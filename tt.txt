@@ -1,0 +1,80 @@
+# Mock Shop
+
+---
+
+# Entities
+
+thid are my business data enitity that holds the business core data and business logic
+
+## User
+
+the user entity holds all data and business logic assosciated with user actor of the system
+
+#### ROLE
+
+1. it handles the user password encryption logic
+1. it habdles the user password verification logic
+1. it validate the users data fields based on the business logic that is defined in it
+
+## Product
+
+the product entity holds all data and business logic acssociated with the product in the system
+
+#### ROLE
+
+1. it is responsible for validateing the product data feild based on the businnes logic defiend in it
+
+## Cart
+
+the cart entity holds all and business logic associated with the Cart enttiy in the system
+
+#### ROLE
+
+1. thus is responsible for adding product to the cart based on the pesofoed business logic
+1. it validste the cart data feild based on the business logic that is defined in it
+
+#### This entitied help move the business logic from the db specific model defination
+
+i can easy test and add to the business logic of the appllication without having to touch the db specific models
+
+---
+
+# Data-access
+
+I decieded to go for the chammen-case convertion for postgres even though its not really the postgres nameing convetion because i wanted to have a consistent namaing convetion throughou the application
+
+### Models defination
+
+```js
+// user
+{
+  "id": INTEGER,
+  "firstName": STRING,
+  "lastName": STRING,
+  "email": STRING,
+  "password": STRING,
+  "isAdmin": BOOLEAN,
+}
+
+// product
+{
+  "id": INTEGER,
+  "name": STRING,
+  "description": STRING,
+  "category": STRING, // clothes, electronics, book
+  "price": FLOAT,
+  "imageUrl": STRING,
+  "inStock": BOOLEAN,
+}
+
+// cart
+{
+  "id": INTEGER,
+  "productIds": [INTEGER], //association with product.id
+  "userId": INTEGER, //association with user.id
+}
+```
+
+#### the mock-hshop handles db communication and absract the communication logic fromt the services
+
+i use this for seperation of conserce
