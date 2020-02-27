@@ -1,8 +1,8 @@
 // product entity
 import makeCart from '';
 
-export default function makeAddProductToCart({ mockShopDb }) {
-  return async function addProductToCart({ id, userId }) {
+export default function makeDeleteProductFromCart({ mockShopDb }) {
+  return async function deleteProductFromCart({ id, userId }) {
     //* the id refers to the id of the product to be deleted from the cart
     //* the userId refers to the id of the currently signed in user try to add a product to his/her cart
     if (!id) {

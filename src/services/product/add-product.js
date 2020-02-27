@@ -18,7 +18,7 @@ export default function makeAddProduct({ mockShopDb }) {
       category: newProduct.getCategory(),
       price: newProduct.getPrice(),
       imageUrl: newProduct.getImageUrl(),
-      //! inStock: newProduct.
+      inStock: newProduct.stillInSock(),
     });
   };
 }

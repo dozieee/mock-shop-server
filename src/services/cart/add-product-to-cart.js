@@ -1,7 +1,7 @@
 // product entity
 import makeCart from '';
 
-export default function makeAddProductToCart({ mockShopDb }) {
+export default function makeAddProductToCart({ mockShopDb, getProduct }) {
   return async function addProductToCart({ id, userId }) {
     //* the id refers to the id of the product to be added to the cart
     //* the userId refers to the id of the currently signed in user try to add a product to his/her cart
@@ -15,9 +15,16 @@ export default function makeAddProductToCart({ mockShopDb }) {
         'the userId of the currently signed in user nmust be provide',
       );
     }
-    const existing = await mockShopDb.findByUserId(userId);
-    if (!existing) {
+    const [cartExisting, productExisting] = await Promise.all([
+      mockShopDb.findByUserId(userId),
+      getProduct({ id, inStock: 'true' }),
+      //query for the the product with the id provided => check if the product exist
+    ]);
+    if (!cartExisting) {
       throw new Error('the user does not have a cart');
+    }
+    if (!productExisting[0]) {
+      throw new Error('the product does not exist or is out of stock');
     }
     const cart = makeCart(existing);
     cart.addProduct(id);

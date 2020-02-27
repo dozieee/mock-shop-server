@@ -20,7 +20,7 @@ export default function makeEditProduct({ mockShopDb }) {
       category: product.getCategory(),
       price: product.getPrice(),
       imageUrl: product.getImageUrl(),
-      //!   inStock: product.
+      inStock: product.stillInSock(),
     });
   };
 }
