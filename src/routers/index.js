@@ -3,11 +3,17 @@
 // not-found
 import notFound from '../controllers/not-found';
 import makeCallBack from '../express-callback';
+import swaggerEndPointSetup from '../../docs/swagger';
 
 // api root
-// const apiRoot = process.env.API_ROOT;
+const apiRoot = process.env.API_ROOT;
 
 export default function(app) {
-  // * app.use(`${apiRoot}/endpoint`, Router);
+  // the docs endpoint
+  app.use(
+    `${apiRoot}${swaggerEndPointSetup.path}`,
+    swaggerEndPointSetup.handlers,
+  );
+  // the not-found end point
   app.use(makeCallBack(notFound));
 }

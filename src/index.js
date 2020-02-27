@@ -21,7 +21,8 @@ app.use((_, res, next) => {
 });
 // router setup
 // router setup
-require('./routers').default(app);
+import routers from './routers';
+routers(app);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
