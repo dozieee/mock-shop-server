@@ -1,0 +1,263 @@
+paths:
+  #? the get product edpoint docummentation
+  /api/v1/product/get-product:
+    get:
+      summary: Get Product endpoint
+      description: This is endpoint it responsible for fetching product. It can fetch products by Id, name, price, inStock, category
+      tags:
+        - Product
+      operationId: getProduct
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: id
+          required: false
+          description: The ID of the product to be edited
+          schema:
+            type: integer
+            example: 1
+        - name: name
+          in: query
+          type: string
+          required: false
+          description: The name of the id must be unique
+          schema:
+            type: string
+            example: test product
+
+        - name: category
+          in: query
+          type: string
+          required: false
+          summary: Products category
+          schema:
+            type: string
+            example: electronics
+
+        - name: price
+          in: query
+          type: integer
+          required: false
+          summary: Products price
+          schema:
+            type: integer
+            example: 2000
+
+        - name: inStock
+          in: query
+          type: boolean
+          required: false
+          summary: Products inStock
+          schema:
+            type: boolean
+            example: true
+
+      responses:
+        200:
+          description: Successful user signin
+          content: application/json
+          schema:
+            example:
+              status: sucess
+              data:
+                name: test product
+                description: test description
+                category: book
+                price: 4000
+                inStock: true
+                createdAt: 2020-02-19T01:17:13.838Z
+                updatedAt: 2020-02-19T01:17:13.838Z
+
+        401:
+          description: Unauthorized client
+          content: application/json
+          schema:
+            example:
+              status: error
+              error: Not authorized to make this request
+
+  #? the add product edpoint docummentation
+  /api/v1/product/add-product:
+    post:
+      summary: Add Product endpoint
+      tags:
+        - Product
+      operationId: addProduct
+      produces:
+        - application/json
+      parameters:
+        - name: name
+          in: body
+          type: string
+          required: true
+          summary: Products name
+
+        - name: description
+          in: body
+          type: string
+          required: true
+          summary: Products description
+
+        - name: category
+          in: body
+          type: string
+          required: true
+          summary: Products category
+
+        - name: price
+          in: body
+          type: integer
+          required: true
+          summary: Products price
+
+        - name: imageUrl
+          in: body
+          type: string
+          required: true
+          summary: Products imageUrl
+
+        - name: inStock
+          in: body
+          type: boolean
+          required: true
+          summary: Products inStock
+
+      responses:
+        200:
+          description: Successful user signin
+          content: application/json
+          schema:
+            example:
+              status: sucess
+              data:
+                name: test product
+                description: test description
+                category: book
+                price: 4000
+                inStock: true
+                createdAt: 2020-02-19T01:17:13.838Z
+                updatedAt: 2020-02-19T01:17:13.838Z
+
+        401:
+          description: Unauthorized client
+          content: application/json
+          schema:
+            example:
+              status: error
+              error: Not authorized to make this request
+
+  #? the edit product edpoint docummentation
+  /api/v1/product/edit-product/{id}:
+    put:
+      summary: Edit Product endpoint
+      tags:
+        - Product
+      operationId: editProduct
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          required: false
+          schema:
+            type: integer
+            example: 23
+            description: The ID of the product to be edited
+        - name: name
+          in: body
+          type: string
+          required: false
+          summary: Products name
+          description: The name of the id must be unique
+
+        - name: description
+          in: body
+          type: string
+          required: false
+          summary: Products description
+
+        - name: category
+          in: body
+          type: string
+          required: false
+          summary: Products category
+
+        - name: price
+          in: body
+          type: integer
+          required: false
+          summary: Products price
+
+        - name: imageUrl
+          in: body
+          type: string
+          required: false
+          summary: Products imageUrl
+
+        - name: inStock
+          in: body
+          type: boolean
+          required: true
+          summary: Products inStock
+
+      responses:
+        200:
+          description: Successful user signin
+          content: application/json
+          schema:
+            example:
+              status: sucess
+              data:
+                name: test product
+                description: test description
+                category: book
+                price: 4000
+                inStock: true
+                createdAt: 2020-02-19T01:17:13.838Z
+                updatedAt: 2020-02-19T01:17:13.838Z
+
+        401:
+          description: Unauthorized client
+          content: application/json
+          schema:
+            example:
+              status: error
+              error: Not authorized to make this request
+
+  #? the delete product edpoint docummentation
+  /api/v1/product/delete-product/{id}:
+    delete:
+      summary: delete Product endpoint
+      tags:
+        - Product
+      operationId: deleteProduct
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 23
+            description: The ID of the product to be deleted
+
+      responses:
+        200:
+          description: Successful user signin
+          content: application/json
+          schema:
+            example:
+              status: sucess
+              data:
+                deleted: true
+                id: 12
+
+        401:
+          description: Unauthorized client
+          content: application/json
+          schema:
+            example:
+              status: error
+              error: Not authorized to make this request

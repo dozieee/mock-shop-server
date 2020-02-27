@@ -1,5 +1,6 @@
 // product entity
-import makeProduct from '';
+import Entity from '../../entites';
+const { makeProduct } = Entity;
 
 export default function makeAddProduct({ mockShopDb }) {
   return async function addProduct({ name, ...rest }) {

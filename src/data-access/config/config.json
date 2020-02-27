@@ -3,7 +3,7 @@
     "username": "bola",
     "password": "bola",
     "database": "mock-shop-test",
-    "host": "172.17.0.3",
+    "host": "172.17.0.2",
     "dialect": "postgres",
     "operatorsAliases": false
   },

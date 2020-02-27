@@ -1,5 +1,6 @@
 // cart entity factory
-import makeCart from '';
+import Entity from '../../entites';
+const { makeCart } = Entity
 
 export default function makeAddProduct({ mockShopDb }) {
   return async function addProduct({ name, ...rest }) {

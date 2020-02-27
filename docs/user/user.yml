@@ -1,6 +1,6 @@
 paths:
   # the signin edpoint docummentation
-  /api/v1/signin:
+  /api/v1/auth/signin:
     post:
       summary: User signin endpoint
       tags:
@@ -10,13 +10,13 @@ paths:
         - application/json
       parameters:
         - name: email
-          in: formData
+          in: body
           type: string
           required: true
           summary: "User's email"
 
         - name: password
-          in: formData
+          in: body
           type: string
           required: true
           summary: "User's passowrd"
@@ -29,23 +29,23 @@ paths:
               status: 'sucess'
               data:
                 user:
-                  firstname: 'samuel'
-                  lastname: 'douye'
-                  email: 'samueldouye@yahoo.com'
-                  isadmin: false
+                  firstname: 'Akinlua'
+                  lastname: 'bolamigbe'
+                  email: 'bolatest@gmail.com'
+                  isAdmin: false
                   createdAt: '2020-02-19T01:17:13.838Z'
                   updatedAt: '2020-02-19T01:17:13.838Z'
                 token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRvdXllNUBnbWFpbC5jb20iLCJpc2FkbWluIjpmYWxzZSwiaWF0IjoxNTgyMDY3NjU3fQ.3SUoBFM49u3UGy1SxfnDOiX4EWhhAgOxsgUX7D6_7M8'
 
         401:
-          description: Unauthorized client
+          description: Unauthorized client, this occures the the user signin credentials are not correct
           content: application/json
           schema:
             example:
               status: 'error'
-              error: 'User name or password incorrect'
+              error: 'email or password incorrect'
   # the signup endpoint docummentation
-  api/v1/signup:
+  api/v1/auth/signup:
     post:
       description: User signup endpoint
       tags:
@@ -83,8 +83,22 @@ paths:
       responses:
         200:
           description: Successful user signup
-          content:
-            application/json:
-              schema:
-                type: string
-                example: pong
+          content: application/json
+          schema:
+            example:
+              status: 'sucess'
+              data:
+                user:
+                  firstname: 'Akinlua'
+                  lastname: 'bolamigbe'
+                  email: 'bolatest@gmail.com'
+                  isAdmin: false
+                token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRvdXllNUBnbWFpbC5jb20iLCJpc2FkbWluIjpmYWxzZSwiaWF0IjoxNTgyMDY3NjU3fQ.3SUoBFM49u3UGy1SxfnDOiX4EWhhAgOxsgUX7D6_7M8'
+
+        401:
+          description: Unauthorized client, this occures the the user signin credentials are not correct
+          content: application/json
+          schema:
+            example:
+              status: 'error'
+              error: 'email or password is incorrect'

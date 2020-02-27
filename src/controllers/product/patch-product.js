@@ -8,7 +8,7 @@ export default function makePatchProduct({ editProduct }) {
           'Content-Type': 'application/json',
         },
         statusCode: 200,
-        body: { status: 200, data: updatedProduct },
+        body: { status: 'sucess', data: updatedProduct },
       };
     } catch (e) {
       console.log(e);
@@ -18,7 +18,7 @@ export default function makePatchProduct({ editProduct }) {
         },
         statusCode: 400,
         body: {
-          status: 400,
+          status: 'error',
           error: e.message,
         },
       };

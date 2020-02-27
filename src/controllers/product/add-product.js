@@ -8,7 +8,7 @@ export default function makeAddProduct({ addProduct }) {
           'Content-Type': 'application/json',
         },
         statusCode: 200,
-        body: { status: 200, data: product },
+        body: { status: 'sucess', data: product },
       };
     } catch (e) {
       console.log(e);
@@ -18,7 +18,7 @@ export default function makeAddProduct({ addProduct }) {
         },
         statusCode: 400,
         body: {
-          status: 400,
+          status: 'error',
           error: e.message,
         },
       };

@@ -9,7 +9,7 @@ export default function makeGetCart({ getCart }) {
           'Content-Type': 'application/json',
         },
         statusCode: 200,
-        body: { status: 200, data: cart },
+        body: { status: 'sucess', data: cart },
       };
     } catch (e) {
       console.log(e);
@@ -19,7 +19,7 @@ export default function makeGetCart({ getCart }) {
         },
         statusCode: 400,
         body: {
-          status: 400,
+          status: 'error',
           error: e.message,
         },
       };

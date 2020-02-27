@@ -1,3 +1,4 @@
+// this helps to configure the controllers to the express request handler
 export default function makeExpressCallBack(controller) {
   return (req, res) => {
     const httpRequest = {

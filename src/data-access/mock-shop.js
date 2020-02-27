@@ -45,6 +45,9 @@ export default function buildMakeMocShopkDb({ Model }) {
     function findByProductId(productId) {
       return sellectedModel.findAll({ where: { productId } });
     }
+    function findByName(name) {
+      return sellectedModel.findOne({ where: { name } });
+    }
     // insert
     function insert(data) {
       return sellectedModel
