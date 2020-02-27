@@ -1,5 +1,5 @@
 export default function makeGetCart({ mockShopDb }) {
-  return async function({ id, productId, userId }) {
+  return async function({ id, productId, userId, isAdmin }) {
     if (!id && !productId && !userId) {
       return mockShopDb.findAll();
     }

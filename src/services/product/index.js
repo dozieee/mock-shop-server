@@ -13,11 +13,11 @@ const getProduct = makeGetProduct({ mockShopDb });
 const deleteProduct = makeDeleteProduct({ mockShopDb });
 const editProduct = makeEditProduct({ mockShopDb });
 // the Service object
-const Product = Object.freeze({
+const productService = Object.freeze({
   addProduct,
   getProduct,
   deleteProduct,
   editProduct,
 });
 // export
-export default Product;
+export default productService;

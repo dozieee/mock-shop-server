@@ -20,7 +20,6 @@ app.use((_, res, next) => {
   next();
 });
 // router setup
-// router setup
 import routers from './routers';
 routers(app);
 

@@ -1,4 +1,4 @@
-// product entity
+// cart entity factory
 import makeCart from '';
 
 export default function makeAddProductToCart({ mockShopDb, getProduct }) {
