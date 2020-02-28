@@ -3,7 +3,7 @@ import Entity from '../../entites';
 const { makeCart } = Entity;
 
 export default function makeAddProduct({ mockShopDb }) {
-  return async function addProduct({ userId }) {
+  return async function addProduct(userId) {
     if (!userId) {
       throw new Error('your userId must provided for the cart');
     }

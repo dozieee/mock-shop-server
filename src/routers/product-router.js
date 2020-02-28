@@ -7,16 +7,15 @@ import makeCallBack from '../express-callback';
 import Controller from '../controllers';
 const { getProduct, addProduct, patchProduct, deleteProduct } = Controller;
 // auth middleware
-// import adminAuthMiddleware from '';
+import { admnAuthMiddleware } from '../middlewares';
+
 // the endpoints
 // thw root endpoint
 route.get('/', (req, res) => {
-  res
-    .status(200)
-    .json({
-      status: 'success',
-      data: { message: 'this is the product service' },
-    });
+  res.status(200).json({
+    status: 'success',
+    data: { message: 'this is the product service' },
+  });
 });
 // the get product endpoint
 route.get('/get-product', makeCallBack(getProduct));

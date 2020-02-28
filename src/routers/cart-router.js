@@ -7,7 +7,7 @@ import makeCallBack from '../express-callback';
 import Controller from '../controllers';
 const { getCart, addToCart, deleteFromCart } = Controller;
 // auth middleware
-// import adminAuthMiddleware from '';
+import { authMiddleware } from '../middlewares';
 // the endpoints
 // thw root endpoint
 route.get('/', (req, res) => {

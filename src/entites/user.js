@@ -1,4 +1,4 @@
-export default function buildMakeUser({ generatePassword, validatePassword }) {
+export default function buildMakeUser({ encryptPassword, validatePassword }) {
   return function makeUser({
     id,
     firstName,
@@ -26,8 +26,8 @@ export default function buildMakeUser({ generatePassword, validatePassword }) {
       getFirstName: () => firstName,
       getLastName: () => lastName,
       getEmail: () => email,
-      getPassword: () => generatePassword(passwords),
-      verifyPassword: (_password) => validatePassword(_password, password),
+      getPassword: () => encryptPassword(passwords),
+      validPassword: (_password) => validatePassword(_password, password),
       getRole: () => isAdmin,
     });
   };
