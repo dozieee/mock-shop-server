@@ -1,4 +1,4 @@
-import model from '../src/data-access/models';
+import model from '../models';
 (async () => {
   console.log('Setting up database...');
   try {

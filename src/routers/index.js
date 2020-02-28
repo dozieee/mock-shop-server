@@ -4,7 +4,7 @@ import cartRouter from './cart-router';
 // not-found
 import notFound from '../controllers/not-found';
 import makeCallBack from '../express-callback';
-import swaggerEndPointSetup from '../../docs/swagger';
+import swaggerEndPointSetup from '../docs/swagger';
 // sawgger endpointsetup
 const { path, handlers } = swaggerEndPointSetup;
 

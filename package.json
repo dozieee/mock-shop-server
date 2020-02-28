@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "db": "babel-node ./db/index.js",
+    "db": "babel-node ./src/data-access/config/index.js",
     "test": "nyc mocha --require @babel/register ./test --exit",
     "start-up": "yarn init && yarn run start-up1 && yarn start-up2",
     "start-up1": "yarn add cors dotenv express morgan jsonwebtoken bcryptjs",
@@ -13,7 +13,7 @@
     "now-build": "npm run build",
     "clean": "rimraf dist",
     "dev": "npm run db && nodemon --exec babel-node ./src/index.js",
-    "start": "npm run clean && npm run build && npm run db && cd dist && node index.js"
+    "start": "npm run clean && npm run build && cd dist && node index.js"
   },
   "author": "Akinlua Bolamigbe Jomiloju <bolamigbeakinlua@gmail.com>",
   "dependencies": {
