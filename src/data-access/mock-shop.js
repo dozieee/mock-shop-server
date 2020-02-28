@@ -24,8 +24,9 @@ export default function buildMakeMocShopkDb({ Model }) {
       return sellectedModel.findAll();
     }
     // findById
-    function findById(id) {
-      return sellectedModel.findOne({ where: { id } });
+    async function findById(id) {
+      const result = await sellectedModel.findOne({ where: { id } });
+      return result ? result.dataValues : null;
     }
     // findByEamil
     function findByEmail(email) {
@@ -55,12 +56,17 @@ export default function buildMakeMocShopkDb({ Model }) {
         .then((newDate) => newDate.get({ plain: true }));
     }
     // update
-    function update({ id, ...rest }) {
-      return sellectedModel.update({ ...rest }, { where: { id } });
+    async function update({ id, ...rest }) {
+      const [firstEle] = await sellectedModel.update(
+        { ...rest },
+        { where: { id } },
+      );
+      return firstEle > 0 ? true : false;
     }
     // remove
-    function remove(id) {
-      return sellectedModel.destroy({ where: { id } });
+    async function remove(id) {
+      const result = await sellectedModel.destroy({ where: { id } });
+      return result > 0 ? true : false;
     }
   };
 }

@@ -12,7 +12,7 @@ export default function makeGetProduct({ mockShopDb }) {
     }
     let query = {};
     if (id) {
-      query.is = id;
+      query.id = id;
     }
     if (name) {
       query.name = name;

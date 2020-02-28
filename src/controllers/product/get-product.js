@@ -7,7 +7,7 @@ export default function makeGetProduct({ getProduct }) {
           'Content-Type': 'application/json',
         },
         statusCode: 200,
-        body: { status: 'sucess', data: product },
+        body: { status: 'success', data: product },
       };
     } catch (e) {
       console.log(e);

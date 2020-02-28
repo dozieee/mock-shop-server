@@ -6,3 +6,4 @@ dist
 .env
 tt.txt
 zbola
+.nyc_output

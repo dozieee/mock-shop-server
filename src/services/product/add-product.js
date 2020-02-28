@@ -7,7 +7,7 @@ export default function makeAddProduct({ mockShopDb }) {
     if (!name) {
       throw new Error('your product must have a name');
     }
-    const existing = await mockShopDb.findByName({ name });
+    const existing = await mockShopDb.findByName(name);
     if (existing) {
       throw new Error('the product with this name already exits');
     }

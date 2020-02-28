@@ -1,14 +1,17 @@
 export default function makeDeleteProduct({ deleteProduct }) {
   return async function(httpRequest) {
     try {
-      const productInfo = httpRequest.body;
-      const { deleted, id } = await deleteProduct({ productInfo });
+      const { id } = httpRequest.params;
+      const { deleted, id: _id } = await deleteProduct(id);
       return {
         headers: {
           'Content-Type': 'application/json',
         },
         statusCode: deleted ? 200 : 404,
-        body: { status: deleted ? 'sucess' : 'error', data: { deleted, id } },
+        body: {
+          status: deleted ? 'success' : 'error',
+          data: { deleted, id: _id },
+        },
       };
     } catch (e) {
       console.log(e);

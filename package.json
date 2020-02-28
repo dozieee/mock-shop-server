@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "db": "babel-node ./db/index.js",
-    "test": "mocha || true",
+    "test": "nyc mocha --require @babel/register ./test --exit",
     "start-up": "yarn init && yarn run start-up1 && yarn start-up2",
     "start-up1": "yarn add cors dotenv express morgan jsonwebtoken bcryptjs",
     "start-up2": "yarn add --dev mocha chai",
@@ -35,6 +35,7 @@
     "@babel/core": "^7.3.4",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.3.4",
+    "@babel/register": "^7.8.6",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "eslint": "^6.8.0",
@@ -50,6 +51,7 @@
     "faker": "^4.1.0",
     "mocha": "^7.0.1",
     "nodemon": "^2.0.2",
+    "nyc": "^15.0.0",
     "prettier": "^1.19.1"
   },
   "license": "MIT",

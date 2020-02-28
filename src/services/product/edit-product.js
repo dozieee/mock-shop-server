@@ -13,15 +13,15 @@ export default function makeEditProduct({ mockShopDb }) {
     if (!existing) {
       throw new Error('the product you want to edit does not exist');
     }
-    const product = makeProduct({ existing, ...updatedInfo });
-    return mockShopDb.update({
+    const product = makeProduct({ ...existing, ...updatedInfo });
+    const updated = await mockShopDb.update({
       id: product.getId(),
-      name: product.getName(),
       description: product.getDescription(),
       category: product.getCategory(),
       price: product.getPrice(),
       imageUrl: product.getImageUrl(),
       inStock: product.stillInSock(),
     });
+    return { updated, id };
   };
 }

@@ -19,7 +19,7 @@ export default function(app) {
   // the root endpoint
   app.use(`${apiRoot}`, (req, res) => {
     res.status(200).json({
-      status: 'sucess',
+      status: 'success',
       data: {
         message: 'This is Mock shop',
         info: 'this is the api root v1',

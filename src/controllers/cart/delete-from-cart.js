@@ -9,7 +9,7 @@ export default function makeDeleteFromCart({ deleteProductFromCart }) {
           'Content-Type': 'application/json',
         },
         statusCode: 200,
-        body: { status: 'sucess', data: updatedCart },
+        body: { status: 'success', data: updatedCart },
       };
     } catch (e) {
       console.log(e);
