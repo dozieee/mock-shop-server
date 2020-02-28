@@ -48,13 +48,20 @@ paths:
             example:
               status: sucess
               data:
-                name: test product
-                description: test description
-                category: book
-                price: 4000
-                inStock: true
-                createdAt: 2020-02-19T01:17:13.838Z
-                updatedAt: 2020-02-19T01:17:13.838Z
+                - name: test product
+                  description: test description
+                  category: book
+                  price: 4000
+                  inStock: true
+                  createdAt: 2020-02-19T01:17:13.838Z
+                  updatedAt: 2020-02-19T01:17:13.838Z
+                - name: test product
+                  description: test description
+                  category: book
+                  price: 4000
+                  inStock: true
+                  createdAt: 2020-02-19T01:17:13.838Z
+                  updatedAt: 2020-02-19T01:17:13.838Z
 
         401:
           description: Unauthorized client

@@ -29,8 +29,8 @@ paths:
               status: 'sucess'
               data:
                 user:
-                  firstname: 'Akinlua'
-                  lastname: 'bolamigbe'
+                  firstName: 'Akinlua'
+                  lastName: 'bolamigbe'
                   email: 'bolatest@gmail.com'
                   isAdmin: false
                   createdAt: '2020-02-19T01:17:13.838Z'
@@ -59,12 +59,12 @@ paths:
           in: body
           required: true
           type: string
-        - name: firstname
+        - name: firstName
           description: First name of user
           in: body
           required: true
           type: string
-        - name: lastname
+        - name: lastName
           description: Last name of user
           in: body
           required: true
@@ -89,8 +89,8 @@ paths:
               status: 'sucess'
               data:
                 user:
-                  firstname: 'Akinlua'
-                  lastname: 'bolamigbe'
+                  firstName: 'Akinlua'
+                  lastName: 'bolamigbe'
                   email: 'bolatest@gmail.com'
                   isAdmin: false
                 token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRvdXllNUBnbWFpbC5jb20iLCJpc2FkbWluIjpmYWxzZSwiaWF0IjoxNTgyMDY3NjU3fQ.3SUoBFM49u3UGy1SxfnDOiX4EWhhAgOxsgUX7D6_7M8'
@@ -102,3 +102,28 @@ paths:
             example:
               status: 'error'
               error: 'email or password is incorrect'
+
+definitions:
+  User:
+    properties:
+      id:
+        type: integer
+        example: 2
+      firstName:
+        type: string
+        example: Akinlua
+      lastName:
+        type: string
+        example: bolamigbe
+      email:
+        type: string
+        example: bolatest@gmail.com
+      isAdmin:
+        type: boolean
+        example: false
+      updatedAt:
+        type: string
+        example: 2020-02-19T01:17:13.838Z
+      createdAt:
+        type: string
+        example: 2020-02-19T01:17:13.838Z
