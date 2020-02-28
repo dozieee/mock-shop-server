@@ -1,7 +1,7 @@
 export default function makeDeleteFromCart({ deleteProductFromCart }) {
   return async function(httpRequest) {
     try {
-      const { id } = httpRequest.body;
+      const { id } = httpRequest.params;
       const userId = httpRequest.authObject.userId;
       const updatedCart = await deleteProductFromCart({ id, userId });
       return {

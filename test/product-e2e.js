@@ -59,7 +59,7 @@ describe('Add products', () => {
         response.body.should.have.property('status').eql('error');
         response.body.should.have
           .property('error')
-          .eql('Not authorized to make this request, token is invalid of expired');
+          .eql('Not authorized to make this request, token is invalid or expired');
         done();
       });
   });
@@ -157,7 +157,7 @@ describe('Edit products', () => {
         response.body.should.have.property('status').eql('error');
         response.body.should.have
           .property('error')
-          .eql('Not authorized to make this request, token is invalid of expired');
+          .eql('Not authorized to make this request, token is invalid or expired');
         done();
       });
   });
@@ -211,7 +211,7 @@ describe('Delete Products', () => {
         response.body.should.have.property('status').eql('error');
         response.body.should.have
           .property('error')
-          .eql('Not authorized to make this request, token is invalid of expired');
+          .eql('Not authorized to make this request, token is invalid or expired');
         done();
       });
   });

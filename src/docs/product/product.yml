@@ -81,38 +81,44 @@ paths:
       produces:
         - application/json
       parameters:
+        - name: Authorization
+          description: Bearer token
+          in: header
+          required: true
+          type: string
+          example: Bearer {token}
         - name: name
-          in: body
+          in: formData
           type: string
           required: true
           summary: Products name
 
         - name: description
-          in: body
+          in: formData
           type: string
           required: true
           summary: Products description
 
         - name: category
-          in: body
+          in: formData
           type: string
           required: true
           summary: Products category
 
         - name: price
-          in: body
+          in: formData
           type: integer
           required: true
           summary: Products price
 
         - name: imageUrl
-          in: body
+          in: formData
           type: string
           required: true
           summary: Products imageUrl
 
         - name: inStock
-          in: body
+          in: formData
           type: boolean
           required: true
           summary: Products inStock
@@ -142,7 +148,7 @@ paths:
               error: Not authorized to make this request
 
   #? the edit product edpoint docummentation
-  /api/v1/product/edit-product/{id}:
+  /api/v1/product/edit-product/{product_id}:
     put:
       summary: Edit Product endpoint
       tags:
@@ -151,46 +157,52 @@ paths:
       produces:
         - application/json
       parameters:
+        - name: Authorization
+          description: Bearer token
+          in: header
+          required: true
+          type: string
+          example: Bearer {token}
         - in: path
-          name: id
+          name: product_id
           required: false
           schema:
             type: integer
             example: 23
             description: The ID of the product to be edited
         - name: name
-          in: body
+          in: formData
           type: string
           required: false
           summary: Products name
           description: The name of the id must be unique
 
         - name: description
-          in: body
+          in: formData
           type: string
           required: false
           summary: Products description
 
         - name: category
-          in: body
+          in: formData
           type: string
           required: false
           summary: Products category
 
         - name: price
-          in: body
+          in: formData
           type: integer
           required: false
           summary: Products price
 
         - name: imageUrl
-          in: body
+          in: formData
           type: string
           required: false
           summary: Products imageUrl
 
         - name: inStock
-          in: body
+          in: formData
           type: boolean
           required: true
           summary: Products inStock
@@ -222,7 +234,7 @@ paths:
           description: A user with the specified ID was not found.
 
   #? the delete product edpoint docummentation
-  /api/v1/product/delete-product/{id}:
+  /api/v1/product/delete-product/{product_id}:
     delete:
       summary: delete Product endpoint
       tags:
@@ -231,12 +243,18 @@ paths:
       produces:
         - application/json
       parameters:
+        - name: Authorization
+          description: Bearer token
+          in: header
+          required: true
+          schema:
+            type: string
+            example: Bearer {token}
         - in: path
-          name: id
+          name: product_id
           required: true
           schema:
             type: integer
-            example: 23
             description: The ID of the product to be deleted
 
       responses:

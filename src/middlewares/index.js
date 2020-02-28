@@ -10,7 +10,7 @@ export function admnAuthMiddleware(req, res, next) {
       .json({
         status: 'error',
         error:
-          'Not authorized to make this request, token is invalid of expired',
+          'Not authorized to make this request, token is invalid or expired',
       })
       .end();
     return;
@@ -32,7 +32,7 @@ export function authMiddleware(req, res, next) {
       .send({
         status: 'error',
         error:
-          'Not authorized to make this request, token is invalid of expired',
+          'Not authorized to make this request, token is invalid or expired',
       })
       .end();
     return;
@@ -56,7 +56,7 @@ export function authMiddleware(req, res, next) {
         .send({
           status: 'error',
           error:
-            'Not authorized to make this request, token is invalid of expired',
+            'Not authorized to make this request, token is invalid or expired',
         })
         .end();
     }
@@ -68,7 +68,7 @@ export function authMiddleware(req, res, next) {
       .send({
         status: 'error',
         error:
-          'Not authorized to make this request, token is invalid of expired',
+          'Not authorized to make this request, token is invalid or expired',
       })
       .end();
   }

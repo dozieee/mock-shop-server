@@ -1,7 +1,7 @@
 export default function makeAddToCart({ addProductToCart }) {
   return async function(httpRequest) {
     try {
-      const { id } = httpRequest.body;
+      const { id } = httpRequest.params;
       const userId = httpRequest.authObject.userId;
       const updatedCart = await addProductToCart({ id, userId });
       return {

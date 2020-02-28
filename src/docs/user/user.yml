@@ -10,13 +10,13 @@ paths:
         - application/json
       parameters:
         - name: email
-          in: body
+          in: formData
           type: string
           required: true
           summary: "User's email"
 
         - name: password
-          in: body
+          in: formData
           type: string
           required: true
           summary: "User's passowrd"
@@ -54,29 +54,24 @@ paths:
         - application/json
 
       parameters:
-        - name: Authorization
-          description: Bearer token
-          in: body
-          required: true
-          type: string
         - name: firstName
           description: First name of user
-          in: body
+          in: formData
           required: true
           type: string
         - name: lastName
           description: Last name of user
-          in: body
+          in: formData
           required: true
           type: string
         - name: email
           description: Email of user
-          in: body
+          in: formData
           required: true
           type: string
         - name: password
           description: Password of user
-          in: body
+          in: formData
           required: true
           type: string
 
