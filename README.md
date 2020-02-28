@@ -61,8 +61,8 @@ npm test
     - **_/ product_** => this contains all product related controllers that talks to the product services
     - **_/ user_** => this contains all user controllers that talk to the user services
   - **_/ data-access_** =>
-    - **_/ models_** =>
-    - **_/ config_** =>
+    - **_/ models_** => this contains the postgres model that help interact with the database
+    - **_/ config_** => this helps to configure the postgres database => is creates the individual database talbles that will be used in the application
     - **_mock-shop_** => this is the postgers data access => it helps cummunicate with the postgresdb
   - **_/ docs_** => this handles all swagger docs setup and api docummentation
   - **_/ entities_** => this contains all the data entities that holds and help implement the application business logic
