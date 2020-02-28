@@ -1,13 +1,14 @@
 import Sequelize from 'sequelize';
-
+import dotenv from 'dotenv';
+dotenv.config();
 const env = process.env.NODE_ENV || 'development';
 
 let sequelize;
 const config = {
-  username: env.POSTGRES_USERNAME,
-  password: env.POSTGRES_PASSWORD,
-  database: env.POSTGRES_DB,
-  host: env.POSTGRES_HOST,
+  username: process.env.POSTGRES_USERNAME,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DB,
+  host: process.env.POSTGRES_HOST,
   dialect: 'postgres',
 };
 
