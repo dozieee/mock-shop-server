@@ -56,10 +56,10 @@ npm test
 
 - **_/ test_** => this contains all the test cases
 - **_/ src_** => this contains the source code that is transpilted by babel
-  - **_/ controllers_** =>
-    - **_/ cart_** =>
-    - **_/ product_** =>
-    - **_/ user_** =>
+  - **_/ controllers_** => this contains all the controller code the talks to the services
+    - **_/ cart_** => this contains all cart related controllers that talks to the cart services
+    - **_/ product_** => this contains all product related controllers that talks to the product services
+    - **_/ user_** => this contains all user controllers that talk to the user services
   - **_/ data-access_** =>
     - **_/ models_** =>
     - **_/ config_** =>
@@ -71,9 +71,9 @@ npm test
   - **_/ modules_** => this contain helper funtions that are use in the application(such as generate JWT token, verify the JWT token)
   - **_/ router_** => this contains router endpoints that use the controllers to supply functionalities
   - **_/ services_** =>
-    - **_/ cart_** => this handles cart related functionalities
-    - **_/ product_** => this handles product related functionalities
-    - **_/ auth_** => this handles authentication related functionalities
+    - **_/ cart_** => this handles cart related functionalities => it is responsible for talking to the cart db interface
+    - **_/ product_** => this handles product related functionalities => it is responsible for taking to the product db interface
+    - **_/ auth_** => this handles authentication related functionalities => it is responsible for taking to the user db interface
   - **_app.js_** => this contains the express server setup
   - **_index.js_** => this contains the actual server spin up => execution
 
