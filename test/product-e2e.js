@@ -11,7 +11,7 @@ chai.use(chaiHttp);
 
 describe('Add products', () => {
   const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG5tYXJrQGVtYWlsLmNvbSIsImlhdCI6MTU1NjQ2Mjc1OCwiZXhwIjoxNTU2NTQ5MTU4fQ.TG9Iv5v5fc0rZPOiEeYrS3UToxpnecnIY-4MYi3eIrw';
+    'BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MTksImlzQWRtaW4iOnRydWV9LCJpYXQiOjE1ODI4NzI2ODUsImV4cCI6MTU4MzQ3NzQ4NX0.snevcFESohp_DEmCIeqf2FN3EebqXRaDMcYOzwhewsI';
   it('should add a product', (done) => {
     const newProduct = {
       name: faker.name.firstName(),
@@ -46,23 +46,23 @@ describe('Add products', () => {
   });
 
   // permision test
-  // it('should return a status code of 401 error if the token passed is incorrect', (done) => {
-  //   const token = 'wrong token';
-  //   chai
-  //     .request(app)
-  //     .post('/api/v1/product/add-product')
-  //     .set('Authorization', token)
-  //     .send({})
-  //     .end((error, response) => {
-  //       response.body.should.be.a('object');
-  //       response.should.have.status(401);
-  //       response.body.should.have.property('status').eql('error');
-  //       response.body.should.have
-  //         .property('error')
-  //         .eql('Not authorized to make this request');
-  //       done();
-  //     });
-  // });
+  it('should return a status code of 401 error if the token passed is incorrect', (done) => {
+    const token = 'wrong token';
+    chai
+      .request(app)
+      .post('/api/v1/product/add-product')
+      .set('Authorization', token)
+      .send({})
+      .end((error, response) => {
+        response.body.should.be.a('object');
+        response.should.have.status(401);
+        response.body.should.have.property('status').eql('error');
+        response.body.should.have
+          .property('error')
+          .eql('Not authorized to make this request, token is invalid of expired');
+        done();
+      });
+  });
 });
 
 describe('Get products', () => {
@@ -103,7 +103,7 @@ describe('Get products', () => {
 
 describe('Edit products', () => {
   const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG5tYXJrQGVtYWlsLmNvbSIsImlhdCI6MTU1NjQ2Mjc1OCwiZXhwIjoxNTU2NTQ5MTU4fQ.TG9Iv5v5fc0rZPOiEeYrS3UToxpnecnIY-4MYi3eIrw';
+    'BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MTksImlzQWRtaW4iOnRydWV9LCJpYXQiOjE1ODI4NzI2ODUsImV4cCI6MTU4MzQ3NzQ4NX0.snevcFESohp_DEmCIeqf2FN3EebqXRaDMcYOzwhewsI';
   it('should edit a product', (done) => {
     const newProduct = {
       description: faker.lorem.words(4),
@@ -111,7 +111,7 @@ describe('Edit products', () => {
       price: parseFloat(3900.0),
       imageUrl: 'test image' + faker.lorem.word(),
     };
-    const productId = faker.random.number(25);
+    const productId = faker.random.number(65);
     chai
       .request(app)
       .patch('/api/v1/product/edit-product/' + productId)
@@ -129,7 +129,7 @@ describe('Edit products', () => {
 
   it('should return a status code of 404 error if the product is not found', (done) => {
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG5tYXJrQGVtYWlsLmNvbSIsImlhdCI6MTU1NjQ2Mjc1OCwiZXhwIjoxNTU2NTQ5MTU4fQ.TG9Iv5v5fc0rZPOiEeYrS3UToxpnecnIY-4MYi3eIrw';
+      'BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MTksImlzQWRtaW4iOnRydWV9LCJpYXQiOjE1ODI4NzI2ODUsImV4cCI6MTU4MzQ3NzQ4NX0.snevcFESohp_DEmCIeqf2FN3EebqXRaDMcYOzwhewsI';
     chai
       .request(app)
       .patch('/api/v1/product/edit-product/1010')
@@ -144,31 +144,31 @@ describe('Edit products', () => {
   });
 
   // permision test
-  // it('should return a status code of 401 error if the token passed is incorrect', (done) => {
-  //   const token = 'wrong token';
-  //   chai
-  //     .request(app)
-  //     .post('/api/v1/product/add-product')
-  //     .set('Authorization', token)
-  //     .send({})
-  //     .end((error, response) => {
-  //       response.body.should.be.a('object');
-  //       response.should.have.status(401);
-  //       response.body.should.have.property('status').eql('error');
-  //       response.body.should.have
-  //         .property('error')
-  //         .eql('Not authorized to make this request');
-  //       done();
-  //     });
-  // });
+  it('should return a status code of 401 error if the token passed is incorrect', (done) => {
+    const token = 'BEARER wrong token';
+    chai
+      .request(app)
+      .post('/api/v1/product/add-product')
+      .set('Authorization', token)
+      .send({})
+      .end((error, response) => {
+        response.body.should.be.a('object');
+        response.should.have.status(401);
+        response.body.should.have.property('status').eql('error');
+        response.body.should.have
+          .property('error')
+          .eql('Not authorized to make this request, token is invalid of expired');
+        done();
+      });
+  });
 });
 
 //* the delete product test
 describe('Delete Products', () => {
   it('should delete a specific product', (done) => {
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG5tYXJrQGVtYWlsLmNvbSIsImlhdCI6MTU1NjQ2Mjc1OCwiZXhwIjoxNTU2NTQ5MTU4fQ.TG9Iv5v5fc0rZPOiEeYrS3UToxpnecnIY-4MYi3eIrw';
-    const productId = faker.random.number(26);
+      'BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MTksImlzQWRtaW4iOnRydWV9LCJpYXQiOjE1ODI4NzI2ODUsImV4cCI6MTU4MzQ3NzQ4NX0.snevcFESohp_DEmCIeqf2FN3EebqXRaDMcYOzwhewsI';
+    const productId = faker.random.number(65);
     chai
       .request(app)
       .delete(`/api/v1/product/delete-product/` + productId)
@@ -185,7 +185,7 @@ describe('Delete Products', () => {
 
   it('should return a status code of 404 error if the product is not found', (done) => {
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG5tYXJrQGVtYWlsLmNvbSIsImlhdCI6MTU1NjQ2Mjc1OCwiZXhwIjoxNTU2NTQ5MTU4fQ.TG9Iv5v5fc0rZPOiEeYrS3UToxpnecnIY-4MYi3eIrw';
+      'BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MTksImlzQWRtaW4iOnRydWV9LCJpYXQiOjE1ODI4NzI2ODUsImV4cCI6MTU4MzQ3NzQ4NX0.snevcFESohp_DEmCIeqf2FN3EebqXRaDMcYOzwhewsI';
     chai
       .request(app)
       .delete(`/api/v1/product/delete-product/1010`)
@@ -199,20 +199,20 @@ describe('Delete Products', () => {
   });
 
   // permision test
-  // it('should return a status code of 401 error if the token passed is incorrect', (done) => {
-  //   const token = 'wrong token';
-  //   chai
-  //     .request(app)
-  //     .delete(`/api/v1/products/delete-product/wrong-product-id`)
-  //     .set('Authorization', token)
-  //     .end((error, response) => {
-  //       response.body.should.be.a('object');
-  //       response.should.have.status(401);
-  //       response.body.should.have.property('status').eql('error');
-  //       response.body.should.have
-  //         .property('error')
-  //         .eql('Not authorized to make this request');
-  //       done();
-  //     });
-  // });
+  it('should return a status code of 401 error if the token passed is incorrect', (done) => {
+    const token = 'BEARER wrong token';
+    chai
+      .request(app)
+      .delete(`/api/v1/product/delete-product/23`)
+      .set('Authorization', token)
+      .end((error, response) => {
+        response.body.should.be.a('object');
+        response.should.have.status(401);
+        response.body.should.have.property('status').eql('error');
+        response.body.should.have
+          .property('error')
+          .eql('Not authorized to make this request, token is invalid of expired');
+        done();
+      });
+  });
 });

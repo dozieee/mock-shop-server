@@ -1,29 +1,24 @@
 // the cart router
 import { Router } from 'express';
-const route = Router();
+const router = Router();
 // the make express callback
 import makeCallBack from '../express-callback';
 // the controllers
-import Controller from '../controllers';
-const { getCart, addToCart, deleteFromCart } = Controller;
+import authController from '../controllers/user';
+const { signin, signup } = authController;
 // auth middleware
-// import { authMiddleware } from "";
-
-// root
-router.get("/", (req, res) => {
-  res
-    .status(200)
-    .json({
-      message: "Hello from auth service"
-    })
-    .end();
+import { authMiddleware } from '../middlewares';
+// the endpoints
+// thw root endpoint
+router.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    data: { message: 'This is auth service' },
+  });
 });
-
-// signup
-router.post("/signup", makeCallBack(signup));
-// login
-router.post("/login", makeCallBack(login));
-// logout
-router.get("/logout", authMiddleware, makeCallBack(logout));
+// the signup endpoint
+router.post('/signup', makeCallBack(signup));
+// the signin endpoint
+router.post('/signin', makeCallBack(signin));
 
 export default router;

@@ -1,13 +1,17 @@
 // the admin checker middleware
 // the validate that the user trying to make the request is an admin
-import { verify as authVerify } from '../modules/auth';
+import { verifyToken as authVerify } from '../modules/auth';
 
 export function admnAuthMiddleware(req, res, next) {
   const authObject = req.authObject;
-  if (authObject.isAdmin) {
+  if (!authObject.isAdmin) {
     res
       .status(401)
-      .json({ status: 'error', error: 'Not authorized to make this request' })
+      .json({
+        status: 'error',
+        error:
+          'Not authorized to make this request, token is invalid of expired',
+      })
       .end();
     return;
   }
@@ -25,7 +29,11 @@ export function authMiddleware(req, res, next) {
     res.type('json');
     res
       .status(401)
-      .send({ status: 'error', error: 'Not authorized to make this request' })
+      .send({
+        status: 'error',
+        error:
+          'Not authorized to make this request, token is invalid of expired',
+      })
       .end();
     return;
   }
@@ -45,7 +53,11 @@ export function authMiddleware(req, res, next) {
       res.type('json');
       res
         .status(401)
-        .send({ status: 'error', error: error.message })
+        .send({
+          status: 'error',
+          error:
+            'Not authorized to make this request, token is invalid of expired',
+        })
         .end();
     }
   } catch (error) {
@@ -53,7 +65,11 @@ export function authMiddleware(req, res, next) {
     res.type('json');
     res
       .status(401)
-      .send({ status: 'error', error: error.message })
+      .send({
+        status: 'error',
+        error:
+          'Not authorized to make this request, token is invalid of expired',
+      })
       .end();
   }
 }

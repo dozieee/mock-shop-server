@@ -1,38 +1,27 @@
-module.exports = function makeSignin({ login }) {
+module.exports = function makeSignin({ signin }) {
   return async function(httpRequest) {
     try {
       const authInfo = httpRequest.body;
-      const auth = await login(authInfo);
+      const auth = await signin(authInfo);
       return {
         headers: {
           'Content-Type': 'application/json',
         },
         statusCode: 200,
-        body: { status: 'success', auth },
+        body: { status: 'success', data: auth },
       };
     } catch (e) {
       console.log(e);
-      return e.message == 'Session limite reached'
-        ? {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            statusCode: 400,
-            body: {
-              status: 'error',
-              error: e.message,
-            },
-          }
-        : {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            statusCode: 401,
-            body: {
-              status: 'error',
-              error: e.message,
-            },
-          };
+      return {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        statusCode: 401,
+        body: {
+          status: 'error',
+          error: e.message,
+        },
+      };
     }
   };
 };

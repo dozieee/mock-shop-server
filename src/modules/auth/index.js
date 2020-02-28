@@ -27,7 +27,7 @@ export function generateToken({ payload }) {
     throw new Error("Couldn't generate token");
   }
 }
-export function verify({ token }) {
+export function verifyToken({ token }) {
   let decodedToken;
   try {
     decodedToken = verify(token, process.env.DM_JWT_SECRET);
@@ -37,9 +37,6 @@ export function verify({ token }) {
     return decodedToken;
   } catch (error) {
     //   TODO: implement logging
-    console.log(error);
     throw new Error("Couldn't verify the token");
   }
 }
-
-export default new AuthController();

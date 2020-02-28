@@ -1,26 +1,26 @@
 // the cart router
 import { Router } from 'express';
-const route = Router();
+const router = Router();
 // the make express callback
 import makeCallBack from '../express-callback';
 // the controllers
-import Controller from '../controllers';
-const { getCart, addToCart, deleteFromCart } = Controller;
+import cartController from '../controllers/cart';
+const { getCart, addToCart, deleteFromCart } = cartController;
 // auth middleware
 import { authMiddleware } from '../middlewares';
 // the endpoints
 // thw root endpoint
-route.get('/', (req, res) => {
+router.get('/', (req, res) => {
   res.status(200).json({
     status: 'success',
-    data: { message: 'this is the cart service' },
+    data: { message: 'This is cart service' },
   });
 });
 // the get cart endpoint
-route.get('/get-cart', makeCallBack(getCart));
+router.get('/get-cart', makeCallBack(getCart));
 // the add product to cart endpoint
-route.get('/add-to-cart/:id', makeCallBack(addToCart));
+router.get('/add-to-cart/:id', makeCallBack(addToCart));
 // the delete product from cart endpoint
-route.get('/delet-from-cart/:id', makeCallBack(deleteFromCart));
+router.get('/delet-from-cart/:id', makeCallBack(deleteFromCart));
 
-export default route;
+export default router;

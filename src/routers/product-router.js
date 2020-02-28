@@ -1,29 +1,44 @@
 // the product router
 import { Router } from 'express';
-const route = Router();
+const router = Router();
 // the make express callback
 import makeCallBack from '../express-callback';
 // the controllers
-import Controller from '../controllers';
+import Controller from '../controllers/product';
 const { getProduct, addProduct, patchProduct, deleteProduct } = Controller;
 // auth middleware
-import { admnAuthMiddleware } from '../middlewares';
+import { admnAuthMiddleware, authMiddleware } from '../middlewares';
 
 // the endpoints
 // thw root endpoint
-route.get('/', (req, res) => {
+router.get('/', (req, res) => {
   res.status(200).json({
     status: 'success',
-    data: { message: 'this is the product service' },
+    data: { message: 'this is product service' },
   });
 });
 // the get product endpoint
-route.get('/get-product', makeCallBack(getProduct));
+router.get('/get-product', makeCallBack(getProduct));
 // the add product endpoint
-route.post('/add-product', makeCallBack(addProduct));
+router.post(
+  '/add-product',
+  authMiddleware,
+  admnAuthMiddleware,
+  makeCallBack(addProduct),
+);
 // the patch product endpoint
-route.patch('/edit-product/:id', makeCallBack(patchProduct));
+router.patch(
+  '/edit-product/:id',
+  authMiddleware,
+  admnAuthMiddleware,
+  makeCallBack(patchProduct),
+);
 // the delete product endpoint
-route.delete('/delete-product/:id', makeCallBack(deleteProduct));
+router.delete(
+  '/delete-product/:id',
+  authMiddleware,
+  admnAuthMiddleware,
+  makeCallBack(deleteProduct),
+);
 
-export default route;
+export default router;

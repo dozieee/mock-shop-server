@@ -19,7 +19,7 @@ export function makeSignin({ mockShopDb, generateToken }) {
     if (!password) {
       throw new Error('You must supply a password');
     }
-    const exits = await mockShopDb.findByEmail({ email });
+    const exits = await mockShopDb.findByEmail(email);
     if (!exits) {
       throw new Error('Auth Failed');
     }
@@ -46,7 +46,7 @@ export function makeSignin({ mockShopDb, generateToken }) {
 export function makeSignup({ mockShopDb, signin, createCart }) {
   return async function signup(userInfo) {
     const user = makeUser({ ...userInfo });
-    const exit = await mockShopDb.findByEmail({ email: user.getEmail() });
+    const exit = await mockShopDb.findByEmail(user.getEmail());
     if (exit) {
       // this error message is delibrate
       throw new Error('Signup failed, You are already registered');

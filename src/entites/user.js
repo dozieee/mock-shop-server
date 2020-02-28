@@ -26,7 +26,7 @@ export default function buildMakeUser({ encryptPassword, validatePassword }) {
       getFirstName: () => firstName,
       getLastName: () => lastName,
       getEmail: () => email,
-      getPassword: () => encryptPassword(passwords),
+      getPassword: () => encryptPassword(password),
       validPassword: (_password) => validatePassword(_password, password),
       getRole: () => isAdmin,
     });
