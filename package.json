@@ -10,14 +10,19 @@
     "start-up1": "yarn add cors dotenv express morgan jsonwebtoken bcryptjs",
     "start-up2": "yarn add --dev mocha chai",
     "server": "node ./src/index.js",
-    "build": "npm run clean && babel src -d dist",
-    "now-build": "npm run build",
+    "build": "yarn run clean && babel src -d dist",
+    "now-build": "yarn run build",
     "clean": "rimraf dist",
-    "dev": "npm run db && nodemon --exec babel-node ./src/index.js",
-    "start": "npm run clean && npm run build && npm run db_pro && node ./dist/index.js"
+    "dev": "yarn run db && nodemon --exec babel-node ./src/index.js",
+    "start": "yarn run clean && yarn run build && yarn run db_pro && node ./dist/index.js"
   },
   "author": "Akinlua Bolamigbe Jomiloju <bolamigbeakinlua@gmail.com>",
   "dependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/register": "^7.8.6",
     "babel-plugin-inline-dotenv": "^1.2.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -33,11 +38,6 @@
     "swagger-ui-express": "^4.1.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.3.4",
-    "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.3.4",
-    "@babel/register": "^7.8.6",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "eslint": "^6.8.0",
