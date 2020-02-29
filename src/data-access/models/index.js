@@ -12,12 +12,17 @@ const config = {
   dialect: 'postgres',
 };
 
-sequelize = new Sequelize(
-  config.database,
-  config.username,
-  config.password,
-  config,
-);
+if (process.env.NODE_ENV === 'production') {
+  sequelize = new Sequelize(process.env.POSTGRES_URL);
+} else {
+  sequelize = new Sequelize(
+    config.database,
+    config.username,
+    config.password,
+    config,
+  );
+}
+
 // models
 const models = {
   user: sequelize['import']('./user'),
