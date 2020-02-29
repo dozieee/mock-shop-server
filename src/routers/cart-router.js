@@ -19,8 +19,8 @@ router.get('/', (req, res) => {
 // the get cart endpoint
 router.get('/get-cart', authMiddleware, makeCallBack(getCart));
 // the add product to cart endpoint
-router.get('/add-to-cart/:id', authMiddleware, makeCallBack(addToCart));
+router.post('/add-to-cart/:id', authMiddleware, makeCallBack(addToCart));
 // the delete product from cart endpoint
-router.get('/delete-from-cart/:id', authMiddleware, makeCallBack(deleteFromCart));
+router.delete('/delete-from-cart/:id', authMiddleware, makeCallBack(deleteFromCart));
 
 export default router;

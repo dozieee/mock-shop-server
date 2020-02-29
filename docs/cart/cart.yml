@@ -3,7 +3,7 @@ path:
   /api/v1/cart/get-cart:
     get:
       summary: Get Cart endpoint
-      description: This is the get cart endpoint it responsible for fetching the users cart. It can fetch cart by Id and userId
+      description: This is the get cart endpoint it is responsible for fetching the users cart. It can fetch cart by Id and userId
       tags:
         - Cart
       operationId: getCart
@@ -14,8 +14,10 @@ path:
           description: Bearer Token, it is used for authenticating the user
           in: header
           type: string
-          example: Bearer {Token}
           required: true
+          schema:
+            type: string
+            example: Bearer {Token}
         - name: id
           description: this is the cart id
           in: query
@@ -55,9 +57,9 @@ path:
 
   # ?
   /api/v1/cart/add-to-cart/{product_id}:
-    get:
+    post:
       summary: Add to Cart endpoint
-      description: This is the add to cart it is responsible for adding product to users cart. The users cart is automaticaly picked up using the Authetication Token
+      description: This is the add to cart endpoint it is responsible for adding product to user's cart. The users cart is automaticaly picked up using the Authetication Token
       tags:
         - Cart
       operationId: addToCart
@@ -67,9 +69,11 @@ path:
         - name: Authorization
           description: Bearer Token, it is used for authenticating the user
           in: header
-          type: string
-          example: Bearer {Token}
+          type: string    
           required: true
+          schema:
+            type: string
+            example: Bearer {Token}
         - name: product_id
           in: path
           required: true
@@ -106,7 +110,7 @@ path:
 
   # ?
   /api/v1/cart/delete-from-cart/{product_id}:
-    get:
+    delete:
       summary: Delete from Cart endpoint
       description: This is the delete form cart endpoint it is responsible for removing product from users cart. The users cart is automaticaly picked up using the Authetication Token
       tags:
@@ -118,9 +122,11 @@ path:
         - name: Authorization
           description: Bearer Token, it is used for authenticating the user
           in: header
-          type: string
-          example: Bearer {Token}
+          type: string          
           required: true
+          schema:
+            type: string
+            example: Bearer {Token}
         - name: product_id
           in: path
           required: true

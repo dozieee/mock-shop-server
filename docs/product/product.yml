@@ -81,7 +81,9 @@ paths:
           in: header
           required: true
           type: string
-          example: Bearer {token}
+          schema:
+            type: string
+            example: Bearer {Token}
         - name: name
           in: formData
           type: string
@@ -120,7 +122,7 @@ paths:
 
       responses:
         200:
-          description: Successful user signin
+          description: Successful product add
           content: application/json
           schema:
             example:
@@ -157,7 +159,9 @@ paths:
           in: header
           required: true
           type: string
-          example: Bearer {token}
+          schema:
+            type: string
+            example: Bearer {Token}
         - in: path
           name: product_id
           required: false
@@ -204,7 +208,7 @@ paths:
 
       responses:
         200:
-          description: Successful user signin
+          description: Successful product edit
           content: application/json
           schema:
             example:
@@ -254,7 +258,7 @@ paths:
 
       responses:
         200:
-          description: Successful user signin
+          description: Successful product delete
           content: application/json
           schema:
             example:

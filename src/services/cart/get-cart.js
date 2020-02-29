@@ -1,6 +1,6 @@
 export default function makeGetCart({ mockShopDb }) {
-  return async function({ id, productId, userId, isAdmin }) {
-    if (!id && !productId && !userId) {
+  return async function({ id, productId, isAdmin }) {
+    if (!id && !productId) {
       return mockShopDb.findAll();
     }
     let query = {};
@@ -11,9 +11,7 @@ export default function makeGetCart({ mockShopDb }) {
       query.productId = productId;
       //! need to do more implentation
     }
-    if (userId) {
-      query.userId = userId;
-    }
+
     const carts = await mockShopDb.find(query);
     return carts.length <= 1 ? carts[0] : carts;
   };

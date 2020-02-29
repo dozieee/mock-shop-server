@@ -4,24 +4,31 @@ dotenv.config();
 const env = process.env.NODE_ENV || 'development';
 
 let sequelize;
-const config = {
-  username: process.env.POSTGRES_USERNAME,
-  password: process.env.POSTGRES_PASSWORD,
-  database: process.env.POSTGRES_DB,
-  host: process.env.POSTGRES_HOST,
-  dialect: 'postgres',
-};
+let config;
+if (process.env.NODE_ENV === 'production') {
+  config = {
+    username: process.env.POSTGRES_USERNAME_PRO,
+    password: process.env.POSTGRES_PASSWORD_PRO,
+    database: process.env.POSTGRES_DB_PRO,
+    host: process.env.POSTGRES_HOST_PRO,
+    dialect: 'postgres',
+  };
+} else {
+  config = {
+    username: process.env.POSTGRES_USERNAME,
+    password: process.env.POSTGRES_PASSWORD,
+    database: process.env.POSTGRES_DB,
+    host: process.env.POSTGRES_HOST,
+    dialect: 'postgres',
+  };
+}
 
-// if (process.env.NODE_ENV === 'production') {
-//   sequelize = new Sequelize(process.env.POSTGRES_URL);
-// } else {
 sequelize = new Sequelize(
   config.database,
   config.username,
   config.password,
   config,
 );
-// }
 
 // models
 const models = {
