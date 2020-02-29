@@ -3,7 +3,7 @@
 # Compiled 
 dist
 # env
-.env
+# .env
 tt.txt
 zbola
 .nyc_output
