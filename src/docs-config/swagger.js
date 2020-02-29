@@ -16,7 +16,7 @@ const swaggerOptions = {
     },
   },
   // the path where the docs are located
-  apis: ['./**/*.yml'],
+  apis: ['./docs/**/*.yml'],
 };
 
 // swagger docs

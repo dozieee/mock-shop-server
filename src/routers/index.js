@@ -5,7 +5,7 @@ import authRouter from './auth-router';
 // not-found
 import notFound from '../controllers/not-found';
 import makeCallBack from '../express-callback';
-import swaggerEndPointSetup from '../docs/swagger';
+import swaggerEndPointSetup from '../docs-config/swagger';
 // sawgger endpointsetup
 const { path, handlers } = swaggerEndPointSetup;
 

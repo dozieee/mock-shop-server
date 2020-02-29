@@ -14,7 +14,7 @@
     "now-build": "npm run build",
     "clean": "rimraf dist",
     "dev": "npm run db && nodemon --exec babel-node ./src/index.js",
-    "start": "npm run clean && npm run build && npm run db_pro && cd dist && node index.js"
+    "start": "npm run clean && npm run build && npm run db_pro && node ./dist/index.js"
   },
   "author": "Akinlua Bolamigbe Jomiloju <bolamigbeakinlua@gmail.com>",
   "dependencies": {
