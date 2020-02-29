@@ -5,7 +5,7 @@ export default function buildMakeUser({ encryptPassword, validatePassword }) {
     lastName,
     email,
     password,
-    isAdmin = true,
+    isAdmin = false,
   } = {}) {
     if (!firstName) {
       throw new Error('user must have a firtsName');

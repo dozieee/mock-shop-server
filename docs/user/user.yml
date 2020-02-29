@@ -3,7 +3,7 @@ paths:
   /api/v1/auth/signin:
     post:
       summary: User signin endpoint
-      description: this is the signin endpoint, it is responses for signing the user and admin-user in
+      description: this is the signin endpoint, it is responses for signing the user and admin-user in................use the following credentials to signin as admin ==> email={admin@gmail.com}  password={admin}
       tags:
         - User
       operationId: signinUser
