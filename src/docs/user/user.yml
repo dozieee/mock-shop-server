@@ -47,7 +47,7 @@ paths:
   # the signup endpoint docummentation
   api/v1/auth/signup:
     post:
-      description: User signup endpoint
+      summary: User signup endpoint
       tags:
         - User
       produces:

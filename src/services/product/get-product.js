@@ -25,6 +25,8 @@ export default function makeGetProduct({ mockShopDb }) {
     }
     if (inStock === 'true') {
       query.inStock = true;
+    } else {
+      query.inStock = false;
     }
     return mockShopDb.find(query);
   };

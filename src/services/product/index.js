@@ -9,7 +9,7 @@ import makeDeleteProduct from './delete-product';
 import makeEditProduct from './edit-product';
 // build the services by passing the db interface to it
 const addProduct = makeAddProduct({ mockShopDb });
-const getProduct = makeGetProduct({ mockShopDb });
+export const getProduct = makeGetProduct({ mockShopDb });
 const deleteProduct = makeDeleteProduct({ mockShopDb });
 const editProduct = makeEditProduct({ mockShopDb });
 // the Service object

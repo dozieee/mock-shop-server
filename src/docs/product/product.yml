@@ -12,7 +12,6 @@ paths:
       parameters:
         - in: query
           name: id
-          required: false
           description: The ID of the product to be edited
           schema:
             type: integer
@@ -20,29 +19,25 @@ paths:
         - name: name
           in: query
           type: string
-          required: false
           description: The name of the id must be unique
         - name: category
           in: query
           type: string
-          required: false
           summary: Products category
 
         - name: price
           in: query
           type: integer
-          required: false
           summary: Products price
 
         - name: inStock
           in: query
           type: boolean
-          required: false
           summary: Products inStock
 
       responses:
         200:
-          description: Successful user signin
+          description: Successful product fetch
           content: application/json
           schema:
             example:
@@ -69,7 +64,7 @@ paths:
           schema:
             example:
               status: error
-              error: Not authorized to make this request
+              error: Not authorized to make this request, token is invalid or expired
 
   #? the add product edpoint docummentation
   /api/v1/product/add-product:
@@ -145,7 +140,7 @@ paths:
           schema:
             example:
               status: error
-              error: Not authorized to make this request
+              error: Not authorized to make this request, token is invalid or expired
 
   #? the edit product edpoint docummentation
   /api/v1/product/edit-product/{product_id}:
@@ -229,7 +224,7 @@ paths:
           schema:
             example:
               status: error
-              error: Not authorized to make this request
+              error: Not authorized to make this request, token is invalid or expired
         404:
           description: A user with the specified ID was not found.
 
@@ -274,7 +269,7 @@ paths:
           schema:
             example:
               status: error
-              error: Not authorized to make this request
+              error: Not authorized to make this request, token is invalid or expired
         404:
           description: A user with the specified ID was not found.
 

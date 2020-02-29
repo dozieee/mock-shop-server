@@ -27,11 +27,12 @@ export default function makeAddProductToCart({ mockShopDb, getProduct }) {
     if (!productExisting[0]) {
       throw new Error('the product does not exist or is out of stock');
     }
-    const cart = makeCart(existing);
+    const cart = makeCart(cartExisting);
     cart.addProduct(id);
-    return mockShopDb.update({
+    const addedToCart = await mockShopDb.update({
       id: cart.getId(),
       productIds: cart.getProductIds(),
     });
+    return { id: cart.getId(), productId: id, addedToCart };
   };
 }

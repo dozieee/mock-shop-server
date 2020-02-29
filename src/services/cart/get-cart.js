@@ -14,6 +14,7 @@ export default function makeGetCart({ mockShopDb }) {
     if (userId) {
       query.userId = userId;
     }
-    return mockShopDb.find(query);
+    const carts = await mockShopDb.find(query);
+    return carts.length <= 1 ? carts[0] : carts;
   };
 }

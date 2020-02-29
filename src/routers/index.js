@@ -22,7 +22,7 @@ export default function(app) {
   // the cart endpoint
   app.use(`${apiRoot}/cart`, cartRouter);
   // the root endpoint
-  app.use(`${apiRoot}`, (req, res) => {
+  app.get(`${apiRoot}`, (req, res) => {
     res.status(200).json({
       status: 'success',
       data: {

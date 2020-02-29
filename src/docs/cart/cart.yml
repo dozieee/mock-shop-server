@@ -1,0 +1,177 @@
+path:
+  # ? the get cart endpoint documentation
+  /api/v1/cart/get-cart:
+    get:
+      summary: Get Cart endpoint
+      description: This is the get cart endpoint it responsible for fetching the users cart. It can fetch cart by Id and userId
+      tags:
+        - Cart
+      operationId: getCart
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          description: Bearer Token, it is used for authenticating the user
+          in: header
+          type: string
+          example: Bearer {Token}
+          required: true
+        - name: id
+          description: this is the cart id
+          in: query
+          type: integer
+        - name: userId
+          description: this is the user's id of the cart
+          in: query
+          type: integer
+      responses:
+        200:
+          description: Successful Cart fetch
+          content: application/json
+          schema:
+            type: object
+            example:
+              - status: success
+                data:
+                  id: 23
+                  userId: 5
+                  productIds:
+                    - 12
+                    - 3
+                    - 7
+              - status: success
+                data:
+                  id: 23
+                  message: no product in cart
+
+        401:
+          description: Unauthorized client
+          content: application/json
+          schema:
+            type: object
+            example:
+              status: error
+              error: Not authorized to make this request, token is invalid or expired
+
+  # ?
+  /api/v1/cart/add-to-cart/{product_id}:
+    get:
+      summary: Add to Cart endpoint
+      description: This is the add to cart it is responsible for adding product to users cart. The users cart is automaticaly picked up using the Authetication Token
+      tags:
+        - Cart
+      operationId: addToCart
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          description: Bearer Token, it is used for authenticating the user
+          in: header
+          type: string
+          example: Bearer {Token}
+          required: true
+        - name: product_id
+          in: path
+          required: true
+          type: integer
+          description: this is the product id to be added to the cart
+          schema:
+            type: integer
+            example: 4
+      responses:
+        200:
+          description: Successful add to cart, this has 2 responses types => when the cart has product and when it's empty
+          content: application/json
+          schema:
+            type: object
+            example:
+              - status: success
+                data:
+                  id: 2
+                  productId: 4
+                  addedToCart: true
+              - status: success
+                data:
+                  id: 2
+                  productId: 4
+                  addedToCart: false
+
+        401:
+          description: Unauthorized client
+          content: application/json
+          schema:
+            example:
+              status: error
+              error: Not authorized to make this request, token is invalid or expired
+
+  # ?
+  /api/v1/cart/delete-from-cart/{product_id}:
+    get:
+      summary: Delete from Cart endpoint
+      description: This is the delete form cart endpoint it is responsible for removing product from users cart. The users cart is automaticaly picked up using the Authetication Token
+      tags:
+        - Cart
+      operationId: deleteFromCart
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          description: Bearer Token, it is used for authenticating the user
+          in: header
+          type: string
+          example: Bearer {Token}
+          required: true
+        - name: product_id
+          in: path
+          required: true
+          description: this is the product id to be removed to the cart
+          schema:
+            type: integer
+            example: 4
+      responses:
+        200:
+          description: Successful add to cart
+          content: application/json
+          schema:
+            type: object
+            example:
+              - status: success
+                data:
+                  id: 2
+                  productId: 4
+                  addedToCart: true
+              - status: success
+                data:
+                  id: 2
+                  productId: 4
+                  addedToCart: false
+
+        401:
+          description: Unauthorized client
+          content: application/json
+          schema:
+            example:
+              status: error
+              error: Not authorized to make this request, token is invalid or expired
+
+definitions:
+  Cart:
+    properties:
+      id:
+        type: integer
+        example: 2
+      productId:
+        type: array
+        example:
+          - 1
+          - 34
+          - 8
+      userId:
+        type: integer
+        example: 3
+      updatedAt:
+        type: string
+        example: 2020-02-19T01:17:13.838Z
+      createdAt:
+        type: string
+        example: 2020-02-19T01:17:13.838Z

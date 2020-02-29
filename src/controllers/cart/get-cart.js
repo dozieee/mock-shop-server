@@ -9,7 +9,7 @@ export default function makeGetCart({ getCart }) {
           'Content-Type': 'application/json',
         },
         statusCode: 200,
-        body: { status: 'success', data: cart },
+        body: { status: 'success', data: deco(cart) },
       };
     } catch (e) {
       console.log(e);
@@ -25,4 +25,12 @@ export default function makeGetCart({ getCart }) {
       };
     }
   };
+}
+
+// transform the output
+function deco(cart) {
+  if (cart.productIds.length < 1) {
+    return { id: cart.id, message: 'no product in cart' };
+  }
+  return cart;
 }

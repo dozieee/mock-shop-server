@@ -17,10 +17,10 @@ router.get('/', (req, res) => {
   });
 });
 // the get cart endpoint
-router.get('/get-cart', makeCallBack(getCart));
+router.get('/get-cart', authMiddleware, makeCallBack(getCart));
 // the add product to cart endpoint
-router.get('/add-to-cart/:id', makeCallBack(addToCart));
+router.get('/add-to-cart/:id', authMiddleware, makeCallBack(addToCart));
 // the delete product from cart endpoint
-router.get('/delet-from-cart/:id', makeCallBack(deleteFromCart));
+router.get('/delete-from-cart/:id', authMiddleware, makeCallBack(deleteFromCart));
 
 export default router;
