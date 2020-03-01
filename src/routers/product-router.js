@@ -27,7 +27,7 @@ router.post(
   makeCallBack(addProduct),
 );
 // the patch product endpoint
-router.patch(
+router.put(
   '/edit-product/:id',
   authMiddleware,
   admnAuthMiddleware,

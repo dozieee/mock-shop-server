@@ -13,9 +13,6 @@ paths:
         - in: query
           name: id
           description: The ID of the product to be edited
-          schema:
-            type: integer
-            example: 1
         - name: name
           in: query
           type: string
@@ -23,17 +20,17 @@ paths:
         - name: category
           in: query
           type: string
-          summary: Products category
+          description: Products category
 
         - name: price
           in: query
           type: integer
-          summary: Products price
+          description: Products price
 
         - name: inStock
           in: query
           type: boolean
-          summary: Products inStock
+          description: Products inStock
 
       responses:
         200:
@@ -88,37 +85,37 @@ paths:
           in: formData
           type: string
           required: true
-          summary: Products name
+          description: Products name
 
         - name: description
           in: formData
           type: string
           required: true
-          summary: Products description
+          description: Products description
 
         - name: category
           in: formData
           type: string
           required: true
-          summary: Products category
+          description: Products category
 
         - name: price
           in: formData
           type: integer
           required: true
-          summary: Products price
+          description: Products price
 
         - name: imageUrl
           in: formData
           type: string
           required: true
-          summary: Products imageUrl
+          description: Products imageUrl
 
         - name: inStock
           in: formData
           type: boolean
           required: true
-          summary: Products inStock
+          description: Products inStock
 
       responses:
         200:
@@ -164,47 +161,37 @@ paths:
             example: Bearer {Token}
         - in: path
           name: product_id
+          description: The ID of the product to be edited
           required: false
-          schema:
-            type: integer
-            example: 23
-            description: The ID of the product to be edited
-        - name: name
-          in: formData
-          type: string
-          required: false
-          summary: Products name
-          description: The name of the id must be unique
-
         - name: description
           in: formData
           type: string
           required: false
-          summary: Products description
+          description: Products description
 
         - name: category
           in: formData
           type: string
           required: false
-          summary: Products category
+          description: Products category
 
         - name: price
           in: formData
           type: integer
           required: false
-          summary: Products price
+          description: Products price
 
         - name: imageUrl
           in: formData
           type: string
           required: false
-          summary: Products imageUrl
+          description: Products imageUrl
 
         - name: inStock
           in: formData
           type: boolean
-          required: true
-          summary: Products inStock
+          required: false
+          description: Products inStock
 
       responses:
         200:
@@ -252,9 +239,9 @@ paths:
         - in: path
           name: product_id
           required: true
+          description: The ID of the product to be deleted
           schema:
             type: integer
-            description: The ID of the product to be deleted
 
       responses:
         200:

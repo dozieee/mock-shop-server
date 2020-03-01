@@ -10,7 +10,7 @@ COPY ./package.json /src/mockshop
 RUN npm install
 # copy the app over
 COPY . /src/mockshop
-# expose a port
+# expose a por
 EXPOSE 3000
 # set default cmd
 CMD ["npm","start"]

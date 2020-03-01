@@ -25,7 +25,7 @@ export default function buildMakeMocShopkDb({ Model }) {
     }
     // findById
     async function findById(id) {
-      const result = await sellectedModel.findOne({ where: { id } });
+      const result = await sellectedModel.findByPk(id);
       return result ? result.dataValues : null;
     }
     // findByEamil

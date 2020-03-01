@@ -23,10 +23,10 @@ export default function makeGetProduct({ mockShopDb }) {
     if (price) {
       query.price = price;
     }
-    if (inStock === 'true') {
-      query.inStock = true;
-    } else {
+    if (inStock === 'false') {
       query.inStock = false;
+    } else {
+      query.inStock = true;
     }
     return mockShopDb.find(query);
   };
