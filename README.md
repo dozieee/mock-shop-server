@@ -8,6 +8,8 @@ Moch Shop runs on Node.js and the Express framework
 
 Moch Shop The backend is written in ES2015 it requires [Babel](https://babeljs.io/) to transpile it.
 
+The API swagger docs can be accessed [HERE](https://mock-shop-server.herokuapp.com/api/v1/mock-shop-api-docs/)
+
 ## Installation instructions
 
 - Clone this repository
