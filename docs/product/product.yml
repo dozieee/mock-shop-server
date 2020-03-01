@@ -162,7 +162,7 @@ paths:
         - in: path
           name: product_id
           description: The ID of the product to be edited
-          required: false
+          required: true
         - name: description
           in: formData
           type: string
