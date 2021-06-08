@@ -5,7 +5,7 @@ const env = process.env.NODE_ENV || 'development';
 
 let sequelize;
 let config;
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'event') {
   config = {
     username: process.env.POSTGRES_USERNAME_PRO,
     password: process.env.POSTGRES_PASSWORD_PRO,
@@ -32,9 +32,9 @@ sequelize = new Sequelize(
 
 // models
 const models = {
-  user: sequelize['import']('./user'),
-  product: sequelize['import']('./product'),
-  cart: sequelize['import']('./cart'),
+  User: sequelize['import']('./user'),
+  Event: sequelize['import']('./Event'),
+  EventAttendance: sequelize['import']('./EventAttendance'),
 };
 
 Object.keys(models).forEach((modelName) => {
