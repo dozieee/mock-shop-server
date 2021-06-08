@@ -24,7 +24,7 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 // the docs endpoint config
 const endPointSetup = {
-  path: '/mock-shop-api-docs',
+  path: '/docs',
   handlers: [swaggerUi.serve, swaggerUi.setup(swaggerDocs)],
 };
 
