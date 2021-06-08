@@ -1,11 +1,11 @@
 import Sequelize from 'sequelize';
 import dotenv from 'dotenv';
 dotenv.config();
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_APP_ENV || 'development';
 
 let sequelize;
 let config;
-if (process.env.NODE_ENV === 'event') {
+if (env === 'event') {
   config = {
     username: process.env.POSTGRES_USERNAME_PRO,
     password: process.env.POSTGRES_PASSWORD_PRO,
