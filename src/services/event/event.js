@@ -3,6 +3,37 @@
 export function makeAddEvent({ mockShopDb }) {
   return async function addEvent(event) {
     // insert the new Event to the database
+    if (!event.name) {
+     throw new Error("you must provide name") 
+    }
+    if (!event.description) {
+      throw new Error("you must provide description") 
+     }
+     if (!event.category) {
+      throw new Error("you must provide category") 
+     }
+     if (!event.price) {
+      throw new Error("you must provide price") 
+     }
+     if (!event.paid) {
+      throw new Error("you must provide paid") 
+     }
+     if (!event.date) {
+      throw new Error("you must provide date") 
+     }
+     if (!event.type) {
+      throw new Error("you must provide type") 
+     }
+     if (!event.venue) {
+      throw new Error("you must provide venue") 
+     }
+     if (!event.ticket_type) {
+      throw new Error("you must provide ticket_type") 
+     }
+     if (!event.private) {
+      throw new Error("you must provide private") 
+     }
+     event.date = new Date(event.date)
     return mockShopDb.insert(event);
   };
 }

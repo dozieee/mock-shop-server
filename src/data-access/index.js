@@ -1,8 +1,21 @@
-// model
-import model from './models';
-// buildMakeMockShop factory
-import buildMakeMockShop from './mock-shop';
-// build the makeMockShop factory with the model as a dependcy
-const makeMockShop = buildMakeMockShop({ Model: model });
+import { config } from 'dotenv';
+config();
+import makeEventDb from './event-db';
+import { MongoClient as _MongoClient } from 'mongodb';
 
-export default makeMockShop;
+const MongoClient = _MongoClient;
+const url = process.env.DM_COMMENTS_DB_URL;
+const dbName = process.env.DM_COMMENTS_DB_NAME;
+const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
+
+export async function makeDb () {
+  if (!client.isConnected()) {
+    await client.connect();
+  }
+  return client.db(dbName);
+}
+
+
+ const eventDB = makeEventDb({ makeDb })
+
+ export default eventDB

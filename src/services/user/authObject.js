@@ -8,6 +8,7 @@
  * for wrong email or password the error message remains consistent for both error cases
  */
 // generate password hash
+import bcrypt from 'bcryptjs'
 function encryptPassword(plainPassword) {
   const salt = bcrypt.genSaltSync(10);
   return bcrypt.hashSync(plainPassword, salt);
@@ -53,16 +54,36 @@ export function makeSignin({ mockShopDb, generateToken }) {
 // take in the login funtion as dependency, it make use of this to log the user in as soon as the user sigup is done
 export function makeSignup({ mockShopDb, signin }) {
   return async function signup(userInfo) {
-    const user = makeUser(userInfo);
+    if (!userInfo.firstName) {
+      throw new Error("you must provide firstName") 
+     }
+     if (!userInfo.lastName) {
+      throw new Error("you must provide lastName") 
+     }
+     if (!userInfo.email) {
+      throw new Error("you must provide email") 
+     }
+     if (!userInfo.email) {
+      throw new Error("you must provide email") 
+     }
+     if (!userInfo.phone) {
+      throw new Error("you must provide phone") 
+     }
+     if (!userInfo.password) {
+      throw new Error("you must provide password") 
+     }
+     
     const exit = await mockShopDb.findByEmail(userInfo.email);
     if (exit) {
       // this error message is delibrate
       throw new Error('Signup failed, You are already registered');
     }
-    userInfo.password = encryptPassword(user.password)
+
+    userInfo.isAdmin = false
+    userInfo.password = encryptPassword(userInfo.password)
     await mockShopDb.insert(userInfo);
     // could have run them in paralle but the user id is needed for the cart creation
-    return signin({ email: user.getEmail(), password: userInfo.password });
+    return signin({ email: userInfo.email, password: userInfo.password });
   };
 }
 
