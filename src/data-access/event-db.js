@@ -1,3 +1,4 @@
+import Id from '../modules/id'
 export default function buildMakeDb({ makeDb}) {
   return function makeMockShopDb({ modelName }) {
     return Object.freeze({
