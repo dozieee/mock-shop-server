@@ -27,6 +27,7 @@ export function makeSignin({ mockShopDb, generateToken }) {
     if (!password) {
       throw new Error('You must supply a password');
     }
+    console.log(email, password)
     const exits = await mockShopDb.findByEmail(email);
     if (!exits) {
       throw new Error('Auth Failed');
