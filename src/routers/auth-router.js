@@ -21,6 +21,6 @@ router.post('/signup', makeCallBack(signup));
 // the signin endpoint
 router.post('/signin', makeCallBack(signin));
 // 
-router.post('/update-profile', makeCallBack(update));
+router.post('/update-profile', authMiddleware, makeCallBack(update));
 
 export default router;
