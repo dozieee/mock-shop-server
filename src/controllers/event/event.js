@@ -2,7 +2,8 @@ export function makeAddEvent({ addEvent }) {
   return async function(httpRequest) {
     try {
       const EventInfo = httpRequest.body;
-      const Event = await addEvent({ ...EventInfo });
+      const userId = httpRequest.authObject.userId;
+      const Event = await addEvent({ ...EventInfo, userId });
       return {
         headers: {
           'Content-Type': 'application/json',

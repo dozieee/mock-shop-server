@@ -33,6 +33,9 @@ export function makeAddEvent({ mockShopDb }) {
      if (!event.private) {
       throw new Error("you must provide private") 
      }
+     if (!event.userId) {
+      throw new Error("you must provide userId") 
+     }
      event.date = new Date(event.date)
     return mockShopDb.insert(event);
   };
@@ -75,9 +78,9 @@ export function makeEditEvent({ mockShopDb }) {
 
 
 export function makeGetEvent({ mockShopDb }) {
-  return async function getEvent({ id }) {
+  return async function getEvent({ userId, id }) {
     if (!id ) {
-      return mockShopDb.findAll();
+      return mockShopDb.find({userId});
     }
     return mockShopDb.findById(id);
   };
