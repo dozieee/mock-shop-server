@@ -5,15 +5,16 @@ const mockShopDb = makeMockShop({ modelName: 'User' });
 import { generateToken } from '../../modules/auth';
 
 // services
-import { makeSignin, makeSignup, makeUpdate } from './authObject';
+import { makeSignin, makeSignup, makeUpdate, makeGetProfile } from './authObject';
 // build the signup function with its dependencies => db_interface, generateToken
 const signin = makeSignin({ mockShopDb, generateToken });
 // build the signin function with its dependencies => db_interface, generateToken
 const signup = makeSignup({ mockShopDb, signin });
 
 const updateUser = makeUpdate({ mockShopDb });
+const getProfile = makeGetProfile({ mockShopDb })
 
 // auth service
-const authService = Object.freeze({ signup, signin, updateUser });
+const authService = Object.freeze({ signup, signin, updateUser, getProfile });
 
 export default authService;

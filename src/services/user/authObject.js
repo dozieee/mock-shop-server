@@ -104,3 +104,16 @@ export function makeUpdate({ mockShopDb }) {
     return update;
   };
 }
+
+export function makeGetProfile({ mockShopDb }){
+  return async function getProfile({ userId }) {
+    if (!userId) {
+      throw new Error('You must supply the userId');
+    }
+    const exits = await mockShopDb.findById(userId);
+    if (!exits) {
+      throw new Error('user does not exit');
+    }
+    return exits
+  }
+}

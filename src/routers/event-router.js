@@ -39,7 +39,7 @@ router.delete(
 );
 
 router.post(
-  '/add-event',
+  '/reg-event',
   authMiddleware,
   makeCallBack(eventReg),
 );
