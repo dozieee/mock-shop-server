@@ -39,7 +39,7 @@ export function makeSignin({ mockShopDb, generateToken }) {
     const token = generateToken({
       payload: {
         userId: exits._id,
-        isAdmin: authUser.getRole(),
+        isAdmin: exits.isAdmin,
       },
     });
     delete exits.password
