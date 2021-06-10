@@ -32,7 +32,7 @@ export function makeSignin({ mockShopDb, generateToken }) {
     if (!exits) {
       throw new Error('Auth Failed');
     }
- 
+    console.l
     if (!validatePassword(password, exits.password)) {
       throw new Error('Auth failed');
     }

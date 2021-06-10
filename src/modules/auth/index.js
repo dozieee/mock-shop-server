@@ -15,14 +15,7 @@ export function generateToken({ payload }) {
     token = sign({ data: payload }, process.env.DM_JWT_SECRET, {
       expiresIn: '1h',
     });
-    return {
-      token,
-      expiresIn: 1,
-      user: {
-        id: payload.userId,
-        isAdmin: payload.isAdmin,
-      },
-    };
+    return token;
   } catch (error) {
     throw new Error("Couldn't generate token");
   }
