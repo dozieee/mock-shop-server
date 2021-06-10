@@ -27,7 +27,6 @@ export function makeSignin({ mockShopDb, generateToken }) {
     if (!password) {
       throw new Error('You must supply a password');
     }
-    console.log(email, password)
     const exits = await mockShopDb.findByEmail(email);
     if (!exits) {
       throw new Error('Auth Failed');
@@ -81,10 +80,11 @@ export function makeSignup({ mockShopDb, signin }) {
     }
 
     userInfo.isAdmin = false
+    const password = userInfo.password
     userInfo.password = encryptPassword(userInfo.password)
     await mockShopDb.insert(userInfo);
     // could have run them in paralle but the user id is needed for the cart creation
-    return signin({ email: userInfo.email, password: userInfo.password });
+    return signin({ email: userInfo.email, password });
   };
 }
 
