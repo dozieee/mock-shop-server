@@ -44,7 +44,7 @@ router.post(
   makeCallBack(eventReg),
 );
 
-router.post(
+router.get(
   '/get-event-reg/:id',
   authMiddleware,
   makeCallBack(getEventReg),
