@@ -36,7 +36,7 @@ export default function buildMakeDb({ makeDb}) {
         ...found
       }));
     }
-    async function findById ({ id: _id }) {
+    async function findById (_id) {
       const db = await makeDb();
       const result = await db.collection(modelName).find({ _id });
       const found = await result.toArray();
