@@ -38,7 +38,7 @@ export function makeSignin({ mockShopDb, generateToken }) {
     // generate the token plus other meta-data to be sent to the client
     const token = generateToken({
       payload: {
-        userId: exit,
+        userId: exits._id,
         isAdmin: authUser.getRole(),
       },
     });
