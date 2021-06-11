@@ -99,7 +99,9 @@ export function makeUpdate({ mockShopDb }) {
     if (!exits) {
       throw new Error('user does not exit');
     }
- 
+
+    delete updateUser.password
+    delete updateUser.email
     const update = await mockShopDb.update({ id: userId, ...updateUser })
     return update;
   };
