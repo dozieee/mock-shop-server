@@ -100,7 +100,7 @@ export function makeUpdate({ mockShopDb }) {
       throw new Error('user does not exit');
     }
  
-    const update = mockShopDb.update(updateUser)
+    const update = mockShopDb.update({ id: updateUser.userId, ...updateUser })
     return update;
   };
 }
@@ -114,6 +114,7 @@ export function makeGetProfile({ mockShopDb }){
     if (!exits) {
       throw new Error('user does not exit');
     }
+    delete exits.password
     return exits
   }
 }
