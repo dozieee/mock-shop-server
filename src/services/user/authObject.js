@@ -100,7 +100,7 @@ export function makeUpdate({ mockShopDb }) {
       throw new Error('user does not exit');
     }
  
-    const update = mockShopDb.update({ id: updateUser.userId, ...updateUser })
+    const update = await mockShopDb.update({ id: userId, ...updateUser })
     return update;
   };
 }
