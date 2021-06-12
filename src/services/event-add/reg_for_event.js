@@ -36,7 +36,8 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
     
     const addEventAttend = await mockShopDb.insert({
       eventId,
-      ...data
+      ...data,
+      reg_date: new Date()
     });
     return addEventAttend;
   };
