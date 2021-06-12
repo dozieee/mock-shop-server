@@ -28,7 +28,7 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
       throw new Error("you must provide ticket_type") 
      }
      
-    const event  = await eventDb.findbyId(eventDb)
+    const event  = await eventDb.findById(eventDb)
 
     if (!event) {
       throw new Error("event does not exist")
@@ -54,7 +54,7 @@ export function makeGetEventAttEvent({ mockShopDb }) {
       );
     }
 
-    const event  = await eventDb.findbyId(eventDb)
+    const event  = await eventDb.findById(eventDb)
 
     if (!event) {
       throw new Error("event does not exist")
