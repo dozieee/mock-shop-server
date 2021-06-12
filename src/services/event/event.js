@@ -1,7 +1,7 @@
 // Event entity
 
 export function makeAddEvent({ mockShopDb }) {
-  return async function addEvent({ private = false,...event}) {
+  return async function addEvent({ private: private_ = false,...event}) {
     // insert the new Event to the database
     if (!event.name) {
      throw new Error("you must provide name")
@@ -36,7 +36,7 @@ export function makeAddEvent({ mockShopDb }) {
       throw new Error("you must provide tag")
      }
      event.date = new Date(event.date)
-     event.private = private
+     event.private = private_
     return mockShopDb.insert(event);
   };
 }
