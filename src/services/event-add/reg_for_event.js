@@ -5,7 +5,7 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
     //* the userId refers to the id of the currently signed in user try to add a product to his/her cart
     if (!eventId) {
       throw new Error(
-        'you must provide the is of the product you want to add to your cart',
+        'you must provide the is of the event Id (eventId)',
       );
     }
 
@@ -50,7 +50,7 @@ export function makeGetEventAttEvent({ mockShopDb }) {
     //* the userId refers to the id of the currently signed in user try to add a product to his/her cart
     if (!eventId) {
       throw new Error(
-        'you must provide the is of the product you want to add to your cart',
+        'you must provide the is of the event Id (eventId)',
       );
     }
 
