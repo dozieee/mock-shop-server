@@ -11,8 +11,8 @@ const EventController = Object.freeze({
   deleteEvent: makeDeleteEvent({ deleteEvent }),
   patchEvent: makePatchEvent({ editEvent }),
   getEvent: makeGetEvent({ getEvent }),
-  getEventReg: makeGetEventReg({ makeGetEventReg }),
-  eventReg: makeEventReg({  makeRegisterEvent: makeRegisterEvent_})
+  getEventReg: makeGetEventReg({ getEventReg: makeGetEventAttend }),
+  eventReg: makeEventReg({  eventReg: makeRegisterEvent_})
 });
 // export
 export default EventController;
