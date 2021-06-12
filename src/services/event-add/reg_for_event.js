@@ -34,7 +34,7 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
       throw new Error("event does not exist")
     }
     
-    const addEventAttend = await mockShopDb.update({
+    const addEventAttend = await mockShopDb.insert({
       eventId,
       ...data
     });
