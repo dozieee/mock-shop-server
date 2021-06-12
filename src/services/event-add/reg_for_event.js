@@ -9,22 +9,22 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
       );
     }
 
-    if (!event.firstName) {
+    if (!data.firstName) {
       throw new Error("you must provide firstName") 
      }
-     if (!event.lastName) {
+     if (!data.lastName) {
       throw new Error("you must provide lastName") 
      }
-     if (!event.email) {
+     if (!data.email) {
       throw new Error("you must provide email") 
      }
-     if (!event.email) {
+     if (!data.email) {
       throw new Error("you must provide email") 
      }
-     if (!event.number_of_tiket) {
+     if (!data.number_of_tiket) {
       throw new Error("you must provide number_of_tiket") 
      }
-     if (!event.ticket_type) {
+     if (!data.ticket_type) {
       throw new Error("you must provide ticket_type") 
      }
      
