@@ -1,43 +1,42 @@
 // Event entity
 
 export function makeAddEvent({ mockShopDb }) {
-  return async function addEvent(event) {
+  return async function addEvent({ private = false,...event}) {
     // insert the new Event to the database
     if (!event.name) {
-     throw new Error("you must provide name") 
+     throw new Error("you must provide name")
     }
     if (!event.description) {
-      throw new Error("you must provide description") 
+      throw new Error("you must provide description")
      }
      if (!event.category) {
-      throw new Error("you must provide category") 
+      throw new Error("you must provide category")
      }
      if (event.paid) {
       if (!event.price) {
-        throw new Error("you must provide price") 
+        throw new Error("you must provide price")
        }
      }else{
        event.ticket_type = []
      }
      if (!event.date) {
-      throw new Error("you must provide date") 
+      throw new Error("you must provide date")
      }
      if (!event.venue) {
-      throw new Error("you must provide venue") 
+      throw new Error("you must provide venue")
      }
      if (!event.ticket_type) {
-      throw new Error("you must provide ticket_type") 
+      throw new Error("you must provide ticket_type")
      }
-     if (!event.private) {
-      throw new Error("you must provide private") 
-     }
+
      if (!event.userId) {
-      throw new Error("you must provide userId") 
+      throw new Error("you must provide userId")
      }
      if (!event.tag) {
-      throw new Error("you must provide tag") 
+      throw new Error("you must provide tag")
      }
      event.date = new Date(event.date)
+     event.private = private
     return mockShopDb.insert(event);
   };
 }
