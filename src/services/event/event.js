@@ -81,6 +81,7 @@ export function makeGetEvent({ mockShopDb, eventAttendanceDb }) {
       return events.map(async event => {
         const eventAtten =await  eventAttendanceDb.find({ eventId: event.id })
         event.eventAttendance = eventAtten
+        return event
     })
 
     }
