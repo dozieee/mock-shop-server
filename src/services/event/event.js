@@ -78,11 +78,13 @@ export function makeGetEvent({ mockShopDb, eventAttendanceDb }) {
   return async function getEvent({ userId, id }) {
     if (!id ) {
       const events = await mockShopDb.find({userId});      
-      const result =await events.map(async event => {
-        const eventAtten =await  eventAttendanceDb.find({ eventId: event.id })
-        event.eventAttendance = eventAtten
-        return event
-    })
+      const result = []
+    for (let i = 0; i < events.length; i++) {
+      const event = events[i];
+      const eventAtten =await  eventAttendanceDb.find({ eventId: event.id })
+      event.eventAttendance = eventAtten
+      result.push(event)
+    }
     return result
     }
     const event = await mockShopDb.findById(id)
