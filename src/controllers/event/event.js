@@ -61,7 +61,8 @@ export function makeDeleteEvent({ deleteEvent }) {
 export function makeGetEvent({ getEvent }) {
   return async function(httpRequest) {
     try {
-      const Event = await getEvent({ ...httpRequest.query });
+      const userId = httpRequest.authObject.userId;
+      const Event = await getEvent({ userId, ...httpRequest.query });
       return {
         headers: {
           'Content-Type': 'application/json',
