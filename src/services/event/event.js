@@ -12,17 +12,15 @@ export function makeAddEvent({ mockShopDb }) {
      if (!event.category) {
       throw new Error("you must provide category") 
      }
-     if (!event.price) {
-      throw new Error("you must provide price") 
-     }
-     if (!event.paid) {
-      throw new Error("you must provide paid") 
+     if (event.paid) {
+      if (!event.price) {
+        throw new Error("you must provide price") 
+       }
+     }else{
+       event.ticket_type = []
      }
      if (!event.date) {
       throw new Error("you must provide date") 
-     }
-     if (!event.type) {
-      throw new Error("you must provide type") 
      }
      if (!event.venue) {
       throw new Error("you must provide venue") 
@@ -35,6 +33,9 @@ export function makeAddEvent({ mockShopDb }) {
      }
      if (!event.userId) {
       throw new Error("you must provide userId") 
+     }
+     if (!event.tag) {
+      throw new Error("you must provide tag") 
      }
      event.date = new Date(event.date)
     return mockShopDb.insert(event);
