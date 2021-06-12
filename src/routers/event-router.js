@@ -40,7 +40,6 @@ router.delete(
 
 router.post(
   '/reg-event',
-  authMiddleware,
   makeCallBack(eventReg),
 );
 
