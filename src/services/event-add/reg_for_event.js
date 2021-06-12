@@ -21,8 +21,8 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
      if (!data.email) {
       throw new Error("you must provide email") 
      }
-     if (!data.number_of_tiket) {
-      throw new Error("you must provide number_of_tiket") 
+     if (!data.number_of_ticket) {
+      throw new Error("you must provide number_of_ticket") 
      }
      if (!data.ticket_type) {
       throw new Error("you must provide ticket_type") 
