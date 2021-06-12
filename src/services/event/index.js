@@ -2,6 +2,7 @@
 import makeMockShop from '../../data-access';
 // make the mockShopDb specific to this service
 const mockShopDb = makeMockShop({ modelName: 'Event' });
+const eventAttendanceDb = makeMockShop({ modelName: 'EventAttendance' });
 // services
 import { makeAddEvent, makeDeleteEvent, makeEditEvent, makeGetEvent } from './event';
 
@@ -9,7 +10,7 @@ import { makeAddEvent, makeDeleteEvent, makeEditEvent, makeGetEvent } from './ev
 const addEvent = makeAddEvent({ mockShopDb });
 const deleteEvent = makeDeleteEvent({ mockShopDb });
 const editEvent = makeEditEvent({ mockShopDb });
-const getEvent = makeGetEvent({ mockShopDb });
+const getEvent = makeGetEvent({ mockShopDb, eventAttendanceDb });
 
 // the Service object
 const productService = Object.freeze({

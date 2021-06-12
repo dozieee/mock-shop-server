@@ -74,11 +74,19 @@ export function makeEditEvent({ mockShopDb }) {
 }
 
 
-export function makeGetEvent({ mockShopDb }) {
+export function makeGetEvent({ mockShopDb, eventAttendanceDb }) {
   return async function getEvent({ userId, id }) {
     if (!id ) {
-      return mockShopDb.find({userId});
+      const events = await mockShopDb.find({userId});      
+      return events.map(event => {
+        const eventAtten = eventAttendanceDb.find({ eventId: event.id })
+        event.eventAttendance = eventAtten
+    })
+
     }
-    return mockShopDb.findById(id);
+    const event = await mockShopDb.findById(id)
+    const eventAtten = eventAttendanceDb.find({ eventId: event.id })
+    event.eventAttendance = eventAtten
+    return event;
   };
 }
