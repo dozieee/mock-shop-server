@@ -19,6 +19,7 @@ router.get('/', (req, res) => {
 });
 // the get product endpoint
 router.get('/get-event', authMiddleware, makeCallBack(getEvent));
+router.get('/get-one-event', makeCallBack(getEvent));
 // the add Event endpoint
 router.post(
   '/add-event',
