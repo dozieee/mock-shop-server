@@ -33,13 +33,40 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
     if (!event) {
       throw new Error("event does not exist")
     }
+    let price = 0
+    if (event.paid) {
+      const ticket_type = event.ticket_type
+      for (let i = 0; i < ticket_type.length; i++) {
+        const element = ticket_type[i];
+        if (element.ticket_name === data.ticket_type) {
+          price = +element.ticket_price
+        }
+      }
+    }
+
+    price *= +number_of_ticket
     
     const addEventAttend = await mockShopDb.insert({
       eventId,
       ...data,
       reg_date: new Date()
     });
-    return addEventAttend;
+
+    // TODO: create a flutterware transaction
+    const public_key = process.env.WAVE_PUBLICK_KEY
+    const transaction = {
+      public_key,
+      tx_ref: addEventAttend._id,
+      amount: price * 100,
+      currency: "NGN",
+      country: "NG",
+      customer: {
+        email: data.email,
+        phone_number: data.phone_number,
+        name: `${data.firstName} ${data.lastName}`,
+      },
+    }
+    return { addEventAttend, transaction: event.paid ? transaction : null };
   };
 }
 
