@@ -18,17 +18,16 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
      if (!data.email) {
       throw new Error("you must provide email") 
      }
-     if (!data.email) {
-      throw new Error("you must provide email") 
-     }
      if (!data.number_of_ticket) {
       throw new Error("you must provide number_of_ticket") 
      }
      if (!data.ticket_type) {
       throw new Error("you must provide ticket_type") 
+
      }
      
     const event  = await eventDb.findById(eventId)
+    let found = false
 
     if (!event) {
       throw new Error("event does not exist")
@@ -40,11 +39,17 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
         const element = ticket_type[i];
         if (element.ticket_name === data.ticket_type) {
           price = +element.ticket_price
-        }
+          found = true
+          break
+        } 
       }
     }
 
-    price *= +number_of_ticket
+    if (!found) {
+      throw new Error(`${data.ticket_type} is not a valid Ticket Type`)
+    }
+
+    price *= +data.number_of_ticket
     
     const addEventAttend = await mockShopDb.insert({
       eventId,
@@ -53,6 +58,7 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
       status: 'PENDING',
       claimed: false,
       creatorId: event.userId,
+      paid: event.paid,
       metaDate: {
         price
       }
