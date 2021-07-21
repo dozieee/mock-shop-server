@@ -88,6 +88,9 @@ export function makeGetEvent({ mockShopDb, eventAttendanceDb }) {
     return result
     }
     const event = await mockShopDb.findById(id)
+    if (!event) {
+      throw new Error("Event not found")
+    }
     const eventAtten =await  eventAttendanceDb.find({ eventId: event.id })
     event.eventAttendance = eventAtten
     return event;
