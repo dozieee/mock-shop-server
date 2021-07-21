@@ -52,9 +52,9 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
       reg_date: new Date(),
       status: 'PENDING',
       claimed: false,
+      creatorId: event.userId,
       metaDate: {
-        price,
-        creatorId: event.userId
+        price
       }
     });
 

@@ -2,6 +2,11 @@
 import { Router } from 'express';
 var axios = require('axios');
 const router = Router();
+import makeMockShop from '../data-access';
+// make the UserDb specific to this service
+const UserDb = makeMockShop({ modelName: 'User' });
+const EventAttendanceDb = makeMockShop({ modelName: 'EventAttendance' });
+
 // the make express callback
 import makeCallBack from '../express-callback';
 
@@ -39,15 +44,25 @@ router.get('/banks', makeCallBack(async (_req) => {
 
 
 // Resolve account details
-router.post('/resolve-banks', makeCallBack(async(req) => {
+router.post('/resolve-banks/:userId', makeCallBack(async(req) => {
   try {
     const body = req.body
+    const userId = req.params.userId
+    if (!userId) {
+      return res({ status: 'error', data: "You must provide the User Id" }, 400)
+    }
     if (!body.account_number) {
       return res({ status: 'error', data: "You must provide the account number" }, 400)
     }
     if (!body.account_bank) {
       return res({ status: 'error', data: 'You must provide the bank code' }, 400)
     }
+
+    const user = await UserDb.findById(userId);
+    if (!user) {
+      return res({ status: 'error', data: 'User does not exit' }, 400)
+    }
+
     const sec_key = process.env.SEC_KEY
     const base = process.env.BASE_API_URL_PAYSTACK
     var options = {
@@ -61,11 +76,66 @@ router.post('/resolve-banks', makeCallBack(async(req) => {
     };
     const response = await axios(options);
     const body_ = response.data
-    
+
     if (body.status >= 300) {
       return res({ status: 'error', data: null }, 400)
     }
+
+    const account_details = {...body_.data, account_bank: body.account_bank}
+    await UserDb.update({ id: userId, account_details })
+    // TODO: send email notification
     return res({ status: 'success', data: body_.data })
+  } catch (error) {
+    return res({ status: 'error', data: error.message }, 500)
+  }
+}));
+
+
+
+// Resolve account details
+router.get('/payout/:userId', makeCallBack(async(req) => {
+  try {
+    const userId = req.params.userId
+    if (!userId) {
+      return res({ status: 'error', data: "You must provide the User Id" }, 400)
+    }
+
+    const user = await UserDb.findById(userId);
+    if (!user) {
+      return res({ status: 'error', data: 'User does not exit' }, 400)
+    }
+
+    const sec_key = process.env.SEC_KEY
+    const base = process.env.BASE_API_URL_PAYSTACK
+    var options = {
+      'method': 'POST',
+      'url': `${base}/transfers`,
+      'headers': {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sec_key}`
+      },
+      data: {
+        "account_bank": "044",
+        "account_number": "0690000040",
+        "amount": 5500,
+        "narration": "Akhlm Pstmn Trnsfr xx007",
+        "currency": "NGN",
+        "reference": "akhlm-pstmnpyt-rfxx007_PMCKDU_1",
+        "callback_url": "https://webhook.site/b3e505b0-fe02-430e-a538-22bbbce8ce0d",
+        "debit_currency": "NGN"
+      }
+    };
+    // const response = await axios(options);
+    // const body_ = response.data
+
+    // if (body.status >= 300) {
+    //   return res({ status: 'error', data: null }, 400)
+    // }
+
+    // const account_details = {...body_.data, account_bank: body.account_bank}
+    // await UserDb.update({ id: userId, account_details })
+    // TODO: send email notification
+    return res({ status: 'success', data: "Pay out Imitated For You" })
   } catch (error) {
     return res({ status: 'error', data: error.message }, 500)
   }
