@@ -3,7 +3,7 @@ import eventService from '../../services/event'; //cart service
 import { makeGetEventAttend, makeRegisterEvent_ } from '../../services/event-add'; //cart service
 const { addEvent, deleteEvent, editEvent, getEvent } = eventService;
 
-import { makeAddEvent, makeDeleteEvent, makeGetEvent, makePatchEvent, makeEventReg, makeGetEventReg} from './event'
+import { makeAddEvent, makeDeleteEvent, makeGetEventV2, makeGetEvent, makePatchEvent, makeEventReg, makeGetEventReg} from './event'
 
 // the controller object
 const EventController = Object.freeze({
@@ -11,6 +11,7 @@ const EventController = Object.freeze({
   deleteEvent: makeDeleteEvent({ deleteEvent }),
   patchEvent: makePatchEvent({ editEvent }),
   getEvent: makeGetEvent({ getEvent }),
+  getEventV2: makeGetEventV2({getEvent}),
   getEventReg: makeGetEventReg({ getEventReg: makeGetEventAttend }),
   eventReg: makeEventReg({  eventReg: makeRegisterEvent_})
 });

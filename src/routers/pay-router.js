@@ -6,7 +6,8 @@ import makeMockShop from '../data-access';
 // make the UserDb specific to this service
 const UserDb = makeMockShop({ modelName: 'User' });
 const EventAttendanceDb = makeMockShop({ modelName: 'EventAttendance' });
-
+// auth middleware
+import {  authMiddleware } from '../middlewares';
 // the make express callback
 import makeCallBack from '../express-callback';
 
@@ -44,23 +45,15 @@ router.get('/banks', makeCallBack(async (_req) => {
 
 
 // Resolve account details
-router.post('/resolve-banks/:userId', makeCallBack(async(req) => {
+router.post('/resolve-banks', makeCallBack(async(req) => {
   try {
     const body = req.body
-    const userId = req.params.userId
-    if (!userId) {
-      return res({ status: 'error', data: "You must provide the User Id" }, 400)
-    }
+
     if (!body.account_number) {
       return res({ status: 'error', data: "You must provide the account number" }, 400)
     }
     if (!body.account_bank) {
       return res({ status: 'error', data: 'You must provide the bank code' }, 400)
-    }
-
-    const user = await UserDb.findById(userId);
-    if (!user) {
-      return res({ status: 'error', data: 'User does not exit' }, 400)
     }
 
     const sec_key = process.env.SEC_KEY
@@ -81,10 +74,43 @@ router.post('/resolve-banks/:userId', makeCallBack(async(req) => {
       return res({ status: 'error', data: null }, 400)
     }
 
-    const account_details = {...body_.data, account_bank: body.account_bank}
+    return res({ status: 'success', data: body_.data })
+  } catch (error) {
+    return res({ status: 'error', data: error.message }, 500)
+  }
+}));
+
+
+// Resolve account details
+router.post('/add-bank', authMiddleware, makeCallBack(async(req) => {
+  try {
+    const body = req.body
+    const userId = req.authObject.userId;
+
+    if (!userId) {
+      return res({ status: 'error', data: "You must provide the User Id" }, 400)
+    }
+    if (!body.account_number) {
+      return res({ status: 'error', data: "You must provide the account number" }, 400)
+    }
+    if (!body.account_bank) {
+      return res({ status: 'error', data: 'You must provide the bank code' }, 400)
+    }
+
+    if (!body.account_name) {
+      return res({ status: 'error', data: 'You must provide the bank account name' }, 400)
+    }
+
+    const user = await UserDb.findById(userId);
+    if (!user) {
+      return res({ status: 'error', data: 'User does not exit' }, 400)
+    }
+
+
+    const account_details = {account_number: body.account_number, account_name: body.account_name, account_bank: body.account_bank}
     await UserDb.update({ id: userId, account_details })
     // TODO: send email notification
-    return res({ status: 'success', data: body_.data })
+    return res({ status: 'success', data: "Successfully added you Account details" })
   } catch (error) {
     return res({ status: 'error', data: error.message }, 500)
   }

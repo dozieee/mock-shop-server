@@ -86,6 +86,32 @@ export function makeGetEvent({ getEvent }) {
   };
 }
 
+export function makeGetEventV2({ getEvent }) {
+  return async function(httpRequest) {
+    try {
+      const Event = await getEvent({ ...httpRequest.query });
+      return {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        statusCode: 200,
+        body: { status: 'success', data: Event },
+      };
+    } catch (e) {
+      console.log(e);
+      return {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        statusCode: 400,
+        body: {
+          status: 'error',
+          error: e.message,
+        },
+      };
+    }
+  };
+}
 
 export function makePatchEvent({ editEvent }) {
   return async function(httpRequest) {

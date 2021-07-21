@@ -68,7 +68,7 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
     const public_key = process.env.WAVE_PUBLICK_KEY
     const transaction = {
       public_key,
-      tx_ref: addEventAttend._id,
+      tx_ref: addEventAttend.id,
       amount: price * 100,
       currency: "NGN",
       country: "NG",
