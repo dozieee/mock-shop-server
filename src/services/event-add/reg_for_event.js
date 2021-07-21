@@ -69,7 +69,7 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
     const transaction = {
       public_key,
       tx_ref: addEventAttend.id,
-      amount: price * 100,
+      amount: price,
       currency: "NGN",
       country: "NG",
       customer: {
