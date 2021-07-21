@@ -1,6 +1,7 @@
 // Routers
 import eventRouter from './event-router';
 import authRouter from './auth-router';
+import payRouter from './pay-router';
 // not-found
 import notFound from '../controllers/not-found';
 import makeCallBack from '../express-callback';
@@ -18,6 +19,8 @@ export default function(app) {
   app.use(`${apiRoot}/event`, eventRouter);
   // the auth endpoint
   app.use(`${apiRoot}/auth`, authRouter);
+  // payment
+  app.use(`${apiRoot}/payment`, payRouter);
   // the cart endpoint
   // the root endpoint
   app.get(`${apiRoot}`, (req, res) => {

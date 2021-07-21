@@ -49,7 +49,13 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
     const addEventAttend = await mockShopDb.insert({
       eventId,
       ...data,
-      reg_date: new Date()
+      reg_date: new Date(),
+      status: 'PENDING',
+      claimed: false,
+      metaDate: {
+        price,
+        creatorId: event.userId
+      }
     });
 
     // TODO: create a flutterware transaction
