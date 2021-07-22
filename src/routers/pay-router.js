@@ -119,9 +119,11 @@ router.post('/add-bank', authMiddleware, makeCallBack(async(req) => {
 
 
 // Resolve account details
-router.get('/payout/:userId', makeCallBack(async(req) => {
+router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
   try {
-    const userId = req.params.userId
+    const userId = req.authObject.userId;
+    const evenId = req.authObject.evenId;
+
     if (!userId) {
       return res({ status: 'error', data: "You must provide the User Id" }, 400)
     }
