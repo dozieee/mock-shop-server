@@ -56,7 +56,7 @@ router.post('/resolve-banks', makeCallBack(async(req) => {
       return res({ status: 'error', data: 'You must provide the bank code' }, 400)
     }
 
-    const sec_key = process.env.SEC_KEY
+    const sec_key = process.env.SEC_KEY_TEMP
     const base = process.env.BASE_API_URL_PAYSTACK
     var options = {
       'method': 'POST',
