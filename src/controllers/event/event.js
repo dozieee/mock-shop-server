@@ -86,6 +86,34 @@ export function makeGetEvent({ getEvent }) {
   };
 }
 
+export function makeGetPaidEvent({ getPaidEvent }) {
+  return async function(httpRequest) {
+    try {
+      const userId = httpRequest.authObject.userId;
+      const Event = await getPaidEvent({ userId });
+      return {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        statusCode: 200,
+        body: { status: 'success', data: Event },
+      };
+    } catch (e) {
+      console.log(e);
+      return {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        statusCode: 400,
+        body: {
+          status: 'error',
+          error: e.message,
+        },
+      };
+    }
+  };
+}
+
 export function makeGetEventV2({ getEvent }) {
   return async function(httpRequest) {
     try {

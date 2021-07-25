@@ -5,7 +5,7 @@ const router = Router();
 import makeCallBack from '../express-callback';
 // the controllers
 import Controller from '../controllers/event';
-const { getEvent, getEventV2, addEvent, patchEvent, deleteEvent, eventReg, getEventReg } = Controller;
+const { getEvent, getEventV2, addEvent, patchEvent, deleteEvent, eventReg, getEventReg, getPaidEvent } = Controller;
 // auth middleware
 import {  authMiddleware } from '../middlewares';
 
@@ -19,6 +19,7 @@ router.get('/', (req, res) => {
 });
 // the get product endpoint
 router.get('/get-event', authMiddleware, makeCallBack(getEvent));
+router.get('/get-paid-event', authMiddleware, makeCallBack(getPaidEvent));
 router.get('/get-one-event', makeCallBack(getEventV2));
 // the add Event endpoint
 router.post(

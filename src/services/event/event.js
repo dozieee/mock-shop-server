@@ -96,3 +96,27 @@ export function makeGetEvent({ mockShopDb, eventAttendanceDb }) {
     return event;
   };
 }
+
+
+export function makeGetPaidEvent({ mockShopDb, eventAttendanceDb }) {
+  return async function getEvent({ userId }) {
+      const events = await mockShopDb.find({userId, paid: true});      
+      const result = []
+    for (let i = 0; i < events.length; i++) {
+      let totalPrice = 0
+      const event = events[i];
+      const eventAtten = await  eventAttendanceDb.find({ eventId: event.id, claimed: false, paid: true})
+      eventAtten.forEach(element => {
+        if (element) {
+          totalPrice += element.metaDate.price
+        }
+      });
+      event.Summary = {
+        totalRegistered: eventAtten.length,
+        totalPrice
+      }
+      result.push(event)
+    }
+    return result
+  };
+}
