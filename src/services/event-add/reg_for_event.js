@@ -1,3 +1,5 @@
+import { sendNotification } from '../../modules/notify/send-mail'
+
 
 export function makeRegisterEvent({ mockShopDb, eventDb }) {
   return async function registerEvent({ eventId, ...data }) {
@@ -78,6 +80,8 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
         name: `${data.firstName} ${data.lastName}`,
       },
     }
+
+    event.paid && sendNotification({ event: "EVENT_REGISTRATION", data: { email: data.email} })
     return { addEventAttend, transaction: event.paid ? transaction : null };
   };
 }

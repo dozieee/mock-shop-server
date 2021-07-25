@@ -1,3 +1,4 @@
+import { sendNotification } from '../../modules/notify/send-mail'
 /**
  * i decieded to go for the same response message for all login authentication error
  * the reason for this is to secure the appliction from brut-force attack
@@ -31,7 +32,6 @@ export function makeSignin({ mockShopDb, generateToken }) {
     if (!exits) {
       throw new Error('Auth Failed');
     }
-    console.log(exits, validatePassword(password, exits.password))
     if (!validatePassword(password, exits.password)) {
       throw new Error('Auth failed');
     }
@@ -43,6 +43,9 @@ export function makeSignin({ mockShopDb, generateToken }) {
       },
     });
     delete exits.password
+  
+    sendNotification({ event: "USER_SIGIN", data: { email} })
+
     return { token,  user: exits};
   };
 }
