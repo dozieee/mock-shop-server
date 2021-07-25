@@ -102,10 +102,11 @@ export function makeGetPaidEvent({ mockShopDb, eventAttendanceDb }) {
   return async function getEvent({ userId }) {
       const events = await mockShopDb.find({userId, paid: true});      
       const result = []
+      const paymentSuccessStatus = 'PENDING' //TODO: 'SUCCESS'
     for (let i = 0; i < events.length; i++) {
       let totalPrice = 0
       const event = events[i];
-      const eventAtten = await  eventAttendanceDb.find({ eventId: event.id, claimed: false, paid: true})
+      const eventAtten = await  eventAttendanceDb.find({ eventId: event.id, claimed: false, paid: true, status: paymentSuccessStatus})
       eventAtten.forEach(element => {
         if (element) {
           totalPrice += element.metaDate.price
