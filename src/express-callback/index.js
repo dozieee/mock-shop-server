@@ -13,6 +13,7 @@ export default function makeExpressCallBack(controller) {
         'Content-Type': req.get('Content-Type'),
         'User-Agent': req.get('User-Agent'),
       },
+      req
     };
     controller(httpRequest)
       .then((httpResponse) => {

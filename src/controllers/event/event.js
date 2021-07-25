@@ -3,7 +3,7 @@ export function makeAddEvent({ addEvent }) {
     try {
       const EventInfo = httpRequest.body;
       const userId = httpRequest.authObject.userId;
-      const Event = await addEvent({ ...EventInfo, userId });
+      const Event = await addEvent(httpRequest.req, { ...EventInfo, userId });
       return {
         headers: {
           'Content-Type': 'application/json',

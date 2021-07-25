@@ -1,7 +1,8 @@
 // Event entity
+import {fileUpload, dataUri, makeResponse} from '../../modules/image-upload'
 
 export function makeAddEvent({ mockShopDb }) {
-  return async function addEvent({ private: private_ = false,...event}) {
+  return async function addEvent(req, { private: private_ = false,...event}) {
     // insert the new Event to the database
     if (!event.name) {
      throw new Error("you must provide name")
@@ -32,6 +33,20 @@ export function makeAddEvent({ mockShopDb }) {
      if (!event.tag) {
       throw new Error("you must provide tag")
      }
+
+     event.image = ''
+
+     if (req && req.file) {
+      const file = dataUri(req);
+      // SAVES IMAGE TO CLOUDINARY
+      const res = await fileUpload(file);
+
+      if (!res) {
+        throw new Error("Imge not uploaded")
+      }
+      // delete prev borrower image
+      event.image = res.secure_url || res.url;
+    }
      event.date = new Date(event.date)
      event.private = private_
     return mockShopDb.insert(event);

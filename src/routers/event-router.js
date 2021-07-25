@@ -3,6 +3,7 @@ import { Router } from 'express';
 const router = Router();
 // the make express callback
 import makeCallBack from '../express-callback';
+import {multerUploads} from '../modules/image-upload'
 // the controllers
 import Controller from '../controllers/event';
 const { getEvent, getEventV2, addEvent, patchEvent, deleteEvent, eventReg, getEventReg, getPaidEvent } = Controller;
@@ -25,6 +26,7 @@ router.get('/get-one-event', makeCallBack(getEventV2));
 router.post(
   '/add-event',
   authMiddleware,
+  multerUploads.single('image'),
   makeCallBack(addEvent),
 );
 // the patch Event endpoint
