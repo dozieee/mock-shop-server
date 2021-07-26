@@ -34,7 +34,7 @@ export function makeAddEvent({ mockShopDb }) {
       throw new Error("you must provide tag")
      }
 
-     event.image = ''
+     event.image = process.env.DIMAGE
 
      if (req && req.file) {
       const file = dataUri(req);
