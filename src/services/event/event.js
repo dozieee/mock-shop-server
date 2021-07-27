@@ -131,7 +131,9 @@ export function makeGetPaidEvent({ mockShopDb, eventAttendanceDb }) {
         totalRegistered: eventAtten.length,
         totalPrice
       }
-      result.push(event)
+      if (totalPrice > 0) {
+        result.push(event)
+      }
     }
     return result
   };
