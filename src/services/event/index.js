@@ -4,13 +4,15 @@ import makeMockShop from '../../data-access';
 const mockShopDb = makeMockShop({ modelName: 'Event' });
 const eventAttendanceDb = makeMockShop({ modelName: 'EventAttendance' });
 // services
-import { makeAddEvent, makeDeleteEvent, makeEditEvent, makeGetEvent, makeGetPaidEvent } from './event';
+import { makeAddEvent, makeDeleteEvent, makeEditEvent, makeGetEvent, makeGetPaidEvent, makeGetScheduledEvent, makeGetCompletedEvent } from './event';
 
 // build the services by passing the db interface to it
 const addEvent = makeAddEvent({ mockShopDb });
 const deleteEvent = makeDeleteEvent({ mockShopDb });
 const editEvent = makeEditEvent({ mockShopDb });
 const getEvent = makeGetEvent({ mockShopDb, eventAttendanceDb });
+const getScheduledEvent = makeGetScheduledEvent({ mockShopDb, eventAttendanceDb });
+const getCompetedEvent = makeGetScheduledEvent({ mockShopDb, eventAttendanceDb });
 const getPaidEvent = makeGetPaidEvent({  mockShopDb, eventAttendanceDb })
 
 // the Service object
@@ -19,7 +21,9 @@ const productService = Object.freeze({
   deleteEvent,
   editEvent,
   getEvent,
-  getPaidEvent
+  getPaidEvent,
+  getScheduledEvent,
+  getCompetedEvent
 });
 // export
 export default productService;

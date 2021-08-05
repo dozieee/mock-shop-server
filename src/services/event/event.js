@@ -113,6 +113,37 @@ export function makeGetEvent({ mockShopDb, eventAttendanceDb }) {
 }
 
 
+export function makeGetScheduledEvent({ mockShopDb, eventAttendanceDb }) {
+  return async function getEvent({ userId}) {
+      const events = await mockShopDb.find({userId, date: { $gt: new Date() } });      
+      const result = []
+    for (let i = 0; i < events.length; i++) {
+      const event = events[i];
+      const eventAtten = await  eventAttendanceDb.find({ eventId: event.id })
+      event.eventAttendance = eventAtten
+      result.push(event)
+    }
+    return result
+   
+  };
+}
+
+export function makeGetCompletedEvent({ mockShopDb, eventAttendanceDb }) {
+  return async function getEvent({ userId}) {
+      const events = await mockShopDb.find({userId, date: { $lt: new Date() } });      
+      const result = []
+    for (let i = 0; i < events.length; i++) {
+      const event = events[i];
+      const eventAtten = await  eventAttendanceDb.find({ eventId: event.id })
+      event.eventAttendance = eventAtten
+      result.push(event)
+    }
+    return result
+   
+  };
+}
+
+
 export function makeGetPaidEvent({ mockShopDb, eventAttendanceDb }) {
   return async function getEvent({ userId }) {
       const events = await mockShopDb.find({userId, paid: true});      

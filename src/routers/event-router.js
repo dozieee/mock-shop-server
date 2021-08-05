@@ -6,7 +6,7 @@ import makeCallBack from '../express-callback';
 import {multerUploads} from '../modules/image-upload'
 // the controllers
 import Controller from '../controllers/event';
-const { getEvent, getEventV2, addEvent, patchEvent, deleteEvent, eventReg, getEventReg, getPaidEvent } = Controller;
+const { getEvent, getEventV2, addEvent, patchEvent, deleteEvent, eventReg, getEventReg, getPaidEvent, getScheduledEvent, getCompetedEvent } = Controller;
 // auth middleware
 import {  authMiddleware } from '../middlewares';
 
@@ -20,6 +20,8 @@ router.get('/', (req, res) => {
 });
 // the get product endpoint
 router.get('/get-event', authMiddleware, makeCallBack(getEvent));
+router.get('/get-scheduled-event', authMiddleware, makeCallBack(getScheduledEvent));
+router.get('/get-completed-event', authMiddleware, makeCallBack(getCompetedEvent));
 router.get('/get-paid-event', authMiddleware, makeCallBack(getPaidEvent));
 router.get('/get-one-event', makeCallBack(getEventV2));
 // the add Event endpoint
