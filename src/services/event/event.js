@@ -51,6 +51,7 @@ export function makeAddEvent({ mockShopDb }) {
       event.image = res.secure_url || res.url;
     }
      event.date = new Date(event.date)
+     event.userId = userId
     return mockShopDb.insert(event);
   };
 }
