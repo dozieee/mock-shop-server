@@ -12,7 +12,7 @@ const deleteEvent = makeDeleteEvent({ mockShopDb });
 const editEvent = makeEditEvent({ mockShopDb });
 const getEvent = makeGetEvent({ mockShopDb, eventAttendanceDb });
 const getScheduledEvent = makeGetScheduledEvent({ mockShopDb, eventAttendanceDb });
-const getCompetedEvent = makeGetScheduledEvent({ mockShopDb, eventAttendanceDb });
+const getCompetedEvent = makeGetCompletedEvent({ mockShopDb, eventAttendanceDb });
 const getPaidEvent = makeGetPaidEvent({  mockShopDb, eventAttendanceDb })
 
 // the Service object
