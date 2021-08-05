@@ -13,7 +13,7 @@ export function makeAddEvent({ mockShopDb }) {
      if (!event.category) {
       throw new Error("you must provide category")
      }
-     if (event.paid) {
+     if (event.paid == true) {
       if (!event.ticket_type) {
         throw new Error("you must provide ticket_type")
        }
