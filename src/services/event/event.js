@@ -2,8 +2,11 @@
 import {fileUpload, dataUri, makeResponse} from '../../modules/image-upload'
 
 export function makeAddEvent({ mockShopDb }) {
-  return async function addEvent(req, { private: private_ = false,...event}) {
+  return async function addEvent(req, { event }) {
     // insert the new Event to the database
+    event = JSON.parse(event)
+    event.private = event.private ? event.private : false,
+    console.log(event)
     if (!event.name) {
      throw new Error("you must provide name")
     }
@@ -106,7 +109,7 @@ export function makeGetEvent({ mockShopDb, eventAttendanceDb }) {
     if (!event) {
       throw new Error("Event not found")
     }
-    const eventAtten =await  eventAttendanceDb.find({ eventId: event.id })
+    const eventAtten =await eventAttendanceDb.find({ eventId: event.id })
     event.eventAttendance = eventAtten
     return event;
   };
