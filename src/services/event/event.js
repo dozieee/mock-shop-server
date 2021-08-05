@@ -2,7 +2,7 @@
 import {fileUpload, dataUri, makeResponse} from '../../modules/image-upload'
 
 export function makeAddEvent({ mockShopDb }) {
-  return async function addEvent(req, { event }) {
+  return async function addEvent(req, { event, userId }) {
     // insert the new Event to the database
     event = JSON.parse(event)
     event.private = event.private ? event.private : false,
@@ -30,7 +30,7 @@ export function makeAddEvent({ mockShopDb }) {
       throw new Error("you must provide venue")
      }
 
-     if (!event.userId) {
+     if (!userId) {
       throw new Error("you must provide userId")
      }
      if (!event.tag) {
