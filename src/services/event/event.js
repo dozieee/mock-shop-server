@@ -92,6 +92,7 @@ export function makeEditEvent({ mockShopDb }) {
 }
 
 
+
 export function makeGetEvent({ mockShopDb, eventAttendanceDb }) {
   return async function getEvent({ userId, id }) {
     if (!id ) {
