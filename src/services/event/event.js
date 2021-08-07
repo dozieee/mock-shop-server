@@ -85,6 +85,7 @@ export function makeEditEvent({ mockShopDb }) {
    
     const updated = await mockShopDb.update({
       id,
+      ...existing,
       ...updatedInfo
     });
     return { updated, id };

@@ -170,6 +170,18 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
 }));
 
 
+
+// Resolve account details
+router.get('/web-hook', authMiddleware, makeCallBack(async(req) => {
+  try {
+    
+    return res({ status: 'success', data: null })
+  } catch (error) {
+    return res({ status: 'error', data: error.message }, 500)
+  }
+}));
+
+
 export default router;
 
 
