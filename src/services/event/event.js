@@ -95,7 +95,7 @@ export function makeEditEvent({ mockShopDb }) {
 export function makeGetEvent({ mockShopDb, eventAttendanceDb }) {
   return async function getEvent({ userId, id }) {
     if (!id ) {
-      const events = await mockShopDb.find({userId});      
+      const events = await mockShopDb.find({userId, date: { $eq: new Date() }});      
       const result = []
     for (let i = 0; i < events.length; i++) {
       const event = events[i];
@@ -109,7 +109,7 @@ export function makeGetEvent({ mockShopDb, eventAttendanceDb }) {
     if (!event) {
       throw new Error("Event not found")
     }
-    const eventAtten =await eventAttendanceDb.find({ eventId: event.id, date: { $eq: new Date() } })
+    const eventAtten =await eventAttendanceDb.find({ eventId: event.id })
     event.eventAttendance = eventAtten
     return event;
   };
