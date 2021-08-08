@@ -33,9 +33,6 @@ export function makeAddEvent({ mockShopDb }) {
      if (!userId) {
       throw new Error("you must provide userId")
      }
-     if (!event.tag) {
-      throw new Error("you must provide tag")
-     }
 
      event.image = process.env.DIMAGE
 
@@ -72,7 +69,7 @@ export function makeDeleteEvent({ mockShopDb }) {
 
 
 export function makeEditEvent({ mockShopDb }) {
-  return async function editEvent({ id, ...updatedInfo }) {
+  return async function editEvent(req, { id, ...updatedInfo }) {
     if (!id) {
       throw new Error(
         'you must provide the Event is of which you want to edit',
@@ -81,6 +78,18 @@ export function makeEditEvent({ mockShopDb }) {
     const existing = await mockShopDb.findById(id);
     if (!existing) {
       throw new Error('the Event you want to edit does not exist');
+    }
+
+    if (req && req.file) {
+      const file = dataUri(req);
+      // SAVES IMAGE TO CLOUDINARY
+      const res = await fileUpload(file);
+
+      if (!res) {
+        throw new Error("Imge not uploaded")
+      }
+      // delete prev borrower image
+      updatedInfo.image = res.secure_url || res.url;
     }
    
     const updated = await mockShopDb.update({
