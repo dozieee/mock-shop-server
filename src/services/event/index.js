@@ -9,7 +9,7 @@ import { makeAddEvent, makeDeleteEvent, makeEditEvent, makeGetEvent, makeGetPaid
 // build the services by passing the db interface to it
 const addEvent = makeAddEvent({ mockShopDb });
 const deleteEvent = makeDeleteEvent({ mockShopDb });
-const editEvent = makeEditEvent({ mockShopDb });
+const editEvent = makeEditEvent({ mockShopDb, eventAttendanceDb });
 const getEvent = makeGetEvent({ mockShopDb, eventAttendanceDb });
 const getScheduledEvent = makeGetScheduledEvent({ mockShopDb, eventAttendanceDb });
 const getCompetedEvent = makeGetCompletedEvent({ mockShopDb, eventAttendanceDb });

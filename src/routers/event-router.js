@@ -36,6 +36,7 @@ router.post(
 router.put(
   '/edit-event/:id',
   authMiddleware,
+  multerUploads.single('image'),
   makeCallBack(patchEvent),
 );
 // the delete Event endpoint

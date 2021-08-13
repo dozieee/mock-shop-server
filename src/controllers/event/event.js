@@ -231,7 +231,7 @@ export function makePatchEvent({ editEvent }) {
     try {
       const EventInfo = httpRequest.body;
       const { id } = httpRequest.params;
-      const updatedEvent = await editEvent({ id, ...EventInfo });
+      const updatedEvent = await editEvent(httpRequest.req, { id, ...EventInfo });
       return {
         headers: {
           'Content-Type': 'application/json',

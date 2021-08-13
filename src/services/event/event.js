@@ -1,5 +1,5 @@
 // Event entity
-import {fileUpload, dataUri, makeResponse} from '../../modules/image-upload'
+import {fileUpload, dataUri, makeResponse, deleteUpload} from '../../modules/image-upload'
 
 export function makeAddEvent({ mockShopDb }) {
   return async function addEvent(req, { event, userId }) {
@@ -68,7 +68,7 @@ export function makeDeleteEvent({ mockShopDb }) {
 }
 
 
-export function makeEditEvent({ mockShopDb }) {
+export function makeEditEvent({ mockShopDb, eventAttendanceDb }) {
   return async function editEvent(req, { id, ...updatedInfo }) {
     if (!id) {
       throw new Error(
@@ -78,6 +78,10 @@ export function makeEditEvent({ mockShopDb }) {
     const existing = await mockShopDb.findById(id);
     if (!existing) {
       throw new Error('the Event you want to edit does not exist');
+    }
+    const eventAtten =await eventAttendanceDb.find({ eventId: id })
+    if (eventAtten.length > 0) {
+      throw new Error("This Event can no longer be edited")
     }
 
     if (req && req.file) {
@@ -91,6 +95,8 @@ export function makeEditEvent({ mockShopDb }) {
       // delete prev borrower image
       updatedInfo.image = res.secure_url || res.url;
     }
+
+    deleteUpload(existing.image)
    
     const updated = await mockShopDb.update({
       id,
@@ -112,6 +118,7 @@ export function makeGetEvent({ mockShopDb, eventAttendanceDb }) {
       const event = events[i];
       const eventAtten =await  eventAttendanceDb.find({ eventId: event.id })
       event.eventAttendance = eventAtten
+      event.editable = eventAtten.length == 0
       result.push(event)
     }
     return result
@@ -122,6 +129,7 @@ export function makeGetEvent({ mockShopDb, eventAttendanceDb }) {
     }
     const eventAtten =await eventAttendanceDb.find({ eventId: event.id })
     event.eventAttendance = eventAtten
+    event.editable = eventAtten.length == 0
     return event;
   };
 }
@@ -137,6 +145,7 @@ export function makeGetActiveEvent({ mockShopDb, eventAttendanceDb }) {
       const event = events[i];
       const eventAtten = await  eventAttendanceDb.find({ eventId: event.id })
       event.eventAttendance = eventAtten
+      event.editable = eventAtten.length == 0
       result.push(event)
     }
     return result
@@ -151,6 +160,7 @@ export function makeGetScheduledEvent({ mockShopDb, eventAttendanceDb }) {
       const event = events[i];
       const eventAtten = await  eventAttendanceDb.find({ eventId: event.id })
       event.eventAttendance = eventAtten
+      event.editable = eventAtten.length == 0
       result.push(event)
     }
     return result
@@ -166,6 +176,7 @@ export function makeGetCompletedEvent({ mockShopDb, eventAttendanceDb }) {
       const event = events[i];
       const eventAtten = await  eventAttendanceDb.find({ eventId: event.id })
       event.eventAttendance = eventAtten
+      event.editable = eventAtten.length == 0
       result.push(event)
     }
     return result
