@@ -62,7 +62,7 @@ export function makeDeleteEvent({ mockShopDb }) {
       );
     }
     // destroy the Event with the id
-    const deleted = await mockShopDb.remove(id);
+    const deleted = await mockShopDb.remove({id});
     return { deleted, id };
   };
 }
