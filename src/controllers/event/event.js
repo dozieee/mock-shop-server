@@ -31,7 +31,7 @@ export function makeDeleteEvent({ deleteEvent }) {
   return async function(httpRequest) {
     try {
       const { id } = httpRequest.params;
-      const data = await deleteEvent(id);
+      const deleted = await deleteEvent(id);
       return {
         headers: {
           'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export function makeDeleteEvent({ deleteEvent }) {
         statusCode: deleted ? 200 : 404,
         body: {
           status: deleted ? 'success' : 'error',
-          data: data,
+          data: deleted,
         },
       };
     } catch (e) {
