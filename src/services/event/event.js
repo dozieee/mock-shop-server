@@ -98,6 +98,8 @@ export function makeEditEvent({ mockShopDb, eventAttendanceDb }) {
     }
 
     deleteUpload(existing.image)
+    
+    updatedInfo.date = updatedInfo.data ? new Date(updatedInfo) : existing.date
    
     const updated = await mockShopDb.update({
       id,
