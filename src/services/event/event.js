@@ -70,7 +70,7 @@ export function makeDeleteEvent({ mockShopDb }) {
 
 export function makeEditEvent({ mockShopDb, eventAttendanceDb }) {
   return async function editEvent(req, { id, event }) {
-    updatedInfo = JSON.parse(event)
+    const updatedInfo = JSON.parse(event)
     if (!id) {
       throw new Error(
         'you must provide the Event is of which you want to edit',
