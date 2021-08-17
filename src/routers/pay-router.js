@@ -172,9 +172,25 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
 
 
 // Resolve account details
-router.get('/web-hook', authMiddleware, makeCallBack(async(req) => {
+router.post('/web-hook', authMiddleware, makeCallBack(async(req) => {
   try {
-    
+    const { event, data} = req.body
+    if (event == 'charge.completed') {
+      console.log("Fluter wave ====> ", data)
+      const { tx_ref, status } = data
+      const eventAtten =await EventAttendanceDb.findById(tx_ref)
+      if (!eventAtten) {
+        return res({ status: 'success', data: null })
+      }
+      if (status !== 'successful') {
+        await EventAttendanceDb.update({ id: tx_ref, status: "FAILED" })
+      }
+      if (eventAtten.status !== 'PENDING') {
+        return res({ status: 'success', data: null })
+      }
+      await EventAttendanceDb.update({ id: tx_ref, status: "SUCCESS" })
+      // sendNotification({ event: "EVENT_REGISTRATION", data: { email: data.email, email2: event.email, name: data.firstName, event: { id: addEventAttend.id, event_name: event.name, description: event.description, category: event.category, paid: event.paid, venue: event.venue, date: event.date.toDateString(), ticket_name: data.ticket_type || 'Free', ticket_price:  `N${price}` || 'Free', ticket_count: data.number_of_ticket}} })
+    }
     return res({ status: 'success', data: null })
   } catch (error) {
     return res({ status: 'error', data: error.message }, 500)
