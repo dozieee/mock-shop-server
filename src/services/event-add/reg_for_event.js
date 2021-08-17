@@ -23,9 +23,8 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
      if (!data.number_of_ticket) {
       throw new Error("you must provide number_of_ticket") 
      }
-     if (!data.ticket_type) {
+     if (event.paid && !data.ticket_type) {
       throw new Error("you must provide ticket_type") 
-
      }
      
     const event  = await eventDb.findById(eventId)
