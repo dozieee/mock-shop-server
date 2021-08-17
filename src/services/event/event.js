@@ -51,10 +51,7 @@ export function makeAddEvent({ mockShopDb, userDB }) {
      event.date = new Date(event.date)
      event.userId = userId
      event.email = (await userDB.findById(userId).email)
-    if (!exist) {
-      throw new Error('Auth Failed');
-    }
-    return mockShopDb.insert(event);
+      return mockShopDb.insert(event);
   };
 }
 
