@@ -46,7 +46,7 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
       }
     }
 
-    if (!found) {
+    if (event.paid && !found) {
       throw new Error(`${data.ticket_type} is not a valid Ticket Type`)
     }
 
