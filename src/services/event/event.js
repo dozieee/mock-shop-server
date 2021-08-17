@@ -1,7 +1,7 @@
 // Event entity
 import {fileUpload, dataUri, makeResponse, deleteUpload} from '../../modules/image-upload'
 
-export function makeAddEvent({ mockShopDb }) {
+export function makeAddEvent({ mockShopDb, userDB }) {
   return async function addEvent(req, { event, userId }) {
     // insert the new Event to the database
     event = JSON.parse(event)
@@ -47,8 +47,13 @@ export function makeAddEvent({ mockShopDb }) {
       // delete prev borrower image
       event.image = res.secure_url || res.url;
     }
+    
      event.date = new Date(event.date)
      event.userId = userId
+     event.email = (await userDB.findById(userId).email)
+    if (!exist) {
+      throw new Error('Auth Failed');
+    }
     return mockShopDb.insert(event);
   };
 }

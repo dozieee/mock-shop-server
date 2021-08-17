@@ -21,32 +21,32 @@ function validatePassword(plainPassword, hash) {
 
 // login
 export function makeSignin({ mockShopDb, generateToken }) {
-  return async function login({ email, password }) {
+  return async function login({ email, password }, dont_send) {
     if (!email) {
       throw new Error('You must supply an Email');
     }
     if (!password) {
       throw new Error('You must supply a password');
     }
-    const exits = await mockShopDb.findByEmail(email);
-    if (!exits) {
+    const exist = await mockShopDb.findByEmail(email);
+    if (!exist) {
       throw new Error('Auth Failed');
     }
-    if (!validatePassword(password, exits.password)) {
+    if (!validatePassword(password, exist.password)) {
       throw new Error('Auth failed');
     }
     // generate the token plus other meta-data to be sent to the client
     const token = generateToken({
       payload: {
-        userId: exits.id,
-        isAdmin: exits.isAdmin,
+        userId: exist.id,
+        isAdmin: exist.isAdmin,
       },
     });
-    delete exits.password
+    delete exist.password
   
-    sendNotification({ event: "USER_SIGIN", data: { email} })
+    !dont_send && sendNotification({ event: "USER_SIGIN", data: { email, name: exist.firstName} })
 
-    return { token,  user: exits};
+    return { token,  user: exist};
   };
 }
 
@@ -76,8 +76,8 @@ export function makeSignup({ mockShopDb, signin }) {
       throw new Error("you must provide password") 
      }
      
-    const exit = await mockShopDb.findByEmail(userInfo.email);
-    if (exit) {
+    const exist = await mockShopDb.findByEmail(userInfo.email);
+    if (exist) {
       // this error message is delibrate
       throw new Error('Signup failed, You are already registered');
     }
@@ -86,8 +86,9 @@ export function makeSignup({ mockShopDb, signin }) {
     const password = userInfo.password
     userInfo.password = encryptPassword(userInfo.password)
     await mockShopDb.insert(userInfo);
+    sendNotification({ event: "USER_CREATION", data: { email, name: exist.name} })
     // could have run them in paralle but the user id is needed for the cart creation
-    return signin({ email: userInfo.email, password });
+    return signin({ email: userInfo.email, password }, true);
   };
 }
 
@@ -98,9 +99,9 @@ export function makeUpdate({ mockShopDb }) {
     if (!userId) {
       throw new Error('You must supply the userId');
     }
-    const exits = await mockShopDb.findById(userId);
-    if (!exits) {
-      throw new Error('user does not exit');
+    const exist = await mockShopDb.findById(userId);
+    if (!exist) {
+      throw new Error('user does not exist');
     }
 
     delete updateUser.password
@@ -115,11 +116,11 @@ export function makeGetProfile({ mockShopDb }){
     if (!userId) {
       throw new Error('You must supply the userId');
     }
-    const exits = await mockShopDb.findById(userId);
-    if (!exits) {
-      throw new Error('user does not exit');
+    const exist = await mockShopDb.findById(userId);
+    if (!exist) {
+      throw new Error('user does not exist');
     }
-    delete exits.password
-    return exits
+    delete exist.password
+    return exist
   }
 }

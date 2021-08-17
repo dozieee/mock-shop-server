@@ -1,7 +1,16 @@
 //
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+import { readFileSync } from 'fs';
+import { compile } from 'handlebars';
+import path from 'path';
+
 dotenv.config();
+
+
+const EVENT_REGISTRATION = 'EVENT_REGISTRATION'
+const USER_SIGIN = 'USER_SIGIN'
+const USER_CREATION = 'USER_CREATION'
 
 // send email api
 function sendEmail(data) {
@@ -33,6 +42,7 @@ function sendEmail(data) {
         reject(error);
         return;
       }
+      console.log("Email sent")
       resolve(email);
     });
   });
@@ -41,19 +51,31 @@ function sendEmail(data) {
 export function sendNotification(message, callback = () => {}) {
    const { event, data } = message;
    switch (event) {
-      case "EVENT_REGISTRATION":
+      case EVENT_REGISTRATION:
          (() => {
-            const { email } = data;
-            const emailData = { subject: 'Event Registration', to: email, text: '<h1>Template to be added here</h1>' };
+            const { email, email2, name, event: { id, event_name, description, category, paid, venue, date, ticket_name, ticket_price, ticket_count } } = data;
+            let emailData = { subject: 'Event Registration', to: email, text: getNotifyTemplate(event)({name, id, event_name, description, category, paid, venue, date, ticket_name, ticket_price, ticket_count}) };
+            sendEmail(emailData);
+            emailData = { subject: 'Event Registration', to: email2, text: getNotifyTemplate('EVENT_REGISTRATION_CREATOR')({id, event_name, ticket_name, ticket_price, ticket_count, paid}) };
             sendEmail(emailData);
             callback(null, true);
          })()
          break;
 
-      case "USER_SIGIN":
+      case USER_SIGIN:
          (() => {
-            const { email } = data;
-            const emailData = { subject: 'Login Action', to: email, text: '<h1>Template to be added here</h1>' };
+            //  TODO: add device info
+            const { email, name } = data;
+            const emailData = { subject: 'Login Action', to: email, text: getNotifyTemplate(event)({ email, name }) };
+            sendEmail(emailData);
+            callback(null, true);
+         })()
+         break;
+
+      case USER_CREATION:
+         (() => {
+            const { email, name } = data;
+            const emailData = { subject: 'Login Action', to: email, text: getNotifyTemplate(event)({ name, email }) };
             sendEmail(emailData);
             callback(null, true);
          })()
@@ -64,4 +86,23 @@ export function sendNotification(message, callback = () => {}) {
          callback(null, false);
          break;
    }
+}
+
+
+
+/**
+* getNotifyTemplate: MailTemplate
+*/
+function getNotifyTemplate(event) {
+    // wait-list
+    const user_sigin_html = readFileSync(path.resolve(__dirname, '..', 'template', `${USER_SIGIN}.html`), 'utf8');
+    const user_creation_html = readFileSync(path.resolve(__dirname, '..', 'template', `${USER_CREATION}.html`), 'utf8');
+    const event_reg = readFileSync(path.resolve(__dirname, '..', 'template', `${EVENT_REGISTRATION}.html`), 'utf8');
+    // Configure
+    const notifyTemplate = {
+       [USER_SIGIN]: compile(user_sigin_html),
+       [USER_CREATION]: compile(user_creation_html),
+       [EVENT_REGISTRATION]: compile(event_reg)
+    };
+  return notifyTemplate[event];
 }
