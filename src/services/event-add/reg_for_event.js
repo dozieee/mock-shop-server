@@ -62,7 +62,17 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
       creatorId: event.userId,
       paid: event.paid,
       metaDate: {
-        price
+        price,
+        event: {
+          email: event.email,
+          event_name: event.name, 
+          description: event.description, 
+          category: event.category, 
+          paid: event.paid, 
+          venue: event.venue, 
+          date: event.date.toDateString(), 
+          ticket_count: data.number_of_ticket
+        }
       }
     });
 

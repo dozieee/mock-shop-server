@@ -51,7 +51,7 @@ export function makeAddEvent({ mockShopDb, userDB }) {
      event.date = new Date(event.date)
      event.userId = userId
      event.email = (await userDB.findById(userId).email)
-      return mockShopDb.insert(event);
+    return mockShopDb.insert(event);
   };
 }
 
@@ -140,8 +140,8 @@ export function makeGetEvent({ mockShopDb, eventAttendanceDb }) {
 }
 
 export function makeGetActiveEvent({ mockShopDb, eventAttendanceDb }) {
-  return async function getEvent({ userId}) {
-      const events = await mockShopDb.find({userId, date: {
+  return async function getEvent(data) {
+      const events = await mockShopDb.find({...data, date: {
         $gte: new Date(new Date().setHours(0)),
         $lt: new Date(new Date().setHours(23))
     }});      
