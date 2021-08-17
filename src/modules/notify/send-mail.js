@@ -11,6 +11,7 @@ dotenv.config();
 const EVENT_REGISTRATION = 'EVENT_REGISTRATION'
 const USER_SIGIN = 'USER_SIGIN'
 const USER_CREATION = 'USER_CREATION'
+const EVENT_REGISTRATION_CREATOR = 'EVENT_REGISTRATION_CREATOR'
 
 // send email api
 function sendEmail(data) {
@@ -57,7 +58,7 @@ export function sendNotification(message, callback = () => {}) {
             const { email, email2, name, event: { id, event_name, description, category, paid, venue, date, ticket_name, ticket_price, ticket_count } } = data;
             let emailData = { subject: 'Event Registration', to: email, text: getNotifyTemplate(event)({name, id, event_name, description, category, paid, venue, date, ticket_name, ticket_price, ticket_count}) };
             sendEmail(emailData);
-            emailData = { subject: 'Someone Just Registered', to: email2, text: getNotifyTemplate('EVENT_REGISTRATION_CREATOR')({id, event_name, ticket_name, ticket_price, ticket_count, paid}) };
+            emailData = { subject: 'Someone Just Registered', to: email2, text: getNotifyTemplate(EVENT_REGISTRATION_CREATOR)({id, event_name, ticket_name, ticket_price, ticket_count, paid}) };
             sendEmail(emailData);
             callback(null, true);
          })()
@@ -99,11 +100,13 @@ function getNotifyTemplate(event) {
     const user_sigin_html = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${USER_SIGIN}.html`), 'utf8');
     const user_creation_html = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${USER_CREATION}.html`), 'utf8');
     const event_reg = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${EVENT_REGISTRATION}.html`), 'utf8');
+    const event_reg_creator = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${EVENT_REGISTRATION_CREATOR}.html`), 'utf8');
     // Configure
     const notifyTemplate = {
        [USER_SIGIN]: compile(user_sigin_html),
        [USER_CREATION]: compile(user_creation_html),
-       [EVENT_REGISTRATION]: compile(event_reg)
+       [EVENT_REGISTRATION]: compile(event_reg),
+       [EVENT_REGISTRATION_CREATOR]: compile(event_reg_creator)
     };
   return notifyTemplate[event];
 }
