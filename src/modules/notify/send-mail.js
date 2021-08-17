@@ -95,9 +95,9 @@ export function sendNotification(message, callback = () => {}) {
 */
 function getNotifyTemplate(event) {
     // wait-list
-    const user_sigin_html = readFileSync(path.resolve(__dirname, '..', 'template', `${USER_SIGIN}.html`), 'utf8');
-    const user_creation_html = readFileSync(path.resolve(__dirname, '..', 'template', `${USER_CREATION}.html`), 'utf8');
-    const event_reg = readFileSync(path.resolve(__dirname, '..', 'template', `${EVENT_REGISTRATION}.html`), 'utf8');
+    const user_sigin_html = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${USER_SIGIN}.html`), 'utf8');
+    const user_creation_html = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${USER_CREATION}.html`), 'utf8');
+    const event_reg = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${EVENT_REGISTRATION}.html`), 'utf8');
     // Configure
     const notifyTemplate = {
        [USER_SIGIN]: compile(user_sigin_html),
