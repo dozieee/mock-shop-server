@@ -53,6 +53,7 @@ export function sendNotification(message, callback = () => {}) {
    switch (event) {
       case EVENT_REGISTRATION:
          (() => {
+           console.log("Mail block == > ",data)
             const { email, email2, name, event: { id, event_name, description, category, paid, venue, date, ticket_name, ticket_price, ticket_count } } = data;
             let emailData = { subject: 'Event Registration', to: email, text: getNotifyTemplate(event)({name, id, event_name, description, category, paid, venue, date, ticket_name, ticket_price, ticket_count}) };
             sendEmail(emailData);
