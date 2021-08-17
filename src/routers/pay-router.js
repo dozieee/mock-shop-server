@@ -172,7 +172,7 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
 
 
 // Resolve account details
-router.post('/web-hook', authMiddleware, makeCallBack(async(req) => {
+router.post('/web-hook', makeCallBack(async(req) => {
   try {
     const { event, data} = req.body
     if (event == 'charge.completed') {
