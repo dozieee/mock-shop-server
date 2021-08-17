@@ -50,7 +50,7 @@ export function makeAddEvent({ mockShopDb, userDB }) {
     
      event.date = new Date(event.date)
      event.userId = userId
-     event.email = (await userDB.findById(userId).email)
+     event.email = (await userDB.findById(userId)).email
     return mockShopDb.insert(event);
   };
 }
