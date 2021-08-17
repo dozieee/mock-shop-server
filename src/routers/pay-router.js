@@ -4,6 +4,7 @@ var axios = require('axios');
 const router = Router();
 import makeMockShop from '../data-access';
 // make the UserDb specific to this service
+import { sendNotification } from '../modules/notify/send-mail'
 const UserDb = makeMockShop({ modelName: 'User' });
 const EventAttendanceDb = makeMockShop({ modelName: 'EventAttendance' });
 // auth middleware
