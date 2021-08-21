@@ -20,7 +20,7 @@ function validatePassword(plainPassword, hash) {
 }
 
 // login
-export function makeSignin({ mockShopDb, generateToken }) {
+export function makeSignin({ userDB, generateToken }) {
   return async function login({ email, password }, dont_send) {
     if (!email) {
       throw new Error('You must supply an Email');
@@ -28,7 +28,7 @@ export function makeSignin({ mockShopDb, generateToken }) {
     if (!password) {
       throw new Error('You must supply a password');
     }
-    const exist = await mockShopDb.findByEmail(email);
+    const exist = await userDB.findByEmail(email);
     if (!exist) {
       throw new Error('Auth Failed');
     }
@@ -51,11 +51,11 @@ export function makeSignin({ mockShopDb, generateToken }) {
 }
 
 // logout => this will be out in version 2
-// export function makeLogout({ mockShopDb }) {}
+// export function makeLogout({ userDB }) {}
 
 // this is responsible for the user signup
 // take in the login funtion as dependency, it make use of this to log the user in as soon as the user sigup is done
-export function makeSignup({ mockShopDb, signin }) {
+export function makeSignup({ userDB, signin }) {
   return async function signup(userInfo) {
     if (!userInfo.firstName) {
       throw new Error("you must provide firstName") 
@@ -76,7 +76,7 @@ export function makeSignup({ mockShopDb, signin }) {
       throw new Error("you must provide password") 
      }
      
-    const exist = await mockShopDb.findByEmail(userInfo.email);
+    const exist = await userDB.findByEmail(userInfo.email);
     if (exist) {
       // this error message is delibrate
       throw new Error('Signup failed, You are already registered');
@@ -85,7 +85,7 @@ export function makeSignup({ mockShopDb, signin }) {
     userInfo.isAdmin = false
     const password = userInfo.password
     userInfo.password = encryptPassword(userInfo.password)
-    await mockShopDb.insert(userInfo);
+    await userDB.insert(userInfo);
     sendNotification({ event: "USER_CREATION", data: { email, name: exist.name} })
     // could have run them in paralle but the user id is needed for the cart creation
     return signin({ email: userInfo.email, password }, true);
@@ -94,33 +94,74 @@ export function makeSignup({ mockShopDb, signin }) {
 
 
 // login
-export function makeUpdate({ mockShopDb }) {
+export function makeUpdate({ userDB }) {
   return async function update({ userId, ...updateUser }) {
     if (!userId) {
       throw new Error('You must supply the userId');
     }
-    const exist = await mockShopDb.findById(userId);
+    const exist = await userDB.findById(userId);
     if (!exist) {
       throw new Error('user does not exist');
     }
 
     delete updateUser.password
     delete updateUser.email
-    const update = await mockShopDb.update({ id: userId, ...updateUser })
+    const update = await userDB.update({ id: userId, ...updateUser })
     return update;
   };
 }
 
-export function makeGetProfile({ mockShopDb }){
+export function makeGetProfile({ userDB }){
   return async function getProfile({ userId }) {
     if (!userId) {
       throw new Error('You must supply the userId');
     }
-    const exist = await mockShopDb.findById(userId);
+    const exist = await userDB.findById(userId);
     if (!exist) {
       throw new Error('user does not exist');
     }
     delete exist.password
     return exist
   }
+}
+
+
+
+export function makeForgetPassoword({ userDB }){
+  return async function ({ email }) {
+    if (!email) {
+      throw new Error('You must supply the email');
+    }
+    const exist = await userDB.find({ email });
+    if (!exist) {
+      return { message: "Please check your email" }
+    }
+    sendNotification({ event: "FORGET_PASSWORD", data: { email, name: exist.name, token: exist.id} })
+
+    return { message: "Please check your email" }
+  }
+}
+
+
+// take in the login funtion as dependency, it make use of this to log the user in as soon as the user sigup is done
+export function makeForgetPassowordConfirm({ userDB }) {
+  return async function ({ token, new_password }) {
+    if (!new_password) {
+      throw new Error("you must provide new password") 
+     }
+     if (!token) {
+      throw new Error("you must provide token") 
+     }
+     
+    const exist = await userDB.findById();
+    if (!exist) {
+      // this error message is delibrate
+      throw new Error('You link has expired');
+    }
+
+    const password = encryptPassword(new_password)
+    await userDB.update({ id: token, password  });
+    
+    return { message: "Password reset successful, you can login with you new password" }
+  };
 }

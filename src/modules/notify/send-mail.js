@@ -12,6 +12,7 @@ const EVENT_REGISTRATION = 'EVENT_REGISTRATION'
 const USER_SIGIN = 'USER_SIGIN'
 const USER_CREATION = 'USER_CREATION'
 const EVENT_REGISTRATION_CREATOR = 'EVENT_REGISTRATION_CREATOR'
+const FORGET_PASSWORD = 'FORGET_PASSWORD'
 
 // send email api
 function sendEmail(data) {
@@ -74,6 +75,17 @@ export function sendNotification(message, callback = () => {}) {
          })()
          break;
 
+      case FORGET_PASSWORD:
+         (() => {
+            //  TODO: add device info
+            const { email, name, token } = data;
+            const link = `https://appiplace.me/reset/?token=${token}&name=${name}`
+            const emailData = { subject: 'Forgot Password', to: email, text: getNotifyTemplate(event)({ email, name, link }) };
+            sendEmail(emailData);
+            callback(null, true);
+         })()
+         break;
+
       case USER_CREATION:
          (() => {
             const { email, name } = data;
@@ -101,12 +113,14 @@ function getNotifyTemplate(event) {
     const user_creation_html = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${USER_CREATION}.html`), 'utf8');
     const event_reg = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${EVENT_REGISTRATION}.html`), 'utf8');
     const event_reg_creator = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${EVENT_REGISTRATION_CREATOR}.html`), 'utf8');
+    const forgot_password = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${FORGET_PASSWORD}.html`), 'utf8');
     // Configure
     const notifyTemplate = {
        [USER_SIGIN]: compile(user_sigin_html),
        [USER_CREATION]: compile(user_creation_html),
        [EVENT_REGISTRATION]: compile(event_reg),
-       [EVENT_REGISTRATION_CREATOR]: compile(event_reg_creator)
+       [EVENT_REGISTRATION_CREATOR]: compile(event_reg_creator),
+       [FORGET_PASSWORD]: compile(forgot_password)
     };
   return notifyTemplate[event];
 }

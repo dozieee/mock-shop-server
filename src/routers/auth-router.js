@@ -5,7 +5,7 @@ const router = Router();
 import makeCallBack from '../express-callback';
 // the controllers
 import authController from '../controllers/user';
-const { signin, signup, update , getProfile} = authController;
+const { signin, signup, update , getProfile, forgetPasswordConfirm, forgetPassword} = authController;
 // auth middleware
 import { authMiddleware } from '../middlewares';
 // the endpoints
@@ -23,5 +23,7 @@ router.post('/signin', makeCallBack(signin));
 // 
 router.post('/update-profile', authMiddleware, makeCallBack(update));
 router.get('/get-profile', authMiddleware, makeCallBack(getProfile));
+router.post('/forgot-password', makeCallBack(forgetPassword));
+router.post('/forgot-password-confirm', makeCallBack(forgetPasswordConfirm));
 
 export default router;
