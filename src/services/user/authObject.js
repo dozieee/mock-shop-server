@@ -152,8 +152,12 @@ export function makeForgetPassowordConfirm({ userDB }) {
      if (!token) {
       throw new Error("you must provide token") 
      }
+
+     if (new_password.length < 8) {
+       throw new Error("Password must be more than 8 char")
+     }
      
-    const exist = await userDB.findById();
+    const exist = await userDB.findById(token);
     if (!exist) {
       // this error message is delibrate
       throw new Error('You link has expired');
