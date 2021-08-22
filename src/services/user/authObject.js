@@ -134,11 +134,11 @@ export function makeForgetPassoword({ userDB }){
     }
     const exist = await userDB.find({ email });
     if (!exist) {
-      return { message: "Please check your email" }
+      return { message: "We've sent you an email please check your inbox to proceed" }
     }
     sendNotification({ event: "FORGET_PASSWORD", data: { email, name: exist.name, token: exist.id} })
 
-    return { message: "Please check your email" }
+    return { message: "We've sent you an email please check your inbox to proceed" }
   }
 }
 

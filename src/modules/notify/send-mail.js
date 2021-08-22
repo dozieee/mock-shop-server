@@ -28,6 +28,15 @@ function sendEmail(data) {
         pass: process.env.PASS,
       },
     };
+   // var smtpConfig = {
+   //    host: 'mail.privateemail.com',
+   //    post: 465,
+   //    secure: true,
+   //    auth: {
+   //      user: process.env.EMAIL,
+   //      pass: process.env.PASS,
+   //    },
+   //  };
     // email object
     var email = {
       from: `"AppiPlace" ${process.env.EMAIL}`,

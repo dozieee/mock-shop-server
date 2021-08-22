@@ -9,6 +9,7 @@ export default function buildMakeDb({ makeDb}) {
       update, //update the data
       insert, //insert data to the db
       remove, // remove data from the db
+      updateMany
     });
     async function find (query = {}) {
       const db = await makeDb();
@@ -60,6 +61,13 @@ export default function buildMakeDb({ makeDb}) {
       const result = await db
         .collection(modelName)
         .updateOne({ _id }, { $set: { ...commentInfo } });
+      return result.modifiedCount > 0 ? { id: _id, ...commentInfo } : null;
+    }
+    async function updateMany (query, { ...commentInfo }) {
+      const db = await makeDb();
+      const result = await db
+        .collection(modelName)
+        .updateMany(query, { $set: { ...commentInfo } });
       return result.modifiedCount > 0 ? { id: _id, ...commentInfo } : null;
     }
     async function remove ({ id: _id }) {

@@ -1,5 +1,6 @@
 // the cart router
 import { Router } from 'express';
+import Id from '../modules/id'
 var axios = require('axios');
 const router = Router();
 import makeMockShop from '../data-access';
@@ -71,7 +72,7 @@ router.post('/resolve-banks', makeCallBack(async(req) => {
     const response = await axios(options);
     const body_ = response.data
 
-    if (body.status >= 300) {
+    if (response.status >= 300) {
       return res({ status: 'error', data: null }, 400)
     }
 
@@ -134,8 +135,25 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
       return res({ status: 'error', data: 'User does not exit' }, 400)
     }
 
+    const event = await mockShopDb.find({id: evenId, paid: true});      
+    if (!event) {
+      throw new Error("Event does not exist")
+    }
+    let totalPrice = 0
+    const paymentSuccessStatus = 'SUCCESS'
+    const eventAtten = await  eventAttendanceDb.find({ eventId: evenId, claimed: false, paid: true, status: paymentSuccessStatus})
+    eventAtten.forEach(element => {
+      if (element) {
+        totalPrice += element.metaDate.price
+      }
+    });
+
+    const rate = 0.045
+    const amount = totalPrice - (totalPrice * rate)
+
     const sec_key = process.env.SEC_KEY
     const base = process.env.BASE_API_URL_PAYSTACK
+    const reference = Id.makeId()
     var options = {
       'method': 'POST',
       'url': `${base}/transfers`,
@@ -144,25 +162,25 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
         'Authorization': `Bearer ${sec_key}`
       },
       data: {
-        "account_bank": "044",
-        "account_number": "0690000040",
-        "amount": 5500,
-        "narration": "Akhlm Pstmn Trnsfr xx007",
+        "account_bank": user.account_details.account_bank,
+        "account_number": user.account_details.account_number,
+        "amount": amount,
+        "narration": "Appiplace Payout " + reference,
         "currency": "NGN",
-        "reference": "akhlm-pstmnpyt-rfxx007_PMCKDU_1",
-        "callback_url": "https://webhook.site/b3e505b0-fe02-430e-a538-22bbbce8ce0d",
+        "reference": reference,
         "debit_currency": "NGN"
       }
     };
-    // const response = await axios(options);
-    // const body_ = response.data
+    console.log('Payout', options)
+    const response = await axios(options);
+    const body = response.data
+    console.log(body)
 
-    // if (body.status >= 300) {
-    //   return res({ status: 'error', data: null }, 400)
-    // }
+    if (response.status >= 300) {
+      return res({ status: 'error', data: null }, 400)
+    }
 
-    // const account_details = {...body_.data, account_bank: body.account_bank}
-    // await UserDb.update({ id: userId, account_details })
+    await UserDb.updateMany({eventId: evenId},{ claimed: true})
     // TODO: send email notification
     return res({ status: 'success', data: "Pay out Imitated For You" })
   } catch (error) {
