@@ -86,7 +86,7 @@ export function makeSignup({ userDB, signin }) {
     const password = userInfo.password
     userInfo.password = encryptPassword(userInfo.password)
     await userDB.insert(userInfo);
-    sendNotification({ event: "USER_CREATION", data: { email: userInfo.email, name: exist.name} })
+    sendNotification({ event: "USER_CREATION", data: { email: userInfo.email, name: userInfo.firstName} })
     // could have run them in paralle but the user id is needed for the cart creation
     return signin({ email: userInfo.email, password }, true);
   };
