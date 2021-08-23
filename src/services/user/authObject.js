@@ -77,7 +77,7 @@ export function makeSignup({ userDB, signin }) {
      }
      
     const exist = await userDB.findByEmail(userInfo.email);
-    if (exist) {
+    if (!exist) {
       // this error message is delibrate
       throw new Error('Signup failed, You are already registered');
     }
