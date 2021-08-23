@@ -73,3 +73,25 @@ export function authMiddleware(req, res, next) {
       .end();
   }
 }
+
+
+export function FOGRTMiddleware(req, res, next) {
+  // extract the token
+  const auth = req.get('Authorization');
+  const token = auth && auth.split(' ')[1];
+  if (!token) {
+    // respond with an error message if an error occured
+    res.type('json');
+    res
+      .status(401)
+      .send({
+        status: 'error',
+        error:
+          'Not authorized to make this request, token is invalid or expired',
+      })
+      .end();
+    return;
+  }
+  req.body.token = token
+  next() 
+}
