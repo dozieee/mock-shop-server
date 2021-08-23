@@ -132,7 +132,7 @@ export function makeForgetPassoword({ userDB }){
     if (!email) {
       throw new Error('You must supply the email');
     }
-    const exist = await userDB.find({ email });
+    const [exist] = await userDB.find({ email });
     if (!exist) {
       return { message: "We've sent you an email please check your inbox to proceed" }
     }
