@@ -18,25 +18,25 @@ const FORGET_PASSWORD = 'FORGET_PASSWORD'
 function sendEmail(data) {
   return new Promise((resolve, reject) => {
     const { subject, to, text } = data;
-    var smtpConfig = {
-      service: 'Gmail',
-      host: 'smtp.gmail.com',
-      post: 587,
-      secure: false,
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASS,
-      },
-    };
-   // var smtpConfig = {
-   //    host: 'mail.privateemail.com',
-   //    post: 465,
-   //    secure: true,
+   //  var smtpConfig = {
+   //    service: 'Gmail',
+   //    host: 'smtp.gmail.com',
+   //    post: 587,
+   //    secure: false,
    //    auth: {
    //      user: process.env.EMAIL,
    //      pass: process.env.PASS,
    //    },
    //  };
+   var smtpConfig = {
+      host: 'mail.privateemail.com',
+      post: 465,
+      secure: true,
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASS,
+      },
+    };
     // email object
     var email = {
       from: `"AppiPlace" ${process.env.EMAIL}`,
