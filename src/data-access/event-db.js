@@ -68,7 +68,7 @@ export default function buildMakeDb({ makeDb}) {
       const result = await db
         .collection(modelName)
         .updateMany(query, { $set: { ...commentInfo } });
-      return result.modifiedCount > 0 ? { id: _id, ...commentInfo } : null;
+      return result.modifiedCount > 0 ? { ...commentInfo } : null;
     }
     async function remove ({ id: _id }) {
       const db = await makeDb();

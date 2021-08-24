@@ -181,7 +181,7 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
       return res({ status: 'error', data: null }, 400)
     }
 
-    await UserDb.updateMany({eventId: evenId},{ claimed: true})
+    await EventAttendanceDb.updateMany({eventId: evenId},{ claimed: true})
     // TODO: send email notification
     return res({ status: 'success', data: "Pay out Imitated For You" })
   } catch (error) {
