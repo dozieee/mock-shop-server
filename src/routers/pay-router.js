@@ -125,7 +125,7 @@ router.post('/add-bank', authMiddleware, makeCallBack(async(req) => {
 router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
   try {
     const userId = req.authObject.userId;
-    const evenId = req.authObject.evenId;
+    const evenId = req.params.evenId;
 
     if (!userId) {
       return res({ status: 'error', data: "You must provide the User Id" }, 400)
@@ -136,7 +136,7 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
       return res({ status: 'error', data: 'User does not exit' }, 400)
     }
 
-    const event = await EventDb.find({id: evenId, paid: true});      
+    const [event] = await EventDb.find({_id: evenId, paid: true});      
     if (!event) {
       throw new Error("Event does not exist")
     }
