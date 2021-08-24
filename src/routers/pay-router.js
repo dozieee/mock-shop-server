@@ -142,7 +142,7 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
     }
     let totalPrice = 0
     const paymentSuccessStatus = 'SUCCESS'
-    const eventAtten = await  eventAttendanceDb.find({ eventId: evenId, claimed: false, paid: true, status: paymentSuccessStatus})
+    const eventAtten = await EventAttendanceDb.find({ eventId: evenId, claimed: false, paid: true, status: paymentSuccessStatus})
     eventAtten.forEach(element => {
       if (element) {
         totalPrice += element.metaDate.price
