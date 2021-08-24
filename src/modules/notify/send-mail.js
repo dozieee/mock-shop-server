@@ -13,6 +13,7 @@ const USER_SIGIN = 'USER_SIGIN'
 const USER_CREATION = 'USER_CREATION'
 const EVENT_REGISTRATION_CREATOR = 'EVENT_REGISTRATION_CREATOR'
 const FORGET_PASSWORD = 'FORGET_PASSWORD'
+const FORGET_PASSWORD_CONFIRMATION = 'FORGET_PASSWORD_CONFIRMATION'
 
 // send email api
 function sendEmail(data) {
@@ -104,6 +105,15 @@ export function sendNotification(message, callback = () => {}) {
          })()
          break;
 
+      case FORGET_PASSWORD_CONFIRMATION:
+         (() => {
+            const { email, name } = data;
+            const emailData = { subject: 'Password Reset', to: email, text: getNotifyTemplate(event)({ name }) };
+            sendEmail(emailData);
+            callback(null, true);
+         })()
+         break;
+
       default:
          console.log('Not a registered event');
          callback(null, false);
@@ -123,13 +133,15 @@ function getNotifyTemplate(event) {
     const event_reg = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${EVENT_REGISTRATION}.html`), 'utf8');
     const event_reg_creator = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${EVENT_REGISTRATION_CREATOR}.html`), 'utf8');
     const forgot_password = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${FORGET_PASSWORD}.html`), 'utf8');
+    const forgot_password_confirm = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${FORGET_PASSWORD_CONFIRMATION}.html`), 'utf8');
     // Configure
     const notifyTemplate = {
        [USER_SIGIN]: compile(user_sigin_html),
        [USER_CREATION]: compile(user_creation_html),
        [EVENT_REGISTRATION]: compile(event_reg),
        [EVENT_REGISTRATION_CREATOR]: compile(event_reg_creator),
-       [FORGET_PASSWORD]: compile(forgot_password)
+       [FORGET_PASSWORD]: compile(forgot_password),
+       [FORGET_PASSWORD_CONFIRMATION]: compile(forgot_password_confirm)
     };
   return notifyTemplate[event];
 }

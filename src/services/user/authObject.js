@@ -165,7 +165,7 @@ export function makeForgetPassowordConfirm({ userDB }) {
 
     const password = encryptPassword(new_password)
     await userDB.update({ id: token, password  });
-    
+    sendNotification({ event: "FORGET_PASSWORD_CONFIRMATION", data: { email: exist.email, name: exist.firstName} })
     return { message: "Password reset successful, you can login with you new password" }
   };
 }
