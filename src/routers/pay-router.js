@@ -183,7 +183,7 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
 
     await EventAttendanceDb.updateMany({eventId: evenId},{ claimed: true})
     // TODO: send email notification
-    return res({ status: 'success', data: "Pay out Imitated For You" })
+    return res({ status: 'success', data: "Pay out Imitated For You, Your account will be credited within 24hrs" })
   } catch (error) {
     console.log(error)
     return res({ status: 'error', data: error.message }, 500)
