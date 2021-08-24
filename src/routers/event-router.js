@@ -57,4 +57,23 @@ router.get(
   makeCallBack(getEventReg),
 );
 
+// Resolve account details
+router.post('/event-category', makeCallBack(async(req) => {
+  try {
+    const categoryTicket = [
+      "Media and Entertainment",
+      "Technology and Science",
+      "Religion",
+      "Health and Wellness",
+      "Business and Professional",
+      "Sales and Discount",
+      'Others'
+    ];
+    return res({ status: 'success', data: categoryTicket })
+  } catch (error) {
+    return res({ status: 'error', data: error.message }, 500)
+  }
+}));
+
+
 export default router;

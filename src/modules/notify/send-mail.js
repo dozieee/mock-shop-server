@@ -40,11 +40,11 @@ function sendEmail(data) {
     // email object
     var email = {
       from: `"AppiPlace" ${process.env.EMAIL}`,
-      bcc: to,
+      to: to,
       subject: subject,
       text: 'FROM AppiPlace NOTIFICATION SERVICE',
       html: text,
-      cc: '*******',
+      // cc: '*******', 
     };
     const transporter = nodemailer.createTransport(smtpConfig);
     transporter.sendMail(email, function (error, info) {
