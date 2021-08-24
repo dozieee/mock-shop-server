@@ -185,6 +185,7 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
     // TODO: send email notification
     return res({ status: 'success', data: "Pay out Imitated For You" })
   } catch (error) {
+    console.log(error)
     return res({ status: 'error', data: error.message }, 500)
   }
 }));
