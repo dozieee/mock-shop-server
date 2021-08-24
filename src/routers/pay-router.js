@@ -8,6 +8,7 @@ import makeMockShop from '../data-access';
 import { sendNotification } from '../modules/notify/send-mail'
 const UserDb = makeMockShop({ modelName: 'User' });
 const EventAttendanceDb = makeMockShop({ modelName: 'EventAttendance' });
+const EventDb = makeMockShop({ modelName: 'Event' });
 // auth middleware
 import {  authMiddleware } from '../middlewares';
 // the make express callback
@@ -135,7 +136,7 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
       return res({ status: 'error', data: 'User does not exit' }, 400)
     }
 
-    const event = await mockShopDb.find({id: evenId, paid: true});      
+    const event = await EventDb.find({id: evenId, paid: true});      
     if (!event) {
       throw new Error("Event does not exist")
     }
