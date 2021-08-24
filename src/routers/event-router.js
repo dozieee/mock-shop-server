@@ -58,7 +58,7 @@ router.get(
 );
 
 // Resolve account details
-router.post('/event-category', makeCallBack(async(req) => {
+router.get('/category', makeCallBack(async(req) => {
   try {
     const categoryTicket = [
       "Media and Entertainment",
@@ -77,3 +77,14 @@ router.post('/event-category', makeCallBack(async(req) => {
 
 
 export default router;
+
+
+function res(body, status = 200) {
+  return {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    statusCode: status,
+    body
+  }
+}
