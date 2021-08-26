@@ -28,6 +28,10 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
      if (event.paid && !data.ticket_type) {
       throw new Error("you must provide ticket_type") 
      }
+     if (new Date() > new Date(event.date)) {
+       throw new Error("You can not register for an already completed event.")
+     }
+
     let found = false
 
     if (!event) {

@@ -137,6 +137,7 @@ export function makeGetEvent({ mockShopDb, eventAttendanceDb }) {
     }
     const eventAtten =await eventAttendanceDb.find({ eventId: event.id })
     event.eventAttendance = eventAtten
+    event.completed = new Date() > new Date(event.date)
     event.editable = eventAtten.length == 0
     return event;
   };
