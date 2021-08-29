@@ -67,7 +67,7 @@ export function sendNotification(message, callback = () => {}) {
          (() => {
            console.log("Mail block == > ",data)
             const { email, email2, name, event: { id, event_name, description, category, paid, venue, date, ticket_name, ticket_price, ticket_count } } = data;
-            let emailData = { subject: 'Event Registration', to: email, text: getNotifyTemplate(event)({name, id, event_name, description, category, paid, venue, date, ticket_name, ticket_price, ticket_count}) };
+            let emailData = { subject: 'Event Registration', to: email, text: getNotifyTemplate(event)({name, id, event_name, description, category, paid, venue, date, ticket_name, ticket_price, ticket_count, email: email2}) };
             sendEmail(emailData);
             emailData = { subject: 'Someone Just Registered', to: email2, text: getNotifyTemplate(EVENT_REGISTRATION_CREATOR)({id, event_name, ticket_name, ticket_price, ticket_count, paid}) };
             sendEmail(emailData);
