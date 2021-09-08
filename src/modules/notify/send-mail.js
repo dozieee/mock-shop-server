@@ -14,6 +14,7 @@ const USER_CREATION = 'USER_CREATION'
 const EVENT_REGISTRATION_CREATOR = 'EVENT_REGISTRATION_CREATOR'
 const FORGET_PASSWORD = 'FORGET_PASSWORD'
 const FORGET_PASSWORD_CONFIRMATION = 'FORGET_PASSWORD_CONFIRMATION'
+const EVENT_REMINDER = 'EVENT_REMINDER'
 
 // send email api
 function sendEmail(data) {
@@ -75,6 +76,16 @@ export function sendNotification(message, callback = () => {}) {
          })()
          break;
 
+      case EVENT_REMINDER:
+         (() => {
+            console.log("Mail block == > ",data)
+            const { email, name, event: { id, event_name, email2, description, category, paid, venue, date, ticket_name, ticket_price, ticket_count } } = data;
+            let emailData = { subject: 'Event Reminder', to: email, text: getNotifyTemplate(event)({name, id, event_name, description, category, paid, venue, date, ticket_name, ticket_price, ticket_count, email: email2}) };
+            sendEmail(emailData);
+            callback(null, true);
+         })()
+      break;
+
       case USER_SIGIN:
          (() => {
             //  TODO: add device info
@@ -127,21 +138,29 @@ export function sendNotification(message, callback = () => {}) {
 * getNotifyTemplate: MailTemplate
 */
 function getNotifyTemplate(event) {
-    // wait-list
-    const user_sigin_html = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${USER_SIGIN}.html`), 'utf8');
-    const user_creation_html = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${USER_CREATION}.html`), 'utf8');
-    const event_reg = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${EVENT_REGISTRATION}.html`), 'utf8');
-    const event_reg_creator = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${EVENT_REGISTRATION_CREATOR}.html`), 'utf8');
-    const forgot_password = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${FORGET_PASSWORD}.html`), 'utf8');
-    const forgot_password_confirm = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${FORGET_PASSWORD_CONFIRMATION}.html`), 'utf8');
-    // Configure
-    const notifyTemplate = {
-       [USER_SIGIN]: compile(user_sigin_html),
-       [USER_CREATION]: compile(user_creation_html),
-       [EVENT_REGISTRATION]: compile(event_reg),
-       [EVENT_REGISTRATION_CREATOR]: compile(event_reg_creator),
-       [FORGET_PASSWORD]: compile(forgot_password),
-       [FORGET_PASSWORD_CONFIRMATION]: compile(forgot_password_confirm)
-    };
-  return notifyTemplate[event];
+  try {
+     // wait-list
+     const user_sigin_html = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${USER_SIGIN}.html`), 'utf8');
+     const user_creation_html = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${USER_CREATION}.html`), 'utf8');
+     const event_reg = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${EVENT_REGISTRATION}.html`), 'utf8');
+     const event_reg_creator = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${EVENT_REGISTRATION_CREATOR}.html`), 'utf8');
+     const forgot_password = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${FORGET_PASSWORD}.html`), 'utf8');
+     const forgot_password_confirm = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${FORGET_PASSWORD_CONFIRMATION}.html`), 'utf8');
+     const event_reminder = readFileSync(path.resolve(__dirname, '..', '..', '..', 'template', `${EVENT_REMINDER}.html`), 'utf8');
+     // Configure
+     const notifyTemplate = {
+        [USER_SIGIN]: compile(user_sigin_html),
+        [USER_CREATION]: compile(user_creation_html),
+        [EVENT_REGISTRATION]: compile(event_reg),
+        [EVENT_REGISTRATION_CREATOR]: compile(event_reg_creator),
+        [FORGET_PASSWORD]: compile(forgot_password),
+        [FORGET_PASSWORD_CONFIRMATION]: compile(forgot_password_confirm),
+        [EVENT_REMINDER]: compile(event_reminder)
+     };
+
+   return notifyTemplate[event];
+  } catch (error) {
+     console.log(error)
+     return {}
+  }
 }
