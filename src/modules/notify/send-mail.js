@@ -20,28 +20,25 @@ const EVENT_REMINDER = 'EVENT_REMINDER'
 function sendEmail(data) {
   return new Promise((resolve, reject) => {
     const { subject, to, text } = data;
-   //  var smtpConfig = {
-   //    service: 'Gmail',
-   //    host: 'smtp.gmail.com',
-   //    post: 587,
-   //    secure: false,
+    var smtpConfig = {
+      service: 'Gmail',
+      host: 'smtp.gmail.com',
+      post: 587,
+      secure: false,
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASS,
+      },
+    };
+   // var smtpConfig = {
+   //    host: 'mail.privateemail.com',
+   //    post: 465,
+   //    secure: true,
    //    auth: {
    //      user: process.env.EMAIL,
    //      pass: process.env.PASS,
    //    },
    //  };
-   var smtpConfig = {
-      host: 'mail.privateemail.com',
-      post: 465,
-      secure: true,
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASS,
-      },
-      Headers: {
-         "X-My-Header": "https://www.example.com/profile_pic.png"
-      }
-    };
     // email object
     var email = {
       from: `"AppiPlace" ${process.env.EMAIL}`,
