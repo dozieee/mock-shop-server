@@ -211,7 +211,7 @@ router.post('/web-hook', makeCallBack(async(req) => {
       }
       await EventAttendanceDb.update({ id: tx_ref, status: "SUCCESS" })
       const evt = eventAttendance.metaDate.event
-      sendNotification({ event: "EVENT_REGISTRATION", data: { email: eventAttendance.email, email2: evt.email, name: eventAttendance.firstName, event: { id: eventAttendance.id, event_name: evt.event_name, description: evt.description, category: evt.category, paid: eventAttendance.paid, venue: evt.venue, date: evt.date, ticket_name: eventAttendance.ticket_type || 'Free', ticket_price:  `N${eventAttendance.metaDate.price}` || 'Free', ticket_count: evt.ticket_count}} })
+      sendNotification({ event: "EVENT_REGISTRATION", data: { email: eventAttendance.email, email2: evt.email, name: eventAttendance.firstName, event: { id: eventAttendance.id, event_name: evt.event_name, description: evt.description, category: evt.category, paid: eventAttendance.paid, venue: evt.venue, date: evt.date.toLocaleString(), ticket_name: eventAttendance.ticket_type || 'Free', ticket_price:  `N${eventAttendance.metaDate.price}` || 'Free', ticket_count: evt.ticket_count}} })
     }
     return res({ status: 'success', data: null })
   } catch (error) {

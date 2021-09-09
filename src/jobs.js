@@ -25,7 +25,7 @@ export function SetUPjob() {
                 }
                 const evt = eventAttendance.metaDate.event
                 try {
-                    sendNotification({ event: "EVENT_REMINDER", data: { email: eventAttendance.email, name: eventAttendance.firstName, event: { id: event.id, email2: event.email, event_name: event.name, description: event.description, category: event.category, paid: event.paid, venue: event.venue, date: event.date, ticket_name: eventAttendance.ticket_type || 'Free', ticket_price:  `N${eventAttendance.metaDate.price || 'Free'}` , ticket_count: evt.ticket_count}} })
+                    sendNotification({ event: "EVENT_REMINDER", data: { email: eventAttendance.email, name: eventAttendance.firstName, event: { id: event.id, email2: event.email, event_name: event.name, description: event.description, category: event.category, paid: event.paid, venue: event.venue, date: event.date.toLocaleString(), ticket_name: eventAttendance.ticket_type || 'Free', ticket_price:  `N${eventAttendance.metaDate.price || 'Free'}` , ticket_count: evt.ticket_count}} })
                 } catch (error) {
                     console.log(error)
                 }
@@ -51,7 +51,7 @@ export function SetUPjob() {
             }
             const evt = eventAttendance.metaDate.event
             try {
-                sendNotification({ event: "EVENT_REMINDER", data: { email: eventAttendance.email, name: eventAttendance.firstName, event: { id: event.id, email2: event.email, event_name: event.name, description: event.description, category: event.category, paid: event.paid, venue: event.venue, date: event.date, ticket_name: eventAttendance.ticket_type || 'Free', ticket_price:  `N${eventAttendance.metaDate.price || 'Free'}` , ticket_count: evt.ticket_count}} })
+                sendNotification({ event: "EVENT_REMINDER", data: { email: eventAttendance.email, name: eventAttendance.firstName, event: { id: event.id, email2: event.email, event_name: event.name, description: event.description, category: event.category, paid: event.paid, venue: event.venue, date: event.date.toLocaleString(), ticket_name: eventAttendance.ticket_type || 'Free', ticket_price:  `N${eventAttendance.metaDate.price || 'Free'}` , ticket_count: evt.ticket_count}} })
             } catch (error) {
                 console.log(error)
             }

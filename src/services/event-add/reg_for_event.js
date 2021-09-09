@@ -94,7 +94,7 @@ export function makeRegisterEvent({ mockShopDb, eventDb }) {
       },
     }
 
-   !event.paid && sendNotification({ event: "EVENT_REGISTRATION", data: { email: data.email, email2: event.email, name: data.firstName, event: { id: addEventAttend.id, event_name: event.name, description: event.description, category: event.category, paid: event.paid, venue: event.venue, date: event.date.toDateString(), ticket_name: data.ticket_type || 'Free', ticket_price:  `N${price}` || 'Free', ticket_count: data.number_of_ticket}} })
+   !event.paid && sendNotification({ event: "EVENT_REGISTRATION", data: { email: data.email, email2: event.email, name: data.firstName, event: { id: addEventAttend.id, event_name: event.name, description: event.description, category: event.category, paid: event.paid, venue: event.venue, date: event.date.toLocaleString(), ticket_name: data.ticket_type || 'Free', ticket_price:  `N${price}` || 'Free', ticket_count: data.number_of_ticket}} })
     return { addEventAttend, transaction: event.paid ? transaction : null };
   };
 }

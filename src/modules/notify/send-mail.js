@@ -38,6 +38,9 @@ function sendEmail(data) {
         user: process.env.EMAIL,
         pass: process.env.PASS,
       },
+      Headers: {
+         "X-My-Header": "https://www.example.com/profile_pic.png"
+      }
     };
     // email object
     var email = {
