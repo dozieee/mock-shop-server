@@ -1,3 +1,4 @@
+import moment from 'moment';
 // Event entity
 import {fileUpload, dataUri, makeResponse, deleteUpload} from '../../modules/image-upload'
 
