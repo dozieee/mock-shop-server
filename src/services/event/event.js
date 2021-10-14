@@ -138,7 +138,7 @@ export function makeGetEvent({ mockShopDb, eventAttendanceDb }) {
     }
     const eventAtten =await eventAttendanceDb.find({ eventId: event.id })
     event.eventAttendance = eventAtten
-    event.completed = new Date() >  moment(new Date(event.date)).subtract(1, 'h').toDate()
+    event.completed = new Date() >  moment(new Date(event.date)).add(1, 'h').toDate()
     event.editable = eventAtten.length == 0
     return event;
   };
