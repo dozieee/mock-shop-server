@@ -2,7 +2,6 @@ import { Agenda } from "agenda/es";
 import { sendNotification } from './modules/notify/send-mail'
 import eventService from './services/event'
 import makeMockShop from './data-access';
-import moment from 'moment';
 import moment from 'moment-timezone';
 const EventDB = makeMockShop({ modelName: 'Event' });
 const eventAttendanceDb = makeMockShop({ modelName: 'EventAttendance' });
