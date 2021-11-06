@@ -195,8 +195,26 @@ export function makeGetCompletedEvent({ mockShopDb, eventAttendanceDb }) {
 }
 
 
-export function makeGetPaidEvent({ mockShopDb, eventAttendanceDb }) {
+export function makeGetPaidEvent({ mockShopDb, eventAttendanceDb, userDB, appWalletDB }) {
   return async function getEvent({ userId }) {
+      user = await userDB.findById(userId)
+      if (!user) {
+        throw new Error("user does not exist")
+      }
+      if (user.email === 'appiplace.help@gmail.com') {
+        // TODO: fetch Withdraw 
+        const [currentWallet] =  await appWalletDB.find({})
+        if (currentWallet == undefined) {
+          return []
+        }
+        if (currentWallet.balance < 200) {
+          return []
+        }
+        return [{
+          totalRegistered: 0,
+          totalPrice: currentWallet.balance
+        }]
+      }
       const events = await mockShopDb.find({userId, paid: true});      
       const result = []
       const paymentSuccessStatus = 'SUCCESS' //TODO: 'SUCCESS'

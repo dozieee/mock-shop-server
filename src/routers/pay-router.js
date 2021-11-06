@@ -9,6 +9,8 @@ import { sendNotification } from '../modules/notify/send-mail'
 const UserDb = makeMockShop({ modelName: 'User' });
 const EventAttendanceDb = makeMockShop({ modelName: 'EventAttendance' });
 const EventDb = makeMockShop({ modelName: 'Event' });
+const appWalletDB = makeMockShop({ modelName: 'appWallet' });
+const appWalletTransactionDb = makeMockShop({ modelName: 'appWalletTransaction' });
 // auth middleware
 import {  authMiddleware } from '../middlewares';
 // the make express callback
@@ -136,21 +138,45 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
       return res({ status: 'error', data: 'User does not exit' }, 400)
     }
 
-    const [event] = await EventDb.find({_id: evenId, paid: true});      
-    if (!event) {
-      throw new Error("Event does not exist")
-    }
     let totalPrice = 0
     const paymentSuccessStatus = 'SUCCESS'
-    const eventAtten = await EventAttendanceDb.find({ eventId: evenId, claimed: false, paid: true, status: paymentSuccessStatus})
-    eventAtten.forEach(element => {
-      if (element) {
-        totalPrice += element.metaDate.price
+    if (user.email !== 'appiplace.help@gmail.com') {
+      const [event] = await EventDb.find({_id: evenId, paid: true});      
+      if (!event) {
+        throw new Error("Event does not exist")
       }
-    });
+      const eventAtten = await EventAttendanceDb.find({ eventId: evenId, claimed: false, paid: true, status: paymentSuccessStatus})
+      eventAtten.forEach(element => {
+        if (element) {
+          totalPrice += element.metaDate.price
+        }
+      });
+    }
 
     const rate = 0.045
-    const amount = totalPrice - (totalPrice * rate)
+    const interest = (totalPrice * rate)
+    const amount = totalPrice - interest
+
+    //TODO; fund appl wallet
+    if (user.email !== 'appiplace.help@gmail.com') {
+      const [currentWallet] = await appWalletDB.find({}) 
+      if (currentWallet !== undefined) {
+        appInterest = interest * 0.2 
+        currentWallet.balance += appInterest
+        await appWalletDB.update({ id: currentWallet.id, balance: currentWallet.balance }) 
+      }  else {
+        await appWalletDB.insert({balance: 0})
+      }
+    } else {
+      const [currentWallet] = await appWalletDB.find({}) 
+      if (currentWallet !== undefined) {
+        amount = currentWallet.balance
+      }
+    }
+
+    if (amount < 200) {
+     throw new Error('You can only Withdrawal about #100')     
+    }
 
     const sec_key = process.env.SEC_KEY
     const base = process.env.BASE_API_URL_PAYSTACK
@@ -182,6 +208,13 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
     }
 
     await EventAttendanceDb.updateMany({eventId: evenId},{ claimed: true})
+    if (user.email == 'appiplace.help@gmail.com') {
+      const [currentWallet] = await appWalletDB.find({}) 
+      if (currentWallet !== undefined) {
+        await appWalletDB.update({id: currentWallet.id, balance: 0})
+        await appWalletTransactionDb.insert({ date: new Date(), amount: currentWallet.balance })
+      }
+    }
     // TODO: send email notification
     return res({ status: 'success', data: "Pay out Imitated For You, Your account will be credited within 24hrs" })
   } catch (error) {
