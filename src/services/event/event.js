@@ -197,7 +197,7 @@ export function makeGetCompletedEvent({ mockShopDb, eventAttendanceDb }) {
 
 export function makeGetPaidEvent({ mockShopDb, eventAttendanceDb, userDB, appWalletDB }) {
   return async function getEvent({ userId }) {
-      user = await userDB.findById(userId)
+      const user = await userDB.findById(userId)
       if (!user) {
         throw new Error("user does not exist")
       }
