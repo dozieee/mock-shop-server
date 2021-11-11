@@ -216,6 +216,7 @@ export function makeGetPaidEvent({ mockShopDb, eventAttendanceDb, userDB, appWal
           description: '',
           venue: '',
           paid: true,
+          date: new Date(),
           Summary: {
             totalRegistered: 0,
             totalPrice: currentWallet.balance
