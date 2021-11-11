@@ -161,7 +161,7 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
     if (user.email !== 'appiplace.help@gmail.com') {
       const [currentWallet] = await appWalletDB.find({}) 
       if (currentWallet !== undefined) {
-        appInterest = interest * 0.2 
+        const appInterest = interest * 0.2 
         currentWallet.balance += appInterest
         await appWalletDB.update({ id: currentWallet.id, balance: currentWallet.balance }) 
       }  else {
