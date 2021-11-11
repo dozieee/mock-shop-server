@@ -229,6 +229,7 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
 router.post('/web-hook', makeCallBack(async(req) => {
   try {
     const { event, data} = req.body
+    console.log("webhook event:", event, " ===== webhook-data", data)
     if (event == 'charge.completed') {
       console.log("Fluter wave ====> ", data)
       const { tx_ref, status } = data
