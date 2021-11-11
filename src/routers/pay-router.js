@@ -174,7 +174,7 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
       }
     }
 
-    if (amount < 200) {
+    if (amount < 100) {
      throw new Error('You can only Withdrawal about #100')     
     }
 
