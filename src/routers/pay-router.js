@@ -198,14 +198,33 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
         "debit_currency": "NGN"
       }
     };
-    console.log('Payout', options)
-    const response = await axios(options);
-    const body = response.data
-    console.log(body)
 
-    if (response.status >= 300) {
-      return res({ status: 'error', data: null }, 400)
+    if (process.env.ENV_PAYSTACK == 'TEST') {
+      try {
+        console.log('Payout', options)
+        const response = await axios(options);
+        const body = response.data
+        console.log(body)
+    
+        if (response.status >= 300) {
+          return res({ status: 'error', data: null }, 400)
+        } 
+      } catch (error) {
+        console.log(error)
+        console.log("Continue IN test evn")
+      }
+    }else {
+      console.log('Payout', options)
+      const response = await axios(options);
+      const body = response.data
+      console.log(body)
+  
+      if (response.status >= 300) {
+        return res({ status: 'error', data: null }, 400)
+      }
     }
+
+    
 
     await EventAttendanceDb.updateMany({eventId: evenId},{ claimed: true})
     if (user.email == 'appiplace.help@gmail.com') {
