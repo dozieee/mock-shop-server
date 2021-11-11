@@ -248,6 +248,7 @@ router.post('/web-hook', makeCallBack(async(req) => {
     }
     return res({ status: 'success', data: null })
   } catch (error) {
+    console.log("Web-hook Error", error)
     return res({ status: 'error', data: error.message }, 500)
   }
 }));
