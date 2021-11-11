@@ -231,18 +231,18 @@ router.post('/web-hook', makeCallBack(async(req) => {
     const data = req.body
     if (data['event.type'] == 'CARD_TRANSACTION') {
       console.log("Fluter wave ====> ", data)
-      const { tx_ref, status } = data
-      const eventAttendance =await EventAttendanceDb.findById(tx_ref)
+      const { txRef, status } = data
+      const eventAttendance =await EventAttendanceDb.findById(txRef)
       if (!eventAttendance) {
         return res({ status: 'success', data: null })
       }
       if (status !== 'successful') {
-        await EventAttendanceDb.update({ id: tx_ref, status: "FAILED" })
+        await EventAttendanceDb.update({ id: txRef, status: "FAILED" })
       }
       if (eventAttendance.status !== 'PENDING') {
         return res({ status: 'success', data: null })
       }
-      await EventAttendanceDb.update({ id: tx_ref, status: "SUCCESS" })
+      await EventAttendanceDb.update({ id: txRef, status: "SUCCESS" })
       const evt = eventAttendance.metaDate.event
       sendNotification({ event: "EVENT_REGISTRATION", data: { email: eventAttendance.email, email2: evt.email, name: eventAttendance.firstName, event: { id: eventAttendance.id, event_name: evt.event_name, description: evt.description, category: evt.category, paid: eventAttendance.paid, venue: evt.venue, date: evt.date.toLocaleString(), ticket_name: eventAttendance.ticket_type || 'Free', ticket_price:  `N${eventAttendance.metaDate.price}` || 'Free', ticket_count: evt.ticket_count}} })
     }
