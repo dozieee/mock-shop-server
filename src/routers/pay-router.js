@@ -155,7 +155,7 @@ router.get('/payout/:evenId', authMiddleware, makeCallBack(async(req) => {
 
     const rate = 0.045
     const interest = (totalPrice * rate)
-    const amount = totalPrice - interest
+    let amount = totalPrice - interest
 
     //TODO; fund appl wallet
     if (user.email !== 'appiplace.help@gmail.com') {
