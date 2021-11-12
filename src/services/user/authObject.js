@@ -28,7 +28,7 @@ export function makeSignin({ userDB, generateToken }) {
     if (!password) {
       throw new Error('You must supply a password');
     }
-    const exist = await userDB.findByEmail(email);
+    const exist = await userDB.findByEmail(email.toLocaleLowerCase());
     if (!exist) {
       throw new Error('Auth Failed');
     }
@@ -75,6 +75,8 @@ export function makeSignup({ userDB, signin }) {
      if (!userInfo.password) {
       throw new Error("you must provide password") 
      }
+
+     userInfo.email = userInfo.email.toLocaleLowerCase()
      
     const exist = await userDB.findByEmail(userInfo.email);
     if (exist) {
