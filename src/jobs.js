@@ -16,7 +16,7 @@ export function  SetUPjob() {
         // IIFE to give access to async/await
         await agenda.start();
       
-        await agenda.every("6 hours", "Reminder1");
+        await agenda.every("1 hour", "Reminder1");
       })();
 }
 
@@ -25,7 +25,7 @@ agenda.define("Reminder1", async() => {
     console.log('running 6hr task');
     const events = await EventDB.find({date: {
         $gte: new Date(),
-        $lt: moment().add(5, 'h').toDate()
+        $lt: moment().add(1, 'h').toDate()
     }})
     console.log(events)
     for (let i = 0; i < events.length; i++) {
