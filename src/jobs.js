@@ -1,4 +1,5 @@
 import { Agenda } from "agenda/es";
+import axios from 'axios';
 import { sendNotification } from './modules/notify/send-mail'
 import eventService from './services/event'
 import makeMockShop from './data-access';
@@ -18,6 +19,28 @@ export function  SetUPjob() {
       
         await agenda.every("1 hour", "Reminder1");
       })();
+
+    //pinger
+    let options
+    if (process.env.ENV_PAYSTACK == 'TEST') {
+        options = {
+            'method': 'GET',
+            'url': `https://mock-shop-server.herokuapp.com/`,
+        };
+    } else {
+        options = {
+            'method': 'GET',
+            'url': `https://mock-shop-server.herokuapp.com/`,
+        };
+    }
+   setInterval(async() => {
+       console.log('ping server')
+       try {
+        await axios(options);
+       } catch (error) {
+        console.log(error.message)
+       }
+   }, 10000);
 }
 
 
