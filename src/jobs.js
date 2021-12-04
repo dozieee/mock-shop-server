@@ -30,7 +30,7 @@ export function  SetUPjob() {
     } else {
         options = {
             'method': 'GET',
-            'url': `https://mock-shop-server.herokuapp.com/`,
+            'url': `https://appiplace.herokuapp.com/`,
         };
     }
    setInterval(async() => {
